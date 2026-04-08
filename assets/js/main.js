@@ -1,4 +1,4 @@
-// ── Nav scroll state ──
+// Nav scroll
 const nav = document.getElementById('nav');
 let ticking = false;
 window.addEventListener('scroll', () => {
@@ -11,8 +11,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// ── Scroll reveal ──
-const reveals = document.querySelectorAll('.reveal');
+// Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -21,32 +20,24 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-reveals.forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ── Custom cursor (desktop only) ──
+// Custom cursor (desktop)
 if (window.matchMedia('(pointer: fine)').matches) {
   const cursor = document.getElementById('cursor');
   let cx = 0, cy = 0, px = 0, py = 0;
-  
-  document.addEventListener('mousemove', e => {
-    cx = e.clientX;
-    cy = e.clientY;
-  });
-  
-  function animateCursor() {
+  document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
+  (function loop() {
     px += (cx - px) * 0.15;
     py += (cy - py) * 0.15;
     cursor.style.left = px + 'px';
     cursor.style.top = py + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-
-  document.querySelectorAll('[data-hover], a, button, .btn-lime, .btn-ghost').forEach(el => {
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('[data-hover], a, button').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
-  
   document.body.style.cursor = 'none';
   document.querySelectorAll('a, button').forEach(el => el.style.cursor = 'none');
 }
