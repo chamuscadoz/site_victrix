@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #0E1C0E; }
+
+  .bg {
+    position: absolute; inset: 0;
+    background: url('Slide_16_9__65.png') center / cover no-repeat;
+    filter: blur(6px) brightness(.55) saturate(.7);
+    transform: scale(1.05); /* evita bordas brancas do blur */
+  }
+
+  .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(14,28,14,.78) 0%, rgba(46,111,58,.18) 100%);
+  }
+
+  .inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 28px;
+  }
+
+  /* Logo Victrix via CSS variable — precisa do victrix-logos.css carregado */
+  .logo {
+    width: 420px; height: 0;
+    padding-bottom: calc(420px * 1726 / 4024);
+  }
+
+  /* Fallback: text logo caso o CSS var não carregue ao fazer screenshot */
+  .logo-text {
+    font-family: Georgia, serif;
+    font-size: 72px; font-weight: 300; letter-spacing: .18em;
+    color: #88E833; text-transform: uppercase;
+  }
+
+  .tagline {
+    font-family: Georgia, serif;
+    font-size: 22px; font-weight: 300; letter-spacing: .3em;
+    color: rgba(213,218,208,.8); text-transform: uppercase;
+  }
+
+  .sep {
+    width: 48px; height: 1px;
+    background: linear-gradient(90deg, transparent, #88E833, transparent);
+  }
+
+  .xp-wrap {
+    display: flex; align-items: center; gap: 20px;
+    margin-top: 8px;
+  }
+
+  .xp-line { width: 1px; height: 18px; background: rgba(136,232,51,.3); }
+
+  .xp-img { height: 22px; width: auto; opacity: .85; }
+</style>
+<link rel="stylesheet" href="../css/victrix-logos.css">
+<style>
+  /* aplicado APÓS victrix-logos.css para usar a variável */
+  .logo {
+    background-image: var(--vc-logo-lime-landscape);
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+  <div class="inner">
+    <div class="logo"></div>
+    <div class="sep"></div>
+    <p class="tagline">Integridade &middot; Disciplina &middot; Experiência</p>
+    <div class="xp-wrap">
+      <div class="xp-line"></div>
+      <img src="xp-branco.png" alt="XP Investimentos" class="xp-img">
+    </div>
+  </div>
+</body>
+</html>
