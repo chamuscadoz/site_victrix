@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Entre em contato com a Victrix Capital - Agende uma conversa com nossos assessores.">
+  
+  <title>Contato | Victrix Capital</title>
+  
+  <link rel="icon" type="image/png" href="assets/images/png01.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <style>
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    
+    .contact-form {
+      background-color: rgba(46, 111, 58, 0.1);
+      border: 1px solid rgba(136, 232, 51, 0.2);
+      border-radius: 8px;
+      padding: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      color: var(--sage);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: rgba(14, 28, 14, 0.5);
+      border: 1px solid rgba(136, 232, 51, 0.3);
+      border-radius: 4px;
+      color: var(--white);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      transition: border-color var(--transition-fast);
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--lime-green);
+    }
+    
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .contact-info-card {
+      background-color: rgba(46, 111, 58, 0.1);
+      border: 1px solid rgba(136, 232, 51, 0.2);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-info-card h4 {
+      color: var(--lime-green);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .contact-info-card p {
+      margin-bottom: 0.5rem;
+    }
+    
+    .contact-info-card a {
+      color: var(--sage);
+      transition: color var(--transition-fast);
+    }
+    
+    .contact-info-card a:hover {
+      color: var(--lime-green);
+    }
+    
+    @media (max-width: 968px) {
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <header>
+    <nav>
+      <a href="index.html">
+        <img src="assets/images/png01.png" alt="Victrix Capital" class="logo">
+      </a>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="servicos.html">Serviços</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Header -->
+  <section class="hero" style="min-height: 50vh;">
+    <div class="hero-content">
+      <h1>Entre em <span class="highlight">Contato</span></h1>
+      <p>Vamos conversar sobre seus objetivos financeiros</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section>
+    <div class="container">
+      <div class="contact-container">
+        
+        <!-- Contact Form -->
+        <div>
+          <h2 class="mb-2">Envie uma Mensagem</h2>
+          <p class="mb-2">Preencha o formulário abaixo e entraremos em contato em breve.</p>
+          
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="name">Nome Completo *</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">E-mail *</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Telefone</label>
+              <input type="tel" id="phone" name="phone" placeholder="(11) 99999-9999">
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">Assunto</label>
+              <select id="subject" name="subject">
+                <option value="">Selecione um assunto</option>
+                <option value="investimentos">Quero investir</option>
+                <option value="consultoria">Consultoria financeira</option>
+                <option value="carteira">Análise de carteira</option>
+                <option value="informacoes">Solicitar informações</option>
+                <option value="outros">Outros</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Mensagem *</label>
+              <textarea id="message" name="message" required placeholder="Conte-nos como podemos ajudar..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              Enviar Mensagem
+            </button>
+          </form>
+        </div>
+        
+        <!-- Contact Info -->
+        <div>
+          <h2 class="mb-2">Informações de Contato</h2>
+          
+          <div class="contact-info-card">
+            <h4>
+              📧 E-mail
+            </h4>
+            <p>
+              <a href="/cdn-cgi/l/email-protection#f99a96978d988d96b98f909a8d8b90819a9889908d9895d79a9694d79b8b"><span class="__cf_email__" data-cfemail="82e1edecf6e3f6edc2f4ebe1f6f0ebfae1e3f2ebf6e3eeace1edeface0f0">[email&#160;protected]</span></a>
+            </p>
+            <p style="font-size: 0.9rem; color: var(--sage); opacity: 0.8; margin-top: 0.5rem;">
+              Respondemos em até 24 horas úteis
+            </p>
+          </div>
+          
+          <div class="contact-info-card">
+            <h4>
+              📱 WhatsApp
+            </h4>
+            <p>
+              <a href="https://wa.me/5511999999999" target="_blank">+55 (11) 99999-9999</a>
+            </p>
+            <p style="font-size: 0.9rem; color: var(--sage); opacity: 0.8; margin-top: 0.5rem;">
+              Atendimento de segunda a sexta, 9h às 18h
+            </p>
+          </div>
+          
+          <div class="contact-info-card">
+            <h4>
+              🕒 Horário de Atendimento
+            </h4>
+            <p><strong>Segunda a Sexta:</strong> 9h às 18h</p>
+            <p><strong>Sábados e Domingos:</strong> Fechado</p>
+            <p style="font-size: 0.9rem; color: var(--sage); opacity: 0.8; margin-top: 0.5rem;">
+              Fora do horário? Envie uma mensagem e retornaremos no próximo dia útil.
+            </p>
+          </div>
+          
+          <div class="contact-info-card">
+            <h4>
+              🔗 Redes Sociais
+            </h4>
+            <p>
+              <a href="#" target="_blank">LinkedIn</a> • 
+              <a href="#" target="_blank">Instagram</a>
+            </p>
+            <p style="font-size: 0.9rem; color: var(--sage); opacity: 0.8; margin-top: 0.5rem;">
+              Siga-nos para insights do mercado e conteúdo educacional
+            </p>
+          </div>
+          
+          <div style="background-color: rgba(136, 232, 51, 0.1); border-radius: 8px; padding: 1.5rem; border: 1px solid rgba(136, 232, 51, 0.3);">
+            <h4 style="color: var(--lime-green); margin-bottom: 1rem;">💡 Dica</h4>
+            <p style="font-size: 0.95rem;">
+              Prefere agendar uma reunião? Entre em contato e marcaremos um horário 
+              que funcione melhor para você discutirmos seus objetivos financeiros.
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section style="background-color: rgba(46, 111, 58, 0.05);">
+    <div class="container">
+      <h2 class="text-center mb-3">Perguntas Frequentes</h2>
+      
+      <div class="grid grid-2">
+        <div class="card">
+          <h4>Qual o valor mínimo para investir?</h4>
+          <p>
+            Não há valor mínimo estabelecido. Trabalhamos com investidores de diferentes perfis 
+            e adaptamos nossas recomendações ao patrimônio disponível.
+          </p>
+        </div>
+        
+        <div class="card">
+          <h4>Como funciona a remuneração?</h4>
+          <p>
+            Nossa remuneração vem da própria XP Investimentos, sem custos adicionais para você. 
+            Toda a transparência sobre custos dos produtos é detalhada antes de qualquer aplicação.
+          </p>
+        </div>
+        
+        <div class="card">
+          <h4>Preciso abrir conta na XP?</h4>
+          <p>
+            Sim, mas o processo é 100% digital e gratuito. Te auxiliamos em todo o cadastro 
+            e na transferência de investimentos de outras instituições, se for o caso.
+          </p>
+        </div>
+        
+        <div class="card">
+          <h4>Vocês oferecem educação financeira?</h4>
+          <p>
+            Sim! Acreditamos que investidores bem informados tomam melhores decisões. 
+            Oferecemos conteúdo educacional e explicamos cada investimento de forma clara.
+          </p>
+        </div>
+        
+        <div class="card">
+          <h4>Qual a diferença para um banco?</h4>
+          <p>
+            Como assessores independentes, não somos obrigados a vender produtos próprios. 
+            Recomendamos o que é melhor para você entre milhares de opções do mercado.
+          </p>
+        </div>
+        
+        <div class="card">
+          <h4>Posso confiar meu dinheiro?</h4>
+          <p>
+            Seu dinheiro fica custodiado na XP Investimentos, uma das maiores corretoras do Brasil, 
+            regulada pela CVM. Nós não temos acesso direto aos seus recursos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container text-center">
+      <h2>Não encontrou o que procurava?</h2>
+      <p class="mb-2">Entre em contato conosco. Teremos prazer em responder suas dúvidas.</p>
+      <a href="/cdn-cgi/l/email-protection#d3b0bcbda7b2a7bc93a5bab0a7a1baabb0b2a3baa7b2bffdb0bcbefdb1a1" class="btn btn-primary">Enviar E-mail</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <img src="assets/images/png01.png" alt="Victrix Capital" class="footer-logo">
+        
+        <ul class="footer-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+        
+        <div class="footer-social">
+          <a href="#" class="social-icon" aria-label="LinkedIn">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+          <a href="#" class="social-icon" aria-label="Instagram">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2026 Victrix Capital. Todos os direitos reservados.</p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;
