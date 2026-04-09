@@ -125,66 +125,17 @@
   <div class="overlay overlay-heavy"></div>
   <div class="container" style="position:relative;z-index:2;">
     <h2 class="section-title reveal">Equipe</h2>
-    <div class="carousel" id="team-carousel">
-      <div class="carousel-track">
-
-        <div class="partner" data-hover>
-          <div class="partner-img-wrap"><div class="partner-img" style="background:linear-gradient(160deg,rgba(14,28,14,.85),rgba(136,232,51,.12)),url('assets/images/Slide_16_9__699.png') center/cover;"></div></div>
-          <h3>Gustavo Jesus</h3>
-          <span class="partner-role">Sócio — Assessor de Investimentos</span>
-          <p>30 anos de experiência no mercado financeiro com passagem pelo JP Morgan. Engenheiro Politécnico e Mestre em Economia pela FGV, Autor do livro "Investimentos: O Guia dos Céticos" Editora FGV.</p>
-        </div>
-
-        <div class="partner" data-hover>
-          <div class="partner-img-wrap"><div class="partner-img" style="background:linear-gradient(160deg,rgba(14,28,14,.85),rgba(46,111,58,.3)),url('assets/images/Slide_16_9__67.png') center/cover;"></div></div>
-          <h3>Guilherme Giron</h3>
-          <span class="partner-role">Sócio — Assessor de Investimentos</span>
-          <p>20 anos de experiência no mercado financeiro com passagem pelo JP Morgan. Economista pela FEA-USP Mestre em Economia pela FGV, monitor no mestrado da matéria de Investimentos.</p>
-        </div>
-
-        <div class="partner" data-hover>
-          <div class="partner-img-wrap"><div class="partner-img" style="background:linear-gradient(160deg,rgba(14,28,14,.85),rgba(46,111,58,.35)),url('assets/images/Slide_16_9__65.png') center/cover;"></div></div>
-          <h3>José Victor Cassiolato</h3>
-          <span class="partner-role">Sócio — Assessor de Investimentos</span>
-          <p>20 anos de experiência no mercado financeiro. Certificação CGA (ANBIMA), com passagem pelo JP Morgan. Economista com MBA em Desenv de Software Web pela UNIP, onde também atua como professor de IA.</p>
-        </div>
-
-        <div class="partner" data-hover>
-          <div class="partner-img-wrap"><div class="partner-img" style="background:linear-gradient(160deg,rgba(14,28,14,.85),rgba(136,232,51,.12)),url('assets/images/Slide_16_9__699.png') center/cover;"></div></div>
-          <h3>Marcio Marin</h3>
-          <span class="partner-role">Desenvolvimento de Novos Negócios</span>
-          <p>30 anos de experiência no mercado financeiro. Formação em Gestão Ambiental e MBA em Inteligência Artificial. Atua como trader no mercado de commodities e há 12 anos no mercado de M&A (IGC Partner).</p>
-        </div>
-
-        <div class="partner" data-hover>
-          <div class="partner-img-wrap"><div class="partner-img" style="background:linear-gradient(160deg,rgba(14,28,14,.85),rgba(46,111,58,.3)),url('assets/images/Slide_16_9__67.png') center/cover;"></div></div>
-          <h3>Pedro Oliveira</h3>
-          <span class="partner-role">Partner — Assessor de Investimentos</span>
-          <p>5 anos de mercado financeiro. Graduado em Economia Política pela PUC-SP.</p>
-        </div>
-
-        <div class="partner" data-hover>
-          <div class="partner-img-wrap"><div class="partner-img" style="background:linear-gradient(160deg,rgba(14,28,14,.85),rgba(46,111,58,.35)),url('assets/images/Slide_16_9__65.png') center/cover;"></div></div>
-          <h3>Lucca Macieira</h3>
-          <span class="partner-role">Partner — Assessor de Investimentos</span>
-          <p>Graduando em dupla formação Economia e Administração de Empresas no INSPER.</p>
-        </div>
-
-        <div class="partner" data-hover>
-          <div class="partner-img-wrap"><div class="partner-img" style="background:linear-gradient(160deg,rgba(14,28,14,.85),rgba(136,232,51,.12)),url('assets/images/Slide_16_9__699.png') center/cover;"></div></div>
-          <h3>Victor Alcântara</h3>
-          <span class="partner-role">Partner — Assessor de Investimentos</span>
-          <p>Graduando em Economia na FAAP. Referência no programa VAI (Vire Assessor de Investimentos) organizado pela Melver, ABAI e o CIEE.</p>
-        </div>
-
-      </div>
-      <p class="carousel-hint" aria-hidden="true">
-        <span>←</span> mova o cursor para navegar <span>→</span>
-      </p>
-      <div class="carousel-progress" aria-hidden="true">
-        <div class="carousel-progress-thumb"></div>
-      </div>
+    <div class="carousel-3d" id="team-carousel"></div>
+    <div class="carousel-nav-row">
+      <button class="carousel-nav-btn" id="carousel-prev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="carousel-dots-3d" id="carousel-dots"></div>
+      <button class="carousel-nav-btn" id="carousel-next" aria-label="Próximo">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
     </div>
+    <p class="carousel-hint-3d" id="carousel-hint">arraste ou mova o cursor para navegar</p>
   </div>
 </section>
 
