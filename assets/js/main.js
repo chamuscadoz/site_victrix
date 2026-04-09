@@ -1,54 +1,147 @@
-// Team carousel
+// Team carousel — infinite · mouse-driven · physics
 (function () {
-  const carousel  = document.getElementById('team-carousel');
+  const carousel   = document.getElementById('team-carousel');
   if (!carousel) return;
-  const track     = carousel.querySelector('.carousel-track');
-  const items     = Array.from(track.querySelectorAll('.partner'));
-  const prevBtn   = carousel.querySelector('.carousel-prev');
-  const nextBtn   = carousel.querySelector('.carousel-next');
-  const dotsWrap  = carousel.querySelector('.carousel-dots');
-  const GAP       = 32;
-  let page        = 0;
 
-  function perPage() { return window.innerWidth >= 768 ? 3 : 1; }
-  function totalPages() { return Math.ceil(items.length / perPage()); }
+  const track      = carousel.querySelector('.carousel-track');
+  const hint       = carousel.querySelector('.carousel-hint');
+  const thumb      = carousel.querySelector('.carousel-progress-thumb');
+  const originals  = Array.from(track.querySelectorAll('.partner:not(.partner-clone)'));
+  const N          = originals.length;
+  const isFine     = window.matchMedia('(pointer: fine)').matches;
+  const cursorEl   = document.getElementById('cursor');
 
-  function translateX() {
-    const pp = perPage();
-    const itemW = (carousel.offsetWidth - GAP * (pp - 1)) / pp;
-    return page * (itemW + GAP) * pp;
+  // Physics constants
+  const MAX_VEL  = 4.2;   // px/frame at edges
+  const LERP     = 0.052; // velocity acceleration smoothness
+  const FRICTION = 0.91;  // coast-to-stop friction when mouse leaves
+
+  // State
+  let pos         = 0;
+  let vel         = 0;
+  let targetVel   = 0;
+  let isOver      = false;
+  let isDragging  = false;
+  let dragStartX  = 0, dragStartPos = 0, prevDragX = 0, dragVel = 0;
+  let hintDone    = false;
+  let itemW       = 0, gap = 0, totalW = 0;
+
+  /* ── Setup: measure + clone ── */
+  function setup() {
+    track.querySelectorAll('.partner-clone').forEach(c => c.remove());
+
+    const W  = carousel.offsetWidth;
+    const pp = W >= 900 ? 3 : W >= 560 ? 2 : 1;
+    gap    = pp > 1 ? 32 : 0;
+    itemW  = (W - gap * (pp - 1)) / pp;
+    totalW = N * (itemW + gap);
+
+    originals.forEach(el => {
+      el.style.flex  = `0 0 ${itemW}px`;
+      el.style.width = `${itemW}px`;
+    });
+
+    originals.forEach(el => {
+      const clone = el.cloneNode(true);
+      clone.classList.add('partner-clone');
+      track.appendChild(clone);
+      if (isFine && cursorEl) {
+        clone.addEventListener('mouseenter', () => cursorEl.classList.add('hover'));
+        clone.addEventListener('mouseleave', () => cursorEl.classList.remove('hover'));
+      }
+    });
+
+    track.style.gap = `${gap}px`;
+    pos = ((pos % totalW) + totalW) % totalW;
+    commit();
   }
 
-  function buildDots() {
-    dotsWrap.innerHTML = '';
-    for (let i = 0; i < totalPages(); i++) {
-      const btn = document.createElement('button');
-      btn.className = 'dot' + (i === 0 ? ' active' : '');
-      btn.setAttribute('aria-label', 'Página ' + (i + 1));
-      btn.addEventListener('click', () => { page = i; render(); });
-      dotsWrap.appendChild(btn);
+  /* ── Commit position to DOM ── */
+  function commit() {
+    const safe = ((pos % totalW) + totalW) % totalW;
+    track.style.transform = `translateX(-${safe}px)`;
+    if (thumb) thumb.style.left = `${(safe / totalW) * 72}px`; // 100px bar − 28px thumb
+  }
+
+  /* ── Mouse zone → velocity ── */
+  carousel.addEventListener('mouseenter', () => { isOver = true; });
+  carousel.addEventListener('mouseleave', () => { isOver = false; targetVel = 0; });
+
+  carousel.addEventListener('mousemove', e => {
+    if (isDragging) return;
+    dismissHint();
+
+    const { left, width } = carousel.getBoundingClientRect();
+    const cx = ((e.clientX - left) / width) * 2 - 1; // −1 … +1
+    const DEAD = 0.28;
+
+    if (Math.abs(cx) < DEAD) {
+      targetVel = 0;
+    } else {
+      const sign = Math.sign(cx);
+      const t    = (Math.abs(cx) - DEAD) / (1 - DEAD); // 0 … 1 outside dead zone
+      targetVel  = sign * t * t * MAX_VEL;              // quadratic — slow near centre, fast at edge
     }
-  }
-
-  function render() {
-    track.style.transform = `translateX(-${translateX()}px)`;
-    dotsWrap.querySelectorAll('.dot').forEach((d, i) =>
-      d.classList.toggle('active', i === page));
-    prevBtn.disabled = page === 0;
-    nextBtn.disabled = page >= totalPages() - 1;
-  }
-
-  prevBtn.addEventListener('click', () => { if (page > 0) { page--; render(); } });
-  nextBtn.addEventListener('click', () => { if (page < totalPages() - 1) { page++; render(); } });
-
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { page = 0; buildDots(); render(); }, 150);
   });
 
-  buildDots();
-  render();
+  /* ── Drag / touch ── */
+  function startDrag(clientX) {
+    isDragging  = true;
+    dragStartX  = prevDragX = clientX;
+    dragStartPos = pos;
+    dragVel     = 0;
+    dismissHint();
+    if (isFine && cursorEl) cursorEl.classList.add('dragging');
+  }
+
+  function moveDrag(clientX) {
+    if (!isDragging) return;
+    dragVel  = prevDragX - clientX;
+    prevDragX = clientX;
+    pos = dragStartPos + (dragStartX - clientX);
+    commit();
+  }
+
+  function endDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    vel = dragVel * 1.5; // hand off momentum to physics
+    if (isFine && cursorEl) cursorEl.classList.remove('dragging');
+  }
+
+  carousel.addEventListener('mousedown',  e => { startDrag(e.clientX); e.preventDefault(); });
+  carousel.addEventListener('touchstart', e => startDrag(e.touches[0].clientX), { passive: true });
+  window.addEventListener('mousemove',    e => moveDrag(e.clientX));
+  window.addEventListener('touchmove',    e => moveDrag(e.touches[0].clientX), { passive: true });
+  window.addEventListener('mouseup',  endDrag);
+  window.addEventListener('touchend', endDrag);
+
+  /* ── Hint ── */
+  function dismissHint() {
+    if (hintDone || !hint) return;
+    hintDone = true;
+    hint.classList.add('hidden');
+  }
+
+  /* ── RAF physics loop ── */
+  function tick() {
+    if (!isDragging) {
+      vel += (targetVel - vel) * LERP;
+      if (!isOver) vel *= FRICTION;
+      if (Math.abs(vel) > 0.005) { pos += vel; commit(); }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ── Resize ── */
+  let resizeT;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(setup, 150);
+  });
+
+  setup();
+  tick();
 })();
 
 // Nav scroll

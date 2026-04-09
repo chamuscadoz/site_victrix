@@ -209,51 +209,73 @@ section { position: relative; overflow: hidden; }
 /* ══════════════════════
    PARTNERS
    ══════════════════════ */
-/* ── Carousel ── */
-.carousel { position: relative; overflow: hidden; margin-top: 56px; }
+/* ── Carousel (infinite · mouse-driven) ── */
+.carousel {
+  position: relative; overflow: hidden;
+  margin-top: 56px; padding-bottom: 52px;
+}
+/* Edge vignettes */
+.carousel::before,
+.carousel::after {
+  content: ''; position: absolute; top: 0; bottom: 52px;
+  width: 160px; z-index: 3; pointer-events: none;
+}
+.carousel::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(14,28,14,.96) 0%, transparent 100%);
+}
+.carousel::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(14,28,14,.96) 0%, transparent 100%);
+}
 .carousel-track {
   display: flex; gap: 32px;
-  transition: transform .55s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+  will-change: transform; user-select: none;
 }
 .partner {
   flex: 0 0 calc((100% - 64px) / 3);
-  min-width: 0; transition: transform .3s var(--ease);
+  min-width: 0; transition: transform .35s var(--ease);
 }
-.partner:hover { transform: translateY(-4px); }
+.partner:hover { transform: translateY(-5px); }
 .partner-img-wrap { width: 100%; aspect-ratio: 4/3; overflow: hidden; margin-bottom: 20px; border-radius: 2px; }
-.partner-img { width: 100%; height: 100%; transition: transform .5s var(--ease); }
-.partner:hover .partner-img { transform: scale(1.04); }
+.partner-img { width: 100%; height: 100%; transition: transform .55s var(--ease); }
+.partner:hover .partner-img { transform: scale(1.05); }
 .partner h3 { font-weight: 600; font-size: 18px; color: var(--white); letter-spacing: .03em; }
 .partner-role {
   display: block; font-size: 11px; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; color: var(--lime); margin: 6px 0 14px;
 }
 .partner p { font-size: 14px; line-height: 1.6; color: rgba(213,218,208,.68); }
-.carousel-nav {
-  display: flex; align-items: center; justify-content: center;
-  gap: 24px; margin-top: 40px;
+/* Hint */
+.carousel-hint {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 14px; margin: 0;
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(213,218,208,.3); pointer-events: none; white-space: nowrap; z-index: 4;
+  transition: opacity .8s var(--ease);
 }
-.carousel-btn {
-  width: 44px; height: 44px; border-radius: 50%;
-  border: 1.5px solid rgba(136,232,51,.35);
-  background: transparent; color: var(--lime); cursor: pointer;
-  font-size: 20px; display: flex; align-items: center; justify-content: center;
-  transition: border-color .25s var(--ease), background .25s var(--ease);
-  line-height: 1;
+.carousel-hint span { color: rgba(136,232,51,.5); font-size: 14px; }
+.carousel-hint.hidden { opacity: 0; }
+/* Progress strip */
+.carousel-progress {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100px; height: 2px;
+  background: rgba(136,232,51,.1); border-radius: 1px; z-index: 4;
 }
-.carousel-btn:hover:not(:disabled) { border-color: var(--lime); background: rgba(136,232,51,.08); }
-.carousel-btn:disabled { opacity: .25; cursor: default; }
-.carousel-dots { display: flex; gap: 10px; }
-.dot {
-  width: 8px; height: 8px; border-radius: 50%; padding: 0; border: none; cursor: pointer;
-  background: rgba(136,232,51,.25);
-  transition: background .25s var(--ease), transform .25s var(--ease);
+.carousel-progress-thumb {
+  position: absolute; top: -1px; left: 0;
+  width: 28px; height: 4px;
+  background: var(--lime); border-radius: 2px;
+  box-shadow: 0 0 10px rgba(136,232,51,.45);
 }
-.dot.active { background: var(--lime); transform: scale(1.35); }
+/* Cursor drag state */
+.cursor.dragging {
+  transform: translate(-50%,-50%) scale(0.6);
+  border-color: var(--white);
+  background: rgba(255,255,255,.06);
+}
 @media (max-width: 768px) {
-  .carousel-track { gap: 0; }
-  .partner { flex: 0 0 100%; }
+  .carousel::before, .carousel::after { width: 40px; }
 }
 
 /* ══════════════════════
