@@ -177,7 +177,7 @@
 
   // RAF loop
   function tick() {
-    if (autoPlay && !dragging) target -= 0.0064;
+    if (autoPlay && !dragging) target -= 0.0032;
     var ease = dragging ? 0.20 : 0.062;
     angle += (target - angle) * ease;
     render();
