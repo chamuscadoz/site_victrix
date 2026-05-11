@@ -1,147 +1,107 @@
-# Roadmap de Melhorias - Victrix Capital Website
+# Roadmap — Victrix Capital Website
 
-## 🎯 Próximas Implementações Sugeridas
+Última atualização: Maio 2026
 
-### Fase 1: Funcionalidades Básicas (Curto Prazo)
+---
 
-- [ ] **Integração de formulário de contato**
-  - Usar FormSpree, Formsubmit.co ou EmailJS
-  - Receber mensagens por e-mail
-  - Notificações automáticas
-  
-- [ ] **Google Analytics**
-  - Rastrear visitantes
-  - Entender comportamento do usuário
-  - Medir conversões
-  
-- [ ] **Favicon completo**
-  - Criar todos os tamanhos necessários
-  - Apple touch icon
-  - Manifest.json para PWA
+## Concluído
 
-- [ ] **Meta tags para redes sociais**
-  - Open Graph (Facebook/LinkedIn)
-  - Twitter Cards
-  - Imagens de preview personalizadas
+### Fundações
+- [x] Design system completo — variáveis CSS, tipografia, cores (BrandVictrix.md)
+- [x] Layout one-page responsivo (`index.html`)
+- [x] Fontes Zalando Sans SemiExpanded — variável + estáticas em `assets/fonts/`
+- [x] Logo via CSS custom property (`victrix-logos.css`) — sem arquivo de imagem externo
+- [x] Estrutura de assets organizada (`blur_backgrounds/`, `Icons/`, `Logos/`, `Profile/`)
 
-### Fase 2: Conteúdo e SEO (Médio Prazo)
+### index.html
+- [x] Seção Hero — logo animado, tagline, scroll indicator
+- [x] Seção Narrativa — grid 2 colunas, scroll reveal
+- [x] Seção Abordagem — 6 cards com grid texture
+- [x] Seção Filosofia — blockquote com blur background
+- [x] Seção Equipe — carrossel 3D coverflow com 7 membros, física e auto-rotação
+- [x] Seção Estudos de Mercado (Insights) — grid de 3 cards com imagens blur
+- [x] Seção Closing — frase institucional
+- [x] Footer — logos, links, aviso legal CVM completo
+- [x] CSS Mobile First (v4) — base mobile, min-width progressivo (541 / 641 / 769 / 900px)
+- [x] Hero logo proporcional — `aspect-ratio: 4024/1726` (downCapital SVG), 80vw mobile → 680px desktop
+- [x] Caminhos de imagens corrigidos — blur_backgrounds/, Profile/, Logos/
+- [x] Ícones de marca nos 6 cards de Abordagem — Icons/Green/
 
-- [ ] **Blog/Artigos**
-  - Seção de insights de mercado
-  - Educação financeira
-  - Análises e relatórios
+### UX e interatividade
+- [x] Cursor customizado (círculo lime, 3px, mix-blend-mode difference)
+- [x] Nav com logo aparecendo ao rolar (scroll > 60px)
+- [x] Scroll reveal com IntersectionObserver
+- [x] Carrossel 3D Equipe — drag + momentum, mouse hover, auto-rotação, dots, prev/next, teclado, wheel
+- [x] Open Graph — og:image, og:url, og:site_name, og:image:width/height
 
-- [ ] **Otimização SEO**
-  - Sitemap.xml
-  - Robots.txt
-  - Schema.org markup
-  - Performance optimization
+### Mobile
+- [x] Nav móvel sem sobreposição ao rolar (padding corrigido, XP logo oculta no mobile)
+- [x] Hero tagline sem overflow horizontal (letter-spacing reduzido em ≤640px)
+- [x] Carrossel 3D responsivo (raio e tamanho de card ajustados por breakpoint)
 
-- [ ] **Calculadoras**
-  - Simulador de investimentos
-  - Calculadora de aposentadoria
-  - Projeção de rentabilidade
+---
 
-- [ ] **Depoimentos de clientes**
-  - Seção de cases de sucesso
-  - Avaliações e reviews
+## Em andamento / Próximas entregas
 
-### Fase 3: Recursos Avançados (Longo Prazo)
+### Curto prazo
 
-- [ ] **Área do cliente**
-  - Login seguro
-  - Dashboard com carteira
-  - Relatórios personalizados
-  - Documentos
+- [ ] **Conteúdo `sobre.html`** — história da empresa, valores, timeline de fundação
 
-- [ ] **Chat online**
-  - WhatsApp Business API
-  - Chatbot inicial
-  - Atendimento em tempo real
+- [ ] **Conteúdo `servicos.html`** — detalhamento das 6 abordagens, ícones SVG do catálogo
 
-- [ ] **Newsletter**
-  - Cadastro de e-mail
-  - Insights semanais
-  - Automação de e-mail marketing
+- [ ] **Formulário `contato.html`** — integrar via [FormSpree](https://formspree.io) ou EmailJS
+  - Campos: nome, e-mail, telefone, mensagem
+  - Envio para `z.cassiolato@gmail.com`
+  - Confirmação visual ao usuário
 
-- [ ] **Vídeos institucionais**
-  - Apresentação da empresa
-  - Explicação de serviços
-  - Tutoriais de plataforma
+- [ ] **Fotos reais da equipe** — substituir imagens blur genéricas por headshots profissionais
+  em `assets/images/Profile/` e atualizar o carrossel 3D
 
-### Fase 4: Tecnologia e Performance
+### Médio prazo
 
-- [ ] **Migrar para framework moderno**
-  - Next.js ou Astro
-  - SSG para performance
-  - TypeScript
+- [ ] **Google Analytics 4** — tag no `<head>` de todas as páginas; acompanhar conversões
 
-- [ ] **PWA (Progressive Web App)**
-  - Funciona offline
-  - Instalável no celular
-  - Notificações push
+- [ ] **Botão WhatsApp flutuante** — fixo no canto inferior direito, abre conversa direta
+  - Oculto em desktop, visível em mobile
 
-- [ ] **Testes automatizados**
-  - Testes de formulários
-  - Testes de navegação
-  - Testes de performance
+- [ ] **Sitemap.xml e robots.txt** — SEO básico, indexação correta
 
-- [ ] **CDN e otimização de imagens**
-  - WebP/AVIF
-  - Lazy loading
-  - Image optimization
+- [ ] **Performance — imagens WebP** — converter blur_backgrounds de PNG para WebP
+  (redução estimada de 60–70% no tamanho)
 
-## 💡 Ideias Complementares
+- [ ] **Favicon completo** — gerar todos os tamanhos a partir do logo (16, 32, 180, 192, 512px)
+  + `manifest.json` básico
 
-### Design
-- Modo escuro/claro (toggle)
-- Animações mais elaboradas (GSAP)
-- Micro-interações
-- Loading states
+- [ ] **Seção Insights com conteúdo real** — conectar cards a artigos ou PDFs existentes
 
-### Conteúdo
-- FAQ expandido
-- Glossário de investimentos
-- Comparativo de produtos
-- Calendario econômico
+### Longo prazo
 
-### Integração
-- CRM (Pipedrive, HubSpot)
-- Google Calendar (agendamento)
-- Zoom/Meet (reuniões online)
-- API XP (se disponível)
+- [ ] **Newsletter** — cadastro de e-mail + automação (Mailchimp ou similar)
 
-### Marketing
-- Landing pages específicas
-- A/B testing
-- Pixel de remarketing
-- Funil de conversão otimizado
+- [ ] **Blog / Estudos de Mercado** — publicação de análises mensais em formato artigo
 
-## 📊 Métricas de Sucesso
+- [ ] **Área do cliente (fase futura)** — acesso seguro, relatórios, documentos
 
-Acompanhar:
-- Taxa de conversão (visitante → lead)
-- Tempo médio na página
-- Taxa de rejeição
-- Páginas mais visitadas
-- Origem do tráfego
+- [ ] **Integração agenda** — botão "Agendar reunião" com Google Calendar ou Calendly
 
-## 🔧 Manutenção
+---
 
-### Mensal
-- Atualizar conteúdo do blog
-- Revisar dados de contato
-- Verificar links quebrados
-- Backup do site
+## Decisões de arquitetura
 
-### Trimestral
-- Análise de métricas
-- Testes de performance
-- Atualização de imagens/vídeos
-- Review de SEO
+| Decisão                              | Escolha atual              | Motivo                                           |
+|--------------------------------------|----------------------------|--------------------------------------------------|
+| Stack                                | HTML/CSS/JS puro           | Zero dependências, deploy estático simples       |
+| Logo                                 | CSS custom property (SVG)  | Sem request extra, controla cor via CSS          |
+| Fontes                               | Self-hosted (`assets/fonts`)| Controle total, sem dependência de CDN           |
+| Carrossel                            | JS vanilla com RAF         | Física real, sem biblioteca externa              |
+| Imagens de fundo                     | PNG blur com overlay CSS   | Qualidade visual, controle de opacidade por seção|
+| Deploy                               | Site estático (Vercel/GH Pages) | Sem backend, custo zero                     |
 
-### Anual
-- Redesign parcial (se necessário)
-- Atualização de tecnologias
-- Auditoria de segurança
-- Renovação de domínio/hospedagem
+---
+
+## Referências
+
+- Manual de marca: `assets/VictrixCapital_guidelines_v01.pdf`
+- Identidade visual para código: `BrandVictrix.md`
+- Guia de deploy: `DEPLOY.md`
+- Referência de desenvolvimento: `QUICKSTART.md`

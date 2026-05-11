@@ -16,49 +16,49 @@
       name: 'Gustavo Jesus',
       role: 'Sócio — Assessor de Investimentos',
       bio: '30 anos de experiência no mercado financeiro com passagem pelo JP Morgan. Engenheiro Politécnico e Mestre em Economia pela FGV, autor do livro "Investimentos: O Guia dos Céticos" Editora FGV.',
-      img: 'assets/images/Slide_16_9__699.png',
+      img: 'assets/images/blur_backgrounds/Slide 16_9 - 699.png',
       grad: 'linear-gradient(170deg,rgba(14,28,14,.88),rgba(136,232,51,.1))'
     },
     {
       name: 'Guilherme Giron',
       role: 'Sócio — Assessor de Investimentos',
       bio: '20 anos de experiência no mercado financeiro com passagem pelo JP Morgan. Economista pela FEA-USP, Mestre em Economia pela FGV, monitor no mestrado da matéria de Investimentos.',
-      img: 'assets/images/Slide_16_9__67.png',
+      img: 'assets/images/blur_backgrounds/Slide 16_9 - 67.png',
       grad: 'linear-gradient(170deg,rgba(14,28,14,.88),rgba(46,111,58,.28))'
     },
     {
       name: 'José Victor Cassiolato',
       role: 'Sócio — Assessor de Investimentos',
       bio: '20 anos de experiência no mercado financeiro. Certificação CGA (ANBIMA), passagem pelo JP Morgan. Economista com MBA em Desenv de Software Web pela UNIP, onde também atua como professor de IA.',
-      img: 'assets/images/Slide_16_9__65.png',
+      img: 'assets/images/blur_backgrounds/Slide 16_9 - 65.png',
       grad: 'linear-gradient(170deg,rgba(14,28,14,.88),rgba(46,111,58,.32))'
     },
     {
       name: 'Marcio Marin',
       role: 'Desenvolvimento de Novos Negócios',
       bio: '30 anos de experiência no mercado financeiro - operações estruturadas no mercado de commodities. Formação em Gestão Ambiental e MBA em Inteligência Artificial. Atuando mais de uma década mercado de M&A (IGC Partner).',
-      img: 'assets/images/Slide_16_9__66.png',
+      img: 'assets/images/blur_backgrounds/Slide 16_9 - 66.png',
       grad: 'linear-gradient(170deg,rgba(14,28,14,.88),rgba(136,232,51,.1))'
     },
     {
       name: 'Pedro Oliveira',
       role: 'Assessor de Investimentos',
       bio: '5 anos de mercado financeiro. Graduando em Economia Política pela PUC-SP.',
-      img: 'assets/images/Slide_16_9__68.png',
+      img: 'assets/images/blur_backgrounds/Slide 16_9 - 68.png',
       grad: 'linear-gradient(170deg,rgba(14,28,14,.88),rgba(46,111,58,.28))'
     },
     {
       name: 'Lucca Macieira',
       role: 'Assessor de Investimentos',
       bio: 'Graduando em dupla formação Economia e Administração de Empresas no INSPER.',
-      img: 'assets/images/Slide_16_9__67.png',
+      img: 'assets/images/blur_backgrounds/Slide 16_9 - 67.png',
       grad: 'linear-gradient(170deg,rgba(14,28,14,.88),rgba(46,111,58,.32))'
     },
     {
       name: 'Victor Alcântara',
       role: 'Assessor de Investimentos',
       bio: 'Graduando em Economia na FAAP. Referência no programa VAI (Vire Assessor de Investimentos) organizado pela Melver, ABAI e o CIEE.',
-      img: 'assets/images/Slide_16_9__699.png',
+      img: 'assets/images/blur_backgrounds/Slide 16_9 - 699.png',
       grad: 'linear-gradient(170deg,rgba(14,28,14,.88),rgba(136,232,51,.1))'
     }
   ];
