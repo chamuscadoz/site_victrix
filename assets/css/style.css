@@ -488,3 +488,103 @@ footer .container { padding: 44px 20px 36px; }
   .f-phone { margin-bottom: 28px; }
   .disclaimer { text-align: justify; }
 }
+
+/* ═══════════════════════════════════════════════
+   v4.1 — LANDING DE ENTRADA (index.html)
+   Hero de boas-vindas + botões PF / PJ
+   ═══════════════════════════════════════════════ */
+
+/* Hero da landing: ocupa a tela inteira, centralizado */
+#gateway { min-height: 100svh; display: flex; align-items: center; justify-content: center; }
+.gateway-inner {
+  position: relative; z-index: 2; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 100px 20px 60px; width: 100%; max-width: 980px;
+}
+
+/* Logo: mesmo SVG embutido usado no hero da página PF */
+.gateway-logo {
+  width: 72vw;
+  aspect-ratio: 4024 / 1726;
+  background-image: var(--vc-logo-lime-landscape);
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  opacity: 0; animation: fadeUp .9s var(--ease) .3s forwards;
+}
+.gateway-welcome {
+  font-weight: 200; font-size: clamp(11px, 3.4vw, 20px);
+  letter-spacing: .15em; text-transform: uppercase; color: var(--sage);
+  margin-top: 22px;
+  opacity: 0; animation: fadeUp .7s var(--ease) .8s forwards;
+}
+.gateway-sub {
+  font-size: 14px; color: rgba(213,218,208,.65); margin-top: 14px; max-width: 560px;
+  opacity: 0; animation: fadeUp .7s var(--ease) 1.05s forwards;
+}
+
+/* Botões de caminho: empilhados no mobile, lado a lado no desktop */
+.gateway-actions {
+  display: grid; grid-template-columns: 1fr; gap: 14px;
+  width: 100%; max-width: 720px; margin-top: 44px;
+  opacity: 0; animation: fadeUp .8s var(--ease) 1.3s forwards;
+}
+.btn-path {
+  display: block; padding: 26px 24px; border-radius: 3px; text-align: center;
+  border: 1px solid rgba(136,232,51,.35);
+  background: rgba(14,28,14,.55);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+}
+.btn-path strong {
+  display: block; font-size: 16px; font-weight: 600;
+  letter-spacing: .10em; text-transform: uppercase; color: var(--white);
+}
+.btn-path span { display: block; margin-top: 8px; font-size: 13px; line-height: 1.5; color: rgba(213,218,208,.7); }
+.btn-path:hover { transform: translateY(-3px); border-color: var(--lime); background: rgba(136,232,51,.06); }
+
+/* Variante primária: bloco em Verde Lima, texto Deep Forest */
+.btn-path--primary { background: var(--lime); border-color: var(--lime); }
+.btn-path--primary strong { color: var(--forest); }
+.btn-path--primary span { color: rgba(14,28,14,.72); }
+.btn-path--primary:hover { background: var(--lime); border-color: var(--white); }
+
+@media (min-width: 641px) {
+  .gateway-logo { width: 56vw; }
+  .gateway-actions { grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 52px; }
+  .btn-path { padding: 32px 28px; }
+  .btn-path strong { font-size: 17px; }
+}
+@media (min-width: 900px) {
+  .gateway-logo { width: min(44vw, 560px); }
+}
+
+/* ═══════════════════════════════════════════════
+   v4.1 — PÁGINA EMPRESAS (empresa_pj.html)
+   Hero interno + seções de serviços PJ
+   ═══════════════════════════════════════════════ */
+
+/* Hero interno: mais baixo que o hero principal */
+.page-hero { min-height: 64svh; display: flex; align-items: center; justify-content: center; }
+.page-hero-inner {
+  position: relative; z-index: 2; text-align: center;
+  max-width: 800px; padding: 120px 20px 60px;
+}
+.page-hero h1 {
+  font-weight: 600; font-size: clamp(26px, 6.5vw, 48px);
+  color: var(--white); line-height: 1.2; letter-spacing: .04em;
+}
+.page-hero h1 em { font-style: normal; color: var(--lime); }
+.page-hero p {
+  margin-top: 18px; font-size: 15px; color: rgba(213,218,208,.75); line-height: 1.7;
+}
+
+/* Rótulo centralizado acima dos títulos de seção */
+.section-label {
+  display: block; text-align: center;
+  font-size: 11px; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--lime); margin-bottom: 14px;
+}
+
+@media (min-width: 769px) {
+  .page-hero { min-height: 70svh; }
+  .page-hero p { font-size: 17px; }
+}
