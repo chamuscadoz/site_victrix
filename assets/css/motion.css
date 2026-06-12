@@ -1,0 +1,222 @@
+/* ═══════════════════════════════════════════════════════════════
+   VICTRIX CAPITAL — motion.css v1
+   Camada de motion design (carregada após style.css)
+   ═══════════════════════════════════════════════════════════════
+   O QUE ESTE ARQUIVO ADICIONA (e onde):
+
+   1. AURORA GRADIENT  (.aurora — injetada via JS nos heros e closing)
+      Mesh gradient animado Deep Forest ↔ Mid Green com glow Lime
+      pulsando devagar. Ciclos de 16–24s, easing suave, só transform/opacity.
+
+   2. SPLIT HEADLINES  (.split-line / .split-word)
+      Reveal escalonado por palavra (clip-mask + fade, stagger 75ms).
+      Aplicado via JS em: .gateway-welcome, .hero-tagline, .page-hero h1.
+
+   3. REVEALS v2  (.reveal aprimorado)
+      Mantém o sistema existente e adiciona blur-in sutil.
+
+   4. NAV  — underline lime que cresce do centro + estado ativo.
+
+   5. CTAs / .btn-path — borda lime que "se desenha" no hover,
+      sheen lento no CTA primário, feedback tátil no press (scale .98).
+
+   6. CARDS — micro-animação dos ícones no hover (rotação + scale),
+      base para tilt 3D (aplicado inline via JS, sem conflito com .reveal).
+
+   7. CURSOR v2 — ponto central no anel existente + estado de clique.
+
+   8. PAGE VEIL (.page-veil — injetada via JS)
+      Transição de rota: fade-out suave ao navegar entre páginas.
+
+   9. ACESSIBILIDADE — :focus-visible com outline lime;
+      prefers-reduced-motion degrada tudo para estático/fades simples.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. AURORA GRADIENT ─────────────────────────────────────── */
+.aurora {
+  position: absolute; inset: 0; z-index: 1;
+  overflow: hidden; pointer-events: none;
+  opacity: .5;
+}
+#closing .aurora { opacity: .32; }
+
+.aurora span {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px);
+}
+.aurora span:nth-child(1) {
+  width: 58vmax; height: 58vmax; top: -22%; left: -14%;
+  background: radial-gradient(circle, rgba(46,111,58,.55) 0%, transparent 65%);
+  animation: aurora-a 19s ease-in-out infinite alternate;
+}
+.aurora span:nth-child(2) {
+  width: 36vmax; height: 36vmax; top: 28%; right: -8%;
+  background: radial-gradient(circle, rgba(136,232,51,.13) 0%, transparent 62%);
+  animation: aurora-b 24s ease-in-out infinite alternate;
+}
+.aurora span:nth-child(3) {
+  width: 48vmax; height: 48vmax; bottom: -26%; left: 22%;
+  background: radial-gradient(circle, rgba(46,111,58,.42) 0%, transparent 68%);
+  animation: aurora-c 16s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-a {
+  from { transform: translate3d(-4%, -3%, 0) scale(1); }
+  to   { transform: translate3d(9%, 7%, 0) scale(1.16); }
+}
+@keyframes aurora-b { /* glow lime — pulso lento e discreto */
+  0%   { transform: translate3d(3%, 5%, 0) scale(.94); opacity: .45; }
+  50%  { opacity: .9; }
+  100% { transform: translate3d(-7%, -6%, 0) scale(1.1); opacity: .5; }
+}
+@keyframes aurora-c {
+  from { transform: translate3d(7%, 3%, 0) scale(1); }
+  to   { transform: translate3d(-5%, -7%, 0) scale(1.14); }
+}
+
+/* ── 2. SPLIT HEADLINES ─────────────────────────────────────── */
+/* JS adiciona .is-split ao elemento (desativa o fadeUp antigo
+   para evitar animação dupla) e .split-in quando deve entrar.  */
+.is-split { animation: none !important; opacity: 1 !important; }
+
+.split-line {
+  display: inline-block; overflow: hidden;
+  vertical-align: bottom; padding-bottom: .08em; margin-bottom: -.08em;
+}
+.split-word {
+  display: inline-block;
+  transform: translateY(112%); opacity: 0;
+  transition:
+    transform .8s cubic-bezier(.22, 1, .36, 1),
+    opacity .55s var(--ease);
+  transition-delay: calc(var(--wi, 0) * 75ms);
+}
+.split-in .split-word { transform: none; opacity: 1; }
+
+/* ── 3. REVEALS v2 — blur-in sutil sobre o sistema existente ── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    filter: blur(7px);
+    transition:
+      opacity .7s var(--ease),
+      transform .7s var(--ease),
+      filter .7s var(--ease);
+  }
+  .reveal.visible { filter: none; }
+}
+
+/* ── 4. NAV — underline que cresce do centro ────────────────── */
+.nav-links a { position: relative; padding-bottom: 4px; }
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1.5px; background: var(--lime);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform .35s var(--ease);
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after,
+.nav-links a.active::after { transform: scaleX(1); }
+.nav-links a.active { color: var(--lime); }
+
+/* ── 5. CTAs / BOTÕES ───────────────────────────────────────── */
+/* Borda lime que se desenha: topo (a partir da esquerda) +
+   base (a partir da direita). No primário, traço branco.       */
+.btn-path { position: relative; --draw: var(--lime); }
+.btn-path--primary { --draw: var(--white); }
+.btn-path::before, .btn-path::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 1.5px;
+  background: var(--draw); pointer-events: none;
+  transform: scaleX(0);
+  transition: transform .5s var(--ease);
+}
+.btn-path::before { top: 0; transform-origin: left center; }
+.btn-path::after  { bottom: 0; transform-origin: right center; }
+.btn-path:hover::before, .btn-path:hover::after,
+.btn-path:focus-visible::before, .btn-path:focus-visible::after { transform: scaleX(1); }
+
+/* Shift de gradiente interno no hover (porta secundária) */
+.btn-path:not(.btn-path--primary):hover {
+  background: linear-gradient(135deg, rgba(136,232,51,.10) 0%, rgba(14,28,14,.55) 60%);
+}
+
+/* Sheen lento e discreto no CTA primário */
+@media (prefers-reduced-motion: no-preference) {
+  .btn-path--primary {
+    background-image: linear-gradient(115deg,
+      transparent 42%, rgba(255,255,255,.22) 50%, transparent 58%);
+    background-size: 260% 100%;
+    animation: cta-sheen 6.5s var(--ease) infinite;
+  }
+  @keyframes cta-sheen {
+    0%, 58% { background-position: 135% 0; }
+    92%, 100% { background-position: -35% 0; }
+  }
+}
+
+/* Feedback tátil no press — em todos os elementos interativos */
+.btn-path:active { transform: translateY(-1px) scale(.985); }
+.nav-links a:active, .card:active, .insight-card:active, .team-card:active {
+  transform: scale(.985);
+}
+
+/* ── 6. CARDS — micro-animações ─────────────────────────────── */
+.card-icon { transition: background .35s var(--ease); }
+.card-icon img { transition: transform .45s var(--ease); }
+.card:hover .card-icon { background: rgba(136,232,51,.16); }
+.card:hover .card-icon img { transform: rotate(-6deg) scale(1.1); }
+.card-n { transition: letter-spacing .35s var(--ease); }
+.card:hover .card-n { letter-spacing: .22em; }
+
+/* Realce lime no hover dos cards de produto */
+.card:hover h3 { color: var(--lime); }
+.card h3 { transition: color .35s var(--ease); }
+
+/* ── 7. CURSOR v2 — ponto central + clique ──────────────────── */
+.cursor::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--lime);
+  transform: translate(-50%, -50%);
+  transition: opacity .3s var(--ease);
+}
+.cursor.hover::after { opacity: 0; }
+.cursor.down { transform: translate(-50%, -50%) scale(.78); }
+
+/* ── 8. PAGE VEIL — transição de rota ───────────────────────── */
+.page-veil {
+  position: fixed; inset: 0; z-index: 9998;
+  background: var(--forest);
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s var(--ease);
+}
+.page-veil.active { opacity: 1; pointer-events: all; }
+
+/* Saída: conteúdo desliza levemente enquanto a cortina fecha */
+body.leaving section { transform: translateY(-10px); opacity: .55; }
+@media (prefers-reduced-motion: no-preference) {
+  section { transition: transform .4s var(--ease), opacity .4s var(--ease); }
+}
+
+/* ── 9. ACESSIBILIDADE ──────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora { display: none; }
+  .page-veil { display: none; }
+  .reveal {
+    opacity: 1 !important; transform: none !important;
+    filter: none !important; transition: none !important;
+  }
+  .split-word { transform: none !important; opacity: 1 !important; transition: none !important; }
+  .hero-logo, .hero-tagline, .scroll-line,
+  .gateway-logo, .gateway-welcome, .gateway-sub, .gateway-actions {
+    animation: none !important; opacity: 1 !important;
+  }
+  .btn-path--primary { animation: none !important; background-image: none !important; }
+  section { transition: none !important; }
+  html { scroll-behavior: auto; }
+}
