@@ -198,27 +198,7 @@
     });
   }
 
-  /* ── 9. CURSOR v2 — anel + ponto (evolução do #cursor) ─────── */
-  if (FINE) {
-    const cursor = document.getElementById('cursor');
-    let cx = 0, cy = 0, px = 0, py = 0;
-    document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
-    (function loop() {
-      px += (cx - px) * 0.16;
-      py += (cy - py) * 0.16;
-      cursor.style.left = px + 'px';
-      cursor.style.top = py + 'px';
-      requestAnimationFrame(loop);
-    })();
-    document.querySelectorAll('[data-hover], a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-    document.addEventListener('mousedown', () => cursor.classList.add('down'));
-    document.addEventListener('mouseup',   () => cursor.classList.remove('down'));
-    document.body.style.cursor = 'none';
-    document.querySelectorAll('a, button').forEach(el => el.style.cursor = 'none');
-  }
+  /* ── 9. (removido) CURSOR customizado — cursor nativo do mouse ── */
 
   /* ── 10. COUNT-UP — KPIs com [data-count] ──────────────────── */
   /* Uso: <span data-count="700" data-suffix="+">0</span>         */
@@ -267,5 +247,10 @@
     if (a.getAttribute('href') === here) a.classList.add('active');
   });
 
+  /* ── Sinaliza que o motion engine carregou por completo.
+        O fallback inline no HTML usa isto para revelar o conteúdo
+        caso este arquivo falhe/corrompa no deploy. ──────────────── */
+  window.__victrixReady = true;
+
 })();
-/* v5.0.1 — re-sync */
+/* v5.1.0 — cursor nativo + fail-safe de conteúdo */

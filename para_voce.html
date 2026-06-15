@@ -23,8 +23,6 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-
 <!-- ═══ NAV ═══ -->
 <nav id="nav">
   <a href="index.html" class="nav-brand">
@@ -286,4 +284,22 @@
   </div>
 </footer>
 
-<scri
+<script src="assets/js/main.js"></script>
+<script>
+/* Fail-safe: se o motion engine (main.js) não carregar — por ex. arquivo
+   corrompido/truncado no deploy — revela todo o conteúdo para que a página
+   nunca apareça em branco. Roda de um <script> separado, então um erro no
+   main.js não o impede de executar. */
+(function () {
+  function revealAll() {
+    if (window.__victrixReady) return;
+    document.documentElement.classList.add('motion-failsafe');
+    var els = document.querySelectorAll('.reveal');
+    for (var i = 0; i < els.length; i++) els[i].classList.add('visible');
+  }
+  if (document.readyState === 'complete') setTimeout(revealAll, 250);
+  else window.addEventListener('load', function () { setTimeout(revealAll, 250); });
+})();
+</script>
+</body>
+</html>

@@ -171,16 +171,14 @@
 .card:hover h3 { color: var(--lime); }
 .card h3 { transition: color .35s var(--ease); }
 
-/* ── 7. CURSOR v2 — ponto central + clique ──────────────────── */
-.cursor::after {
-  content: ''; position: absolute; left: 50%; top: 50%;
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--lime);
-  transform: translate(-50%, -50%);
-  transition: opacity .3s var(--ease);
+/* ── 7. (removido) CURSOR customizado — cursor nativo do mouse ── */
+
+/* ── 7b. FAIL-SAFE — conteúdo sempre visível se o motion engine falhar ── */
+.motion-failsafe .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
 }
-.cursor.hover::after { opacity: 0; }
-.cursor.down { transform: translate(-50%, -50%) scale(.78); }
 
 /* ── 8. PAGE VEIL — transição de rota ───────────────────────── */
 .page-veil {
