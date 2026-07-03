@@ -69,7 +69,7 @@
   function show(t, kind){ msg.textContent=t; msg.className='msg '+(kind||''); }
 
   if(!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY){ show('Configuração ausente (config.js).','err'); return; }
-  var sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+  var sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY, { auth: { storage: window.sessionStorage, persistSession: true, autoRefreshToken: true } });
 
   // O link do e-mail traz o token de recuperação; o SDK cria uma sessão temporária.
   sb.auth.getSession().then(function(r){

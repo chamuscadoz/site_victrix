@@ -170,7 +170,7 @@ footer.notes b{color:var(--sage);font-weight:600}
     <a href="#/liquidez" data-route="liquidez"><span class="nv"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h11M4 18h7"/></svg></span>Liquidez e Instrumentos</a>
     <a href="#/carteira" data-route="carteira"><span class="nv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Score e Carteira</a>
   </nav>
-  <div class="foot"><b>Relatório de patrimônio</b><br>Dados agregados por ativo.<br>Contas mascaradas — LGPD.<br><span id="sideStamp"></span></div>
+  <div class="foot"><b>Relatório de patrimônio</b><br>Seus dados organizados e seguros.<br><span id="sideStamp"></span></div>
 </aside>
 
 <main>
@@ -204,10 +204,10 @@ footer.notes b{color:var(--sage);font-weight:600}
       </div>
 
       <div class="card span6">
-        <h2>Consolidado por Titular <span class="badge">contas mascaradas</span></h2>
+        <h2>Consolidado por Titular</h2>
         <div class="h-sub">Rentabilidade ponderada por posição — mês, ano e 12 meses</div>
         <div class="tbl-wrap" id="tblTitular"></div>
-        <div class="legend-note">Titularidade exibida por conta mascarada (LGPD). Campo <code>titular</code> não disponível na base atual.</div>
+        <div class="legend-note">Campo <code>titular</code> não disponível na base atual.</div>
       </div>
       <div class="card span6">
         <h2>Consolidado por Gestor</h2>
@@ -333,7 +333,7 @@ footer.notes b{color:var(--sage);font-weight:600}
   <footer class="notes">
     <div><b>Metodologia.</b> Rentabilidade exibida é a variação da posição a mercado no mês; agregados por titular, gestor e classe são médias ponderadas pelo valor a mercado das posições com rentabilidade informada. Acumulados (ano e 12 meses) por capitalização composta dos retornos mensais.</div>
     <div style="margin-top:6px"><b>Liquidez.</b> Janelas ordenadas: D+0 → D+1 → D+2 a D+30 → D+31 a D+180 → D+181 a D+365, seguidas de Mercado secundário, No vencimento e Previdência.</div>
-    <div style="margin-top:6px"><b>LGPD.</b> Dados agregados por ativo e por classe. Sem nomes de titulares, CPF/CNPJ ou número completo de conta — contas mascaradas apenas para rastreio interno.</div>
+    <div style="margin-top:6px"><b>Segurança.</b> Seus dados são tratados com segurança e discrição.</div>
     <div style="margin-top:6px" id="footStamp"></div>
   </footer>
 </main>
@@ -809,7 +809,7 @@ render();
     var CFG = window.VICTRIX_CONFIG||{};
     if(!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY){ return fail('Configuração ausente (config.js).'); }
     var BUCKET = CFG.BUCKET || 'relatorios';
-    var sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+    var sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY, { auth: { storage: window.sessionStorage, persistSession: true, autoRefreshToken: true } });
 
     var sess = (await sb.auth.getSession()).data.session;
     if(!sess){ location.replace('./login.html'); return; }

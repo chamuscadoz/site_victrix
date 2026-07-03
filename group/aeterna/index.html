@@ -102,6 +102,20 @@
   .form-msg.err{color:var(--red)}
   .hpot{position:absolute; left:-9999px}
 
+  /* ── modal de sucesso ── */
+  .modal{position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center; padding:24px;
+    background:rgba(7,14,7,.74); backdrop-filter:blur(4px)}
+  .modal.open{display:flex}
+  .modal-card{position:relative; max-width:420px; width:100%; background:var(--panel); border:1px solid var(--line);
+    border-radius:16px; padding:38px 32px 30px; text-align:center; animation:modalIn .35s var(--ease)}
+  @keyframes modalIn{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+  .modal-check{width:56px; height:56px; margin:0 auto 18px; border-radius:50%; background:rgba(136,232,51,.14);
+    display:flex; align-items:center; justify-content:center}
+  .modal-check svg{width:28px; height:28px}
+  .modal-card h3{font-size:20px; font-weight:700; color:var(--white); margin-bottom:10px}
+  .modal-card p{font-size:14px; font-weight:300; color:var(--sage); line-height:1.6}
+  .modal-card .cta{margin-top:24px; cursor:pointer; border:none; font-family:var(--font)}
+
   @media (max-width:820px){
     .grid{grid-template-columns:1fr 1fr}
     .contact-grid{grid-template-columns:1fr; gap:26px}
@@ -199,11 +213,28 @@
     </div>
   </section>
 
+  <!-- MODAL DE SUCESSO -->
+  <div class="modal" id="successModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-check">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#88E833" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 id="modalTitle">Contato enviado</h3>
+      <p>Obrigado pela sua mensagem. A Victrix entrará em contato em breve.</p>
+      <button class="cta" type="button" id="modalClose">Fechar</button>
+    </div>
+  </div>
+
 <script>
 (function(){
   var form = document.getElementById('contatoForm');
   var msg = form.querySelector('.form-msg');
   var btn = form.querySelector('button');
+  var modal = document.getElementById('successModal');
+  function closeModal(){ modal.classList.remove('open'); }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     btn.disabled = true; msg.textContent = 'Enviando…'; msg.className = 'form-msg';
@@ -215,4 +246,13 @@
         body: JSON.stringify(data)
       });
       var j = await r.json();
-      if(j.success){ form.reset(); ms
+      if(j.success){ form.reset(); msg.textContent = ''; msg.className = 'form-msg'; modal.classList.add('open'); }
+      else { msg.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.'; msg.className = 'form-msg err'; }
+    }catch(_){ msg.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.'; msg.className = 'form-msg err'; }
+    btn.disabled = false;
+  });
+})();
+</script>
+
+</body>
+</html>
