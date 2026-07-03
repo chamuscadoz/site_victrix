@@ -37,6 +37,17 @@
   .lockup .mark{font-weight:800; letter-spacing:.24em; font-size:15px; text-transform:uppercase; line-height:1; color:var(--white)}
   .lockup .mark .v{color:var(--lime)}
   .lockup .sub{font-weight:300; letter-spacing:.20em; font-size:8.5px; text-transform:uppercase; color:var(--sage-dim)}
+  /* voltar para a home do Victrix Group */
+  .brand-back{display:inline-flex; align-items:center; gap:10px; color:var(--white); transition:opacity .3s var(--ease)}
+  .brand-back:hover{opacity:.85}
+  .brand-back .back-ic{width:16px; height:11px; transition:transform .3s var(--ease)}
+  .brand-back:hover .back-ic{transform:translateX(-3px)}
+  .brand-back .brand-txt{font-weight:800; letter-spacing:.24em; font-size:14px; text-transform:uppercase; line-height:1}
+  .brand-back .brand-txt .grp{color:var(--lime)}
+  /* assinatura Aeterna dentro do hero */
+  .hero-lockup{margin-bottom:22px}
+  .hero-lockup .mark{font-weight:800; letter-spacing:.22em; font-size:clamp(15px,2.3vw,19px); text-transform:uppercase; color:var(--white); line-height:1}
+  .hero-lockup .mark .v{color:var(--lime)}
   .btn-access{padding:10px 20px; background:var(--lime); color:var(--deep-forest); font-weight:700; font-size:12.5px;
     letter-spacing:.04em; border-radius:8px; transition:opacity .3s var(--ease)}
   .btn-access:hover{opacity:.88}
@@ -129,10 +140,10 @@
 <body>
 
   <nav>
-    <div class="lockup">
-      <span class="mark">Aeterna&nbsp;<span class="v">Victrix</span></span>
-      <span class="sub">Coordenação e Organização Patrimonial</span>
-    </div>
+    <a class="brand-back" href="/" aria-label="Voltar para o Victrix Group">
+      <svg class="back-ic" viewBox="0 0 18 12" fill="none"><path d="M17 6H2M7 1L2 6l5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="brand-txt">Victrix&nbsp;<span class="grp">Group</span></span>
+    </a>
     <a class="btn-access" href="/aeterna/login.html">Acessar minha área</a>
   </nav>
 
@@ -141,6 +152,7 @@
     <div class="blur-layer"><img src="/assets/images/blur_backgrounds/Slide%2016_9%20-%2066.png" alt="" class="blur-img"></div>
     <div class="overlay"></div>
     <div class="wrap">
+      <div class="hero-lockup"><span class="mark">Aeterna&nbsp;<span class="v">Victrix</span></span></div>
       <p class="kicker">Coordenação e Organização Patrimonial</p>
       <h1>Seu patrimônio com clareza institucional.</h1>
       <p class="lead">A Aeterna Victrix reúne suas posições em uma leitura única e organizada do seu patrimônio — com acompanhamento sênior, disciplina e discrição, para você enxergar o todo sem ruído.</p>
