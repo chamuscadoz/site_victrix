@@ -16,5 +16,6 @@
       "source": "/aeterna/:path*",
       "has": [{ "type": "host", "value": "(www\\.)?victrixgroup\\.com\\.br" }],
       "destination": "/group/aeterna/:path*"
-    },
-    
+    }
+  ]
+}
