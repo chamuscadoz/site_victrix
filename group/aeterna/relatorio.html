@@ -817,6 +817,11 @@ render();
 
     // Baixa APENAS o relatório do usuário autenticado (RLS garante o isolamento)
     var dl = await sb.storage.from(BUCKET).download(uid + '/dados_dashboard.json');
+    // --- Diagnóstico (visível no Console do navegador com F12) -----------
+    console.log('[Aeterna] UID autenticado:', uid);
+    console.log('[Aeterna] Buscando:', BUCKET + '/' + uid + '/dados_dashboard.json');
+    if(dl.error){ console.error('[Aeterna] Erro do Supabase Storage:', dl.error); }
+    // --------------------------------------------------------------------
     if(dl.error || !dl.data){ return fail('Nenhum relatório disponível para esta conta. Entre em contato com a Victrix.'); }
     DATA = JSON.parse(await dl.data.text());
 
