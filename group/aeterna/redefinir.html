@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aeterna Victrix — Redefinir senha</title>
+<style>
+  :root{
+    --lime:#88E833; --deep-forest:#0E1C0E; --charcoal:#262626; --mid-green:#2E6F3A;
+    --sage:#D5DAD0; --white:#FFFFFF; --alt-row:#152615; --red:#C0392B;
+    --line:#1E331E; --panel:#112211; --sage-dim:#9BA695;
+    --font:'Zalando Sans SemiExpanded','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:var(--font); color:var(--sage); background:var(--deep-forest);
+    display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px;
+  }
+  .card{width:100%; max-width:380px; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:34px 30px}
+  .brand{margin-bottom:26px}
+  .wordmark{font-weight:800; letter-spacing:.22em; font-size:16px; color:var(--white); text-transform:uppercase}
+  .wordmark .a{color:var(--lime)}
+  .brand small{display:block; font-weight:300; font-size:9.5px; letter-spacing:.16em; color:var(--sage-dim); text-transform:uppercase; margin-top:6px}
+  h1{font-size:15px; font-weight:600; color:var(--white); margin:0 0 4px}
+  .hint{font-size:12px; color:var(--sage-dim); margin:0 0 22px; line-height:1.5}
+  label{display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--sage-dim); margin:0 0 6px}
+  input{width:100%; padding:11px 12px; margin-bottom:16px; font-family:var(--font); font-size:14px;
+    color:var(--white); background:#0B160B; border:1px solid var(--line); border-radius:8px}
+  input:focus{outline:none; border-color:var(--mid-green)}
+  button{width:100%; padding:12px; font-family:var(--font); font-weight:700; font-size:13px; letter-spacing:.06em;
+    color:var(--deep-forest); background:var(--lime); border:none; border-radius:8px; cursor:pointer}
+  button:disabled{opacity:.55; cursor:default}
+  .msg{font-size:12.5px; margin:14px 0 0; line-height:1.5; min-height:18px}
+  .msg.err{color:var(--red)}
+  .msg.ok{color:var(--lime)}
+  .foot{margin-top:24px; font-size:10.5px; color:var(--sage-dim); line-height:1.6; border-top:1px solid var(--line); padding-top:14px}
+  .foot a{color:var(--sage-dim)}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <span class="wordmark"><span class="a">Aeterna</span>&nbsp;Victrix</span>
+      <small>Coordenação e Organização Patrimonial</small>
+    </div>
+    <h1>Definir uma nova senha</h1>
+    <p class="hint">Crie uma senha para acessar sua área de cliente.</p>
+
+    <form id="form">
+      <label for="s1">Nova senha</label>
+      <input id="s1" type="password" required autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres">
+      <label for="s2">Confirmar senha</label>
+      <input id="s2" type="password" required autocomplete="new-password" minlength="8" placeholder="Repita a senha">
+      <button id="btn" type="submit">Salvar nova senha</button>
+      <p id="msg" class="msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="foot"><a href="./login.html">Voltar ao login</a></div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="./config.js"></script>
+<script>
+(function(){
+  var CFG = window.VICTRIX_CONFIG||{};
+  var msg = document.getElementById('msg');
+  var btn = document.getElementById('btn');
+  function show(t, kind){ msg.textContent=t; msg.className='msg '+(kind||''); }
+
+  if(!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY){ show('Configuração ausente (config.js).','err'); return; }
+  var sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+
+  // O link do e-mail traz o token de recuperação; o SDK cria uma sessão temporária.
+  sb.auth.getSession().then(function(r){
+    if(!r.data.session){ show('Link inválido ou expirado. Solicite um novo em "Esqueci minha senha".','err'); btn.disabled=true; }
+  });
+
+  document.getElementById('form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var s1=document.getElementById('s1').value, s2=document.getElementById('s2').value;
+    if(s1!==s2){ show('As senhas não conferem.','err'); return; }
+    btn.disabled=true; show('Salvando…');
+    var r = await sb.auth.updateUser({ password:s1 });
+    if(r.error){ show('Não foi possível salvar a senha. Tente novamente.','err'); btn.disabled=false; return; }
+    show('Senha atualizada. Redirecionando…','ok');
+    setTimeout(function(){ location.replace('./relatorio.html'); }, 1200);
+  });
+})();
+</script>
+</body>
+</html>

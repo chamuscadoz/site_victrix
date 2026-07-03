@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Victrix Group — Investimentos e Organização Patrimonial. Experiência, disciplina e integridade.">
+<title>Victrix Group</title>
+<link rel="icon" type="image/png" href="/assets/images/Profile/pngprofile01.png">
+<meta property="og:title" content="Victrix Group">
+<meta property="og:description" content="Investimentos e Organização Patrimonial. Experiência, disciplina e integridade.">
+<meta property="og:image" content="https://www.victrixgroup.com.br/assets/images/Profile/profile_blur.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.victrixgroup.com.br/">
+<meta property="og:site_name" content="Victrix Group">
+<link rel="preload" href="/assets/images/blur_backgrounds/Slide%2016_9%20-%2065.png" as="image">
+<style>
+  :root{
+    --lime:#88E833; --deep-forest:#0E1C0E; --charcoal:#262626; --mid-green:#2E6F3A;
+    --sage:#D5DAD0; --white:#FFFFFF; --alt-row:#152615; --red:#C0392B;
+    --line:#1E331E; --panel:#112211; --sage-dim:#9BA695;
+    --font:'Zalando Sans SemiExpanded','Segoe UI',system-ui,sans-serif;
+    --ease:cubic-bezier(0.4,0,0.2,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--font); color:var(--sage); background:var(--deep-forest);
+    min-height:100vh; display:flex; flex-direction:column;
+    -webkit-font-smoothing:antialiased;
+  }
+  .blur-layer{position:fixed; inset:0; z-index:0}
+  .blur-img{width:100%; height:100%; object-fit:cover; filter:saturate(1.05)}
+  .overlay{position:fixed; inset:0; z-index:1; background:rgba(14,28,14,.80)}
+  .shell{position:relative; z-index:2; flex:1; display:flex; flex-direction:column;
+    max-width:1040px; width:100%; margin:0 auto; padding:40px 28px 32px}
+
+  /* ── topo / marca ── */
+  header{display:flex; align-items:center; gap:14px}
+  .wordmark{font-weight:800; letter-spacing:.24em; font-size:17px; color:var(--white); text-transform:uppercase; line-height:1}
+  .nav-sep{width:1px; height:20px; background:var(--line)}
+  .nav-xp{height:16px; width:auto; opacity:.9; display:block}
+
+  /* ── centro ── */
+  main{flex:1; display:flex; flex-direction:column; justify-content:center; padding:56px 0}
+  .kicker{font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--lime); margin-bottom:18px}
+  h1{font-size:clamp(30px,6vw,50px); font-weight:800; color:var(--white); line-height:1.06; letter-spacing:-.01em; max-width:16ch}
+  .lead{margin-top:18px; font-size:clamp(14px,2.2vw,17px); font-weight:300; color:var(--sage); max-width:52ch; line-height:1.6}
+
+  .paths{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:44px}
+  .path{
+    display:flex; flex-direction:column; justify-content:space-between; gap:26px;
+    background:rgba(17,34,17,.72); border:1px solid var(--line); border-radius:16px;
+    padding:26px 26px 24px; text-decoration:none; color:var(--sage);
+    transition:border-color .35s var(--ease), transform .35s var(--ease), background .35s var(--ease);
+    min-height:210px;
+  }
+  .path:hover{border-color:var(--mid-green); transform:translateY(-3px); background:rgba(21,38,21,.88)}
+  .path--primary{background:rgba(46,111,58,.16)}
+  .path--primary:hover{background:rgba(46,111,58,.26)}
+  .path .tag{font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--lime)}
+  .path h2{font-size:22px; font-weight:700; color:var(--white); margin-top:8px; line-height:1.15}
+  .path p{font-size:13.5px; font-weight:300; line-height:1.55; color:var(--sage); margin-top:10px}
+  .path .go{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; letter-spacing:.04em; color:var(--lime)}
+  .path .go svg{transition:transform .35s var(--ease)}
+  .path:hover .go svg{transform:translateX(4px)}
+
+  /* ── rodapé ── */
+  footer{position:relative; z-index:2; border-top:1px solid var(--line); background:rgba(11,22,11,.6)}
+  .foot-in{max-width:1040px; margin:0 auto; padding:22px 28px; font-size:10.5px; color:var(--sage-dim); line-height:1.6}
+  .foot-in a{color:var(--sage-dim)}
+  .foot-brand{display:flex; align-items:center; gap:10px; margin-bottom:12px}
+  .foot-brand .wordmark{font-size:13px; letter-spacing:.2em}
+  .foot-brand .nav-xp{height:13px}
+
+  @media (max-width:720px){
+    .paths{grid-template-columns:1fr}
+    .shell{padding:28px 20px 24px}
+    main{padding:36px 0}
+    .path{min-height:0}
+  }
+</style>
+</head>
+<body>
+  <div class="blur-layer"><img src="/assets/images/blur_backgrounds/Slide%2016_9%20-%2065.png" alt="" class="blur-img"></div>
+  <div class="overlay"></div>
+
+  <div class="shell">
+    <header>
+      <span class="wordmark">Victrix</span>
+      <span class="nav-sep"></span>
+      <img src="/assets/images/xp-branco.png" alt="XP Investimentos" class="nav-xp">
+    </header>
+
+    <main>
+      <p class="kicker">Victrix Group</p>
+      <h1>Experiência que atravessa ciclos.</h1>
+      <p class="lead">Uma casa, dois caminhos. Assessoria de investimentos credenciada à XP e coordenação patrimonial dedicada — com a mesma disciplina e integridade em cada frente.</p>
+
+      <div class="paths">
+        <a class="path path--primary" href="https://www.victrixcapital.com.br">
+          <div>
+            <span class="tag">Victrix Capital</span>
+            <h2>Investimentos</h2>
+            <p>Assessoria de investimentos e planejamento patrimonial para você e para sua empresa, credenciada à XP Investimentos.</p>
+          </div>
+          <span class="go">Acessar o site
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h15M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a class="path" href="/aeterna">
+          <div>
+            <span class="tag">Aeterna Victrix</span>
+            <h2>Organização Patrimonial</h2>
+            <p>Coordenação e consolidação do seu patrimônio, com relatórios claros e área de cliente restrita e segura.</p>
+          </div>
+          <span class="go">Conhecer e acessar
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h15M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="foot-in">
+      <div class="foot-brand">
+        <span class="wordmark">Victrix</span>
+        <span class="nav-sep"></span>
+        <img src="/assets/images/xp-branco.png" alt="XP Investimentos" class="nav-xp">
+      </div>
+      Victrix Assessor de Investimentos Ltda · CNPJ 61.215.470/0001-67 · Escritório credenciado à XP Investimentos.<br>
+      Contas mascaradas e dados tratados conforme a LGPD. Ouvidoria XP Investimentos: <a href="tel:08007223730">0800 722 3730</a>.<br>
+      &copy; 2026 Victrix Group. Todos os direitos reservados.
+    </div>
+  </footer>
+</body>
+</html>

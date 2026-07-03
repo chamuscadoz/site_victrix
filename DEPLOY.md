@@ -1,7 +1,12 @@
 # Deploy — Victrix Capital
 
-Domínio: **www.victrixcapital.com.br**  
+Domínios: **www.victrixcapital.com.br** (site institucional) e
+**www.victrixgroup.com.br** (hub do grupo + área logada Aeterna) — mesmo repositório.  
 Repositório: `chamuscadoz` / `site_victrix` (branch `main`)
+
+> Para publicar o **victrixgroup.com.br** e a área logada, siga o guia dedicado:
+> [`group/GUIA_VICTRIXGROUP.md`](group/GUIA_VICTRIXGROUP.md). O roteamento por domínio
+> fica em `vercel.json` na raiz.
 
 ---
 

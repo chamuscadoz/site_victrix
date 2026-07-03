@@ -1,0 +1,21 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "(www\\.)?victrixgroup\\.com\\.br" }],
+      "destination": "/group/index.html"
+    },
+    {
+      "source": "/aeterna",
+      "has": [{ "type": "host", "value": "(www\\.)?victrixgroup\\.com\\.br" }],
+      "destination": "/group/aeterna/index.html"
+    },
+    {
+      "source": "/aeterna/:path*",
+      "has": [{ "type": "host", "value": "(www\\.)?victrixgroup\\.com\\.br" }],
+      "destination": "/group/aeterna/:path*"
+    }
+  ]
+}
