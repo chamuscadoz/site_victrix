@@ -7,7 +7,7 @@
 // >>> SUBSTITUA os dois valores abaixo pelos do seu projeto Supabase
 //     (Project Settings > API) e faça commit deste arquivo. <<<
 window.VICTRIX_CONFIG = {
-  SUPABASE_URL: "https://SEU-PROJETO.supabase.co",
-  SUPABASE_ANON_KEY: "COLE-AQUI-A-ANON-PUBLIC-KEY",
+  SUPABASE_URL: "https://wimaytzxaxlcfudfrmlm.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpbWF5dHp4YXhsY2Z1ZGZybWxtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwOTA2MzMsImV4cCI6MjA5ODY2NjYzM30.b0QhmjnIyW83XPVmf0TzGGJuw-4nHFEPnSC8n8Gq4dg",
   BUCKET: "relatorios"
 };
