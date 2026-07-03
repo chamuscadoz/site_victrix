@@ -3,21 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Aeterna Victrix — Coordenação e Organização Patrimonial. Consolidação do seu patrimônio com relatórios claros e área de cliente segura.">
+<meta name="description" content="Aeterna Victrix — Coordenação e Organização Patrimonial. Transformando complexidade em clareza para famílias empresárias.">
 <title>Aeterna Victrix — Organização Patrimonial</title>
 <link rel="icon" type="image/png" href="/assets/images/Profile/pngprofile01.png">
 <meta property="og:title" content="Aeterna Victrix — Organização Patrimonial">
-<meta property="og:description" content="Coordenação e consolidação do seu patrimônio, com relatórios claros e área de cliente restrita e segura.">
+<meta property="og:description" content="Coordenação patrimonial dedicada, transformando complexidade em clareza.">
 <meta property="og:image" content="https://www.victrixgroup.com.br/assets/images/Profile/profile_blur.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.victrixgroup.com.br/aeterna">
 <meta property="og:site_name" content="Victrix Group">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="preload" href="/assets/images/blur_backgrounds/Slide%2016_9%20-%2066.png" as="image">
 <style>
   :root{
     --lime:#88E833; --deep-forest:#0E1C0E; --charcoal:#262626; --mid-green:#2E6F3A;
     --sage:#D5DAD0; --white:#FFFFFF; --alt-row:#152615; --red:#C0392B;
-    --line:#1E331E; --panel:#112211; --sage-dim:#9BA695;
+    --line:#1E331E; --panel:#112211; --panel2:#0B160B; --sage-dim:#9BA695;
     --font:'Zalando Sans SemiExpanded','Segoe UI',system-ui,sans-serif;
     --ease:cubic-bezier(0.4,0,0.2,1);
   }
@@ -30,33 +33,33 @@
   /* ── nav ── */
   nav{position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between;
     padding:16px 28px; background:rgba(11,22,11,.72); backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
-  .brand{display:flex; align-items:center; gap:12px}
-  .wordmark{font-weight:800; letter-spacing:.22em; font-size:15px; color:var(--white); text-transform:uppercase; line-height:1}
-  .wordmark .a{color:var(--lime)}
-  .nav-sep{width:1px; height:18px; background:var(--line)}
-  .nav-xp{height:14px; width:auto; opacity:.9; display:block}
+  .lockup{display:flex; flex-direction:column; gap:3px}
+  .lockup .mark{font-weight:800; letter-spacing:.24em; font-size:15px; text-transform:uppercase; line-height:1; color:var(--white)}
+  .lockup .mark .v{color:var(--lime)}
+  .lockup .sub{font-weight:300; letter-spacing:.20em; font-size:8.5px; text-transform:uppercase; color:var(--sage-dim)}
   .btn-access{padding:10px 20px; background:var(--lime); color:var(--deep-forest); font-weight:700; font-size:12.5px;
     letter-spacing:.04em; border-radius:8px; transition:opacity .3s var(--ease)}
   .btn-access:hover{opacity:.88}
 
   /* ── hero ── */
-  .hero{position:relative; overflow:hidden; padding:96px 0 104px}
+  .hero{position:relative; overflow:hidden; padding:100px 0 108px}
   .hero .blur-layer{position:absolute; inset:0; z-index:0}
   .hero .blur-img{width:100%; height:100%; object-fit:cover}
-  .hero .overlay{position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(14,28,14,.72),rgba(14,28,14,.90))}
+  .hero .overlay{position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(14,28,14,.70),rgba(14,28,14,.92))}
   .hero .wrap{position:relative; z-index:2}
   .kicker{font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--lime); margin-bottom:20px}
   .hero h1{font-size:clamp(30px,6vw,52px); font-weight:800; color:var(--white); line-height:1.07; letter-spacing:-.01em; max-width:18ch}
   .hero .lead{margin-top:20px; font-size:clamp(15px,2.2vw,18px); font-weight:300; color:var(--sage); max-width:56ch; line-height:1.6}
-  .hero .cta{display:inline-flex; align-items:center; gap:9px; margin-top:34px; padding:13px 26px;
+  .cta{display:inline-flex; align-items:center; gap:9px; padding:13px 26px;
     background:var(--lime); color:var(--deep-forest); font-weight:700; font-size:13.5px; letter-spacing:.04em; border-radius:9px;
     transition:transform .3s var(--ease)}
-  .hero .cta:hover{transform:translateY(-2px)}
+  .cta:hover{transform:translateY(-2px)}
+  .hero .cta{margin-top:34px}
 
   /* ── seções ── */
   section{padding:76px 0; border-top:1px solid var(--line)}
   .sec-kicker{font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--lime); margin-bottom:14px}
-  .sec-title{font-size:clamp(24px,4vw,36px); font-weight:700; color:var(--white); line-height:1.14; max-width:20ch}
+  .sec-title{font-size:clamp(24px,4vw,36px); font-weight:700; color:var(--white); line-height:1.14; max-width:22ch}
   .sec-lead{margin-top:16px; font-size:15px; font-weight:300; color:var(--sage); max-width:60ch; line-height:1.65}
 
   .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px}
@@ -69,52 +72,52 @@
   .card h3{font-size:17px; font-weight:700; color:var(--white); margin-bottom:8px}
   .card p{font-size:13.5px; font-weight:300; color:var(--sage); line-height:1.6}
 
-  /* ── como funciona ── */
-  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:44px; counter-reset:s}
-  .step{position:relative; padding-top:44px}
-  .step::before{counter-increment:s; content:"0" counter(s); position:absolute; top:0; left:0;
-    font-size:26px; font-weight:800; color:var(--mid-green); letter-spacing:.02em}
-  .step h4{font-size:15px; font-weight:700; color:var(--white); margin-bottom:7px}
-  .step p{font-size:13px; font-weight:300; color:var(--sage); line-height:1.55}
+  /* ── compromisso ── */
+  .commit{position:relative; overflow:hidden}
+  .commit .c-blur{position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; opacity:.16}
+  .commit .c-ov{position:absolute; inset:0; z-index:1; background:rgba(14,28,14,.80)}
+  .commit .wrap{position:relative; z-index:2}
 
-  /* ── faixa CTA ── */
-  .band{background:linear-gradient(120deg,rgba(46,111,58,.22),rgba(17,34,17,.4)); border-radius:20px;
-    padding:52px 44px; display:flex; align-items:center; justify-content:space-between; gap:28px; flex-wrap:wrap}
-  .band h2{font-size:clamp(22px,3.4vw,30px); font-weight:700; color:var(--white); line-height:1.18; max-width:22ch}
-  .band p{margin-top:10px; font-size:14px; font-weight:300; color:var(--sage); max-width:44ch; line-height:1.6}
-  .band .cta{padding:14px 30px; background:var(--lime); color:var(--deep-forest); font-weight:700; font-size:14px;
-    letter-spacing:.04em; border-radius:10px; white-space:nowrap; transition:transform .3s var(--ease)}
-  .band .cta:hover{transform:translateY(-2px)}
-
-  /* ── rodapé ── */
-  footer{border-top:1px solid var(--line); background:rgba(11,22,11,.6); padding:34px 0}
-  .foot-brand{display:flex; align-items:center; gap:10px; margin-bottom:14px}
-  .foot-brand .wordmark{font-size:13px}
-  .foot-brand .nav-xp{height:13px}
-  .foot-txt{font-size:10.5px; color:var(--sage-dim); line-height:1.65}
-  .foot-txt a{color:var(--sage-dim); text-decoration:underline}
-  .foot-links{margin-top:12px; display:flex; gap:20px; flex-wrap:wrap; font-size:12px}
-  .foot-links a{color:var(--sage)}
+  /* ── contato / formulário ── */
+  .contact{position:relative; overflow:hidden}
+  .contact .c-blur{position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; opacity:.18}
+  .contact .c-ov{position:absolute; inset:0; z-index:1; background:linear-gradient(120deg,rgba(46,111,58,.20),rgba(14,28,14,.90))}
+  .contact .wrap{position:relative; z-index:2}
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:36px; align-items:start}
+  .form{display:grid; gap:14px}
+  .form input, .form textarea{
+    width:100%; padding:13px 14px; font-family:var(--font); font-size:14px;
+    color:var(--white); background:rgba(11,22,11,.72); border:1px solid var(--line); border-radius:9px;
+  }
+  .form textarea{min-height:120px; resize:vertical}
+  .form input:focus, .form textarea:focus{outline:none; border-color:var(--mid-green)}
+  .form input::placeholder, .form textarea::placeholder{color:var(--sage-dim)}
+  .form button{
+    justify-self:start; padding:13px 30px; font-family:var(--font); font-weight:700; font-size:13.5px; letter-spacing:.04em;
+    color:var(--deep-forest); background:var(--lime); border:none; border-radius:9px; cursor:pointer; transition:transform .3s var(--ease)}
+  .form button:hover{transform:translateY(-2px)}
+  .form button:disabled{opacity:.55; cursor:default; transform:none}
+  .form-msg{font-size:13px; margin-top:4px; min-height:18px; line-height:1.5}
+  .form-msg.ok{color:var(--lime)}
+  .form-msg.err{color:var(--red)}
+  .hpot{position:absolute; left:-9999px}
 
   @media (max-width:820px){
     .grid{grid-template-columns:1fr 1fr}
-    .steps{grid-template-columns:1fr 1fr}
+    .contact-grid{grid-template-columns:1fr; gap:26px}
   }
   @media (max-width:560px){
-    .grid,.steps{grid-template-columns:1fr}
-    .nav-xp{display:none}
+    .grid{grid-template-columns:1fr}
     section{padding:56px 0}
-    .band{padding:36px 26px}
   }
 </style>
 </head>
 <body>
 
   <nav>
-    <div class="brand">
-      <span class="wordmark"><span class="a">Aeterna</span>&nbsp;Victrix</span>
-      <span class="nav-sep"></span>
-      <img src="/assets/images/xp-branco.png" alt="XP Investimentos" class="nav-xp">
+    <div class="lockup">
+      <span class="mark">Aeterna&nbsp;<span class="v">Victrix</span></span>
+      <span class="sub">Coordenação e Organização Patrimonial</span>
     </div>
     <a class="btn-access" href="/aeterna/login.html">Acessar minha área</a>
   </nav>
@@ -125,10 +128,10 @@
     <div class="overlay"></div>
     <div class="wrap">
       <p class="kicker">Coordenação e Organização Patrimonial</p>
-      <h1>Seu patrimônio consolidado, com clareza institucional.</h1>
-      <p class="lead">A Aeterna Victrix reúne suas posições em uma visão única e organizada. Relatórios objetivos, acompanhamento sênior e uma área de cliente restrita — para você enxergar o todo sem ruído.</p>
-      <a class="cta" href="/aeterna/login.html">
-        Acessar meu relatório
+      <h1>Seu patrimônio com clareza institucional.</h1>
+      <p class="lead">A Aeterna Victrix reúne suas posições em uma leitura única e organizada do seu patrimônio — com acompanhamento sênior, disciplina e discrição, para você enxergar o todo sem ruído.</p>
+      <a class="cta" href="#contato">
+        Fale com a Victrix
         <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h15M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -139,96 +142,77 @@
     <div class="wrap">
       <p class="sec-kicker">O que é</p>
       <h2 class="sec-title">Uma camada de organização sobre o seu patrimônio.</h2>
-      <p class="sec-lead">A Aeterna não administra nem gere recursos. Ela coordena a leitura do seu patrimônio: consolida contas, padroniza a informação e entrega um relatório claro, atualizado periodicamente e acessível apenas por você.</p>
+      <p class="sec-lead">A Aeterna coordena a leitura do seu patrimônio e transforma o que é complexo em algo claro — apoiando cada decisão da família com o mesmo padrão de disciplina e integridade da Victrix.</p>
       <div class="grid">
         <div class="card">
           <div class="ic"><img src="/assets/images/Icons/Green/04_carteira.svg" alt=""></div>
-          <h3>Consolidação</h3>
-          <p>Diferentes contas e titularidades reunidas em uma visão única, descaracterizada e fácil de ler.</p>
+          <h3>Visão integrada</h3>
+          <p>Diferentes contas e titularidades reunidas em uma leitura única e organizada do seu patrimônio.</p>
         </div>
         <div class="card">
           <div class="ic"><img src="/assets/images/Icons/Green/06_contrato.svg" alt=""></div>
-          <h3>Relatórios claros</h3>
-          <p>Painel objetivo, sem jargão, atualizado a cada ciclo. A informação que importa, no formato certo.</p>
+          <h3>Clareza para decidir</h3>
+          <p>Informação objetiva, sem jargão e no formato certo para apoiar a tomada de decisão da família.</p>
         </div>
         <div class="card">
           <div class="ic"><img src="/assets/images/Icons/Green/07_seguranca.svg" alt=""></div>
-          <h3>Acesso restrito</h3>
-          <p>Cada cliente vê apenas o próprio relatório. Segregação garantida no servidor, não em URLs escondidas.</p>
+          <h3>Coordenação sênior</h3>
+          <p>Acompanhamento próximo e dedicado, com a disciplina e a integridade que o seu patrimônio exige.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- COMO FUNCIONA -->
-  <section>
+  <!-- COMPROMISSO -->
+  <section class="commit">
+    <img src="/assets/images/blur_backgrounds/Slide%2016_9%20-%2068.png" alt="" class="c-blur">
+    <div class="c-ov"></div>
     <div class="wrap">
-      <p class="sec-kicker">Como funciona</p>
-      <h2 class="sec-title">Do acesso ao relatório, em quatro passos.</h2>
-      <div class="steps">
-        <div class="step">
-          <h4>Entre</h4>
-          <p>Acesse a área de cliente com e-mail e senha individuais.</p>
-        </div>
-        <div class="step">
-          <h4>Autenticação</h4>
-          <p>Sua sessão é validada com segurança antes de qualquer dado ser carregado.</p>
-        </div>
-        <div class="step">
-          <h4>Seu painel</h4>
-          <p>O relatório da sua carteira é carregado — e somente o seu.</p>
-        </div>
-        <div class="step">
-          <h4>Acompanhe</h4>
-          <p>A cada ciclo, o painel é atualizado com a nova posição consolidada.</p>
-        </div>
+      <p class="sec-kicker">Compromisso</p>
+      <h2 class="sec-title">O cuidado com as suas informações é inegociável.</h2>
+      <p class="sec-lead">A confidencialidade das informações de cada família é um princípio inegociável da Victrix. Tratamos seus dados com o rigor e a discrição que o seu patrimônio merece — esse é o nosso compromisso.</p>
+    </div>
+  </section>
+
+  <!-- CONTATO / FORMULÁRIO -->
+  <section class="contact" id="contato">
+    <img src="/assets/images/blur_backgrounds/Slide%2016_9%20-%2067.png" alt="" class="c-blur">
+    <div class="c-ov"></div>
+    <div class="wrap">
+      <p class="sec-kicker">Fale com a Victrix</p>
+      <h2 class="sec-title">Vamos organizar o seu patrimônio?</h2>
+      <div class="contact-grid">
+        <p class="sec-lead">Deixe seus dados e um dos nossos profissionais entrará em contato. Se você já é cliente, acesse a sua área pelo botão no topo da página.</p>
+        <form class="form" id="contatoForm" autocomplete="on">
+          <input type="hidden" name="access_key" value="SUA_CHAVE_WEB3FORMS_AQUI">
+          <input type="hidden" name="subject" value="Novo contato — Aeterna Victrix">
+          <input type="hidden" name="from_name" value="Site Aeterna Victrix">
+          <input type="text" name="name" placeholder="Nome" required>
+          <input type="email" name="email" placeholder="E-mail" required>
+          <input type="text" name="phone" placeholder="Telefone (opcional)">
+          <textarea name="message" placeholder="Como podemos ajudar?" required></textarea>
+          <input type="checkbox" name="botcheck" class="hpot" tabindex="-1" autocomplete="off">
+          <button type="submit">Enviar</button>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </div>
   </section>
 
-  <!-- PRIVACIDADE -->
-  <section>
-    <div class="wrap">
-      <p class="sec-kicker">Privacidade e conformidade</p>
-      <h2 class="sec-title">Dados tratados com o cuidado que o patrimônio exige.</h2>
-      <p class="sec-lead">Os relatórios usam contas mascaradas e descaracterizadas — sem expor CPF, número de conta real ou dados sensíveis. O transporte é sempre por HTTPS, as senhas ficam protegidas por hash e todo acesso é registrado. O tratamento segue a LGPD, com canais para acesso, correção e eliminação de dados.</p>
-    </div>
-  </section>
-
-  <!-- FAIXA CTA -->
-  <section>
-    <div class="wrap">
-      <div class="band">
-        <div>
-          <h2>Pronto para ver seu patrimônio em um só lugar?</h2>
-          <p>Acesse sua área de cliente. Se ainda não tem credenciais, fale com seu assessor Victrix.</p>
-        </div>
-        <a class="cta" href="/aeterna/login.html">Acessar minha área</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- RODAPÉ -->
-  <footer>
-    <div class="wrap">
-      <div class="foot-brand">
-        <span class="wordmark"><span class="a">Aeterna</span>&nbsp;Victrix</span>
-        <span class="nav-sep"></span>
-        <img src="/assets/images/xp-branco.png" alt="XP Investimentos" class="nav-xp">
-      </div>
-      <p class="foot-txt">
-        Victrix Assessor de Investimentos Ltda · CNPJ 61.215.470/0001-67 · Escritório credenciado à XP Investimentos.<br>
-        A Aeterna Victrix realiza coordenação e organização patrimonial e não administra nem gere recursos de terceiros.<br>
-        Contas mascaradas e dados tratados conforme a LGPD. Ouvidoria XP Investimentos: <a href="tel:08007223730">0800 722 3730</a>.<br>
-        &copy; 2026 Victrix Group. Todos os direitos reservados.
-      </p>
-      <div class="foot-links">
-        <a href="/">Victrix Group</a>
-        <a href="https://www.victrixcapital.com.br">Investimentos</a>
-        <a href="/aeterna/login.html">Área do cliente</a>
-      </div>
-    </div>
-  </footer>
-
-</body>
-</html>
+<script>
+(function(){
+  var form = document.getElementById('contatoForm');
+  var msg = form.querySelector('.form-msg');
+  var btn = form.querySelector('button');
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    btn.disabled = true; msg.textContent = 'Enviando…'; msg.className = 'form-msg';
+    var data = Object.fromEntries(new FormData(form).entries());
+    try{
+      var r = await fetch('https://api.web3forms.com/submit', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+        body: JSON.stringify(data)
+      });
+      var j = await r.json();
+      if(j.success){ form.reset(); msg.textConten
