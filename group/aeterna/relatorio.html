@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aeterna Victrix — Patrimônio Consolidado</title>
+<title>Æterna Victrix — Patrimônio Consolidado</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ===== Aeterna Victrix — sistema visual ===== */
+/* ===== Æterna Victrix — sistema visual ===== */
 :root{
   --lime:#88E833; --deep-forest:#0E1C0E; --charcoal:#262626; --mid-green:#2E6F3A;
   --sage:#D5DAD0; --white:#FFFFFF; --alt-row:#152615; --red:#C0392B;
@@ -162,7 +162,7 @@ footer.notes b{color:var(--sage);font-weight:600}
 <body>
 <div class="app">
 <aside class="side">
-  <div class="wordmark">Aeterna&nbsp;<span class="xp">Victrix</span><small>Coordenação e Organização Patrimonial</small></div>
+  <div class="wordmark">Æterna&nbsp;<span class="xp">Victrix</span><small>Coordenação e Organização Patrimonial</small></div>
   <div class="rule"></div>
   <nav class="menu" aria-label="Navegação principal">
     <a href="#/visao" data-route="visao"><span class="nv"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></span>Visão Consolidada</a>
@@ -818,9 +818,9 @@ render();
     // Baixa APENAS o relatório do usuário autenticado (RLS garante o isolamento)
     var dl = await sb.storage.from(BUCKET).download(uid + '/dados_dashboard.json');
     // --- Diagnóstico (visível no Console do navegador com F12) -----------
-    console.log('[Aeterna] UID autenticado:', uid);
-    console.log('[Aeterna] Buscando:', BUCKET + '/' + uid + '/dados_dashboard.json');
-    if(dl.error){ console.error('[Aeterna] Erro do Supabase Storage:', dl.error); }
+    console.log('[Æterna] UID autenticado:', uid);
+    console.log('[Æterna] Buscando:', BUCKET + '/' + uid + '/dados_dashboard.json');
+    if(dl.error){ console.error('[Æterna] Erro do Supabase Storage:', dl.error); }
     // --------------------------------------------------------------------
     if(dl.error || !dl.data){ return fail('Nenhum relatório disponível para esta conta. Entre em contato com a Victrix.'); }
     DATA = JSON.parse(await dl.data.text());
