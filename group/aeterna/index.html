@@ -73,7 +73,9 @@
   .sec-title{font-size:clamp(24px,4vw,36px); font-weight:700; color:var(--white); line-height:1.14; max-width:22ch}
   .sec-lead{margin-top:16px; font-size:15px; font-weight:300; color:var(--sage); max-width:60ch; line-height:1.65}
 
-  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:44px}
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:44px; max-width:760px}
+  /* compromisso integrado à seção "o que é" */
+  .commit-inline{margin-top:56px; padding-top:40px; border-top:1px solid var(--line)}
   .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px 24px;
     transition:border-color .35s var(--ease), transform .35s var(--ease)}
   .card:hover{border-color:var(--mid-green); transform:translateY(-3px)}
@@ -135,6 +137,18 @@
     .grid{grid-template-columns:1fr}
     section{padding:56px 0}
   }
+  /* nav em telas estreitas: evita o botão "Acessar minha área" quebrar em várias linhas */
+  @media (max-width:520px){
+    nav{padding:12px 16px; gap:12px}
+    .brand-back{gap:7px}
+    .brand-back .back-ic{width:13px; height:9px}
+    .brand-back .brand-txt{font-size:11.5px; letter-spacing:.12em; white-space:nowrap}
+    .btn-access{padding:8px 12px; font-size:11px; letter-spacing:.02em; white-space:nowrap; border-radius:7px; flex:none}
+  }
+  @media (max-width:340px){
+    .brand-back .brand-txt{font-size:10.5px; letter-spacing:.06em}
+    .btn-access{padding:7px 10px; font-size:10px}
+  }
 </style>
 </head>
 <body>
@@ -163,7 +177,7 @@
     </div>
   </header>
 
-  <!-- O QUE É -->
+  <!-- O QUE É + COMPROMISSO -->
   <section>
     <div class="wrap">
       <p class="sec-kicker">O que é</p>
@@ -180,23 +194,13 @@
           <h3>Clareza para decidir</h3>
           <p>Informação objetiva, sem jargão e no formato certo para apoiar a tomada de decisão da família.</p>
         </div>
-        <div class="card">
-          <div class="ic"><img src="/assets/images/Icons/Green/07_seguranca.svg" alt=""></div>
-          <h3>Coordenação sênior</h3>
-          <p>Acompanhamento próximo e dedicado, com a disciplina e a integridade que o seu patrimônio exige.</p>
-        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- COMPROMISSO -->
-  <section class="commit">
-    <img src="/assets/images/blur_backgrounds/Slide%2016_9%20-%2068.png" alt="" class="c-blur">
-    <div class="c-ov"></div>
-    <div class="wrap">
-      <p class="sec-kicker">Compromisso</p>
-      <h2 class="sec-title">O cuidado com as suas informações é inegociável.</h2>
-      <p class="sec-lead">A confidencialidade das informações de cada família é um princípio inegociável da Victrix. Tratamos seus dados com o rigor e a discrição que o seu patrimônio merece — esse é o nosso compromisso.</p>
+      <div class="commit-inline">
+        <p class="sec-kicker">Compromisso</p>
+        <h2 class="sec-title">O cuidado com as suas informações é inegociável.</h2>
+        <p class="sec-lead">A privacidade e confidencialidade das informações de cada família é um princípio inegociável da Victrix. Tratamos seus dados com o rigor e a discrição que o seu patrimônio merece — esse é o nosso compromisso.</p>
+      </div>
     </div>
   </section>
 

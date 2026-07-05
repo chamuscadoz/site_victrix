@@ -79,6 +79,16 @@
   .foot-brand .wordmark{font-size:14px; letter-spacing:.26em}
   .foot-txt{font-size:12.5px; font-weight:300; color:var(--sage-dim); line-height:1.7; max-width:70ch}
 
+  /* ── animação de entrada (mesma do botão da Victrix Capital) ── */
+  @keyframes fadeUp{from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:translateY(0)}}
+  header{opacity:0; animation:fadeUp .8s var(--ease) 0s forwards}
+  h1{opacity:0; animation:fadeUp .8s var(--ease) .15s forwards}
+  .lead{opacity:0; animation:fadeUp .8s var(--ease) .3s forwards}
+  .paths{opacity:0; animation:fadeUp .8s var(--ease) .5s forwards}
+  @media (prefers-reduced-motion:reduce){
+    header,h1,.lead,.paths{animation:none; opacity:1}
+  }
+
   @media (max-width:720px){
     .paths{grid-template-columns:1fr}
     .shell{padding:28px 20px 24px}
@@ -97,7 +107,6 @@
     </header>
 
     <main>
-      <p class="kicker">Victrix Group</p>
       <h1>Experiência acompanhando o patrimônio através de gerações</h1>
       <p class="lead">Experiência, disciplina e integridade aplicadas às diferentes esferas da vida de cada família empresária — com o mesmo padrão e o mesmo cuidado em cada frente.</p>
 
@@ -119,7 +128,7 @@
           <div>
             <span class="tag">Aeterna Victrix</span>
             <h2>Organização Patrimonial</h2>
-            <p>Coordenação patrimonial dedicada e customizada, traduzindo o complexo com clareza e objetividade mensurável.</p>
+            <p>Traduzindo o complexo com clareza e objetividade mensurável.</p>
           </div>
           <span class="go">Conhecer e acessar
             <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h15M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>

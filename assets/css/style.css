@@ -209,6 +209,12 @@ section { position: relative; overflow: hidden; }
   text-align: center; color: rgba(213,218,208,.65);
   font-size: 15px; margin-top: 12px; margin-bottom: 44px;
 }
+.section-intro {
+  text-align: center; color: rgba(213,218,208,.75);
+  font-size: 15px; line-height: 1.72; max-width: 680px;
+  margin: 0 auto 44px;
+}
+.section-sub:has(+ .section-intro) { margin-bottom: 16px; }
 
 /* Mobile: 1 coluna, borda esquerda como separador visual */
 .cards { display: grid; grid-template-columns: 1fr; gap: 1px; }
@@ -272,14 +278,14 @@ section { position: relative; overflow: hidden; }
 #partners { overflow: visible; }
 
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex; flex-wrap: wrap; justify-content: center;
   gap: 12px;
   margin-top: 40px;
 }
 
 .team-card {
   position: relative;
+  flex: 0 1 calc(50% - 6px);
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 3px;
@@ -350,11 +356,13 @@ section { position: relative; overflow: hidden; }
 }
 
 @media (min-width: 641px) {
-  .team-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .team-grid { gap: 14px; }
+  .team-card { flex-basis: calc(33.333% - 10px); }
 }
 
 @media (min-width: 900px) {
-  .team-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .team-grid { gap: 16px; }
+  .team-card { flex-basis: calc(33.333% - 11px); max-width: 340px; }
   .team-card-content { padding: 20px; }
   .team-card-name { font-size: 15px; }
   .team-card-role { font-size: 10px; }
@@ -384,7 +392,7 @@ section { position: relative; overflow: hidden; }
    INSIGHTS
    ══════════════════════ */
 #insights { background: var(--alt); }
-.insights-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 40px; }
+.insights-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
 .insight-card {
   position: relative; overflow: hidden; border-radius: 3px;
   aspect-ratio: 4/3; display: flex; align-items: flex-end;
@@ -407,7 +415,8 @@ section { position: relative; overflow: hidden; }
 .insight-card p  { font-size: 13px; line-height: 1.5; color: rgba(213,218,208,.7); }
 
 @media (min-width: 769px) {
-  .insights-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+  .insights-grid { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 28px; margin-top: 48px; }
+  .insight-card { flex: 0 1 calc(33.333% - 19px); }
   .insight-card h3 { font-size: 18px; }
   .insight-content { padding: 24px; }
 }
@@ -500,8 +509,8 @@ footer .container { padding: 44px 20px 36px; }
   background-image: var(--vc-logo-lime-landscape);
   background-size: contain; background-repeat: no-repeat; background-position: center;
 }
-/* XP na mesma altura do lettering VICTRIX */
-.gateway-xp { height: 23vw; max-height: 96px; width: auto; }
+/* XP proporcional à altura das LETRAS do VICTRIX (~70% da caixa do logo) */
+.gateway-xp { height: 16vw; max-height: 67px; width: auto; }
 .gateway-sep { flex: none; width: 1px; height: 15vw; max-height: 62px; background: rgba(136,232,51,.35); }
 
 .gateway-welcome {
@@ -549,7 +558,7 @@ footer .container { padding: 44px 20px 36px; }
   .gateway-inner { padding: 110px 20px 60px; }
   .gateway-lockup { gap: 22px; }
   .gateway-logo { height: 15vw; max-height: 176px; }
-  .gateway-xp { height: 15vw; max-height: 176px; }
+  .gateway-xp { height: 10.5vw; max-height: 123px; }
   .gateway-sep { height: 9.5vw; max-height: 112px; }
   .gateway-welcome { margin-top: 24px; }
   .gateway-sub { font-size: 14px; margin-top: 14px; }
@@ -560,7 +569,7 @@ footer .container { padding: 44px 20px 36px; }
 }
 @media (min-width: 900px) {
   .gateway-logo { height: min(13vw, 190px); max-height: 190px; }
-  .gateway-xp { height: min(13vw, 190px); max-height: 190px; }
+  .gateway-xp { height: min(9.1vw, 133px); max-height: 133px; }
   .gateway-sep { height: min(8vw, 120px); max-height: 120px; }
 }
 
