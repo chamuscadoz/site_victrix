@@ -169,6 +169,7 @@ footer.notes b{color:var(--sage);font-weight:600}
     <a href="#/retorno" data-route="retorno"><span class="nv"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>Retorno por Ativo</a>
     <a href="#/liquidez" data-route="liquidez"><span class="nv"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h11M4 18h7"/></svg></span>Liquidez e Instrumentos</a>
     <a href="#/carteira" data-route="carteira"><span class="nv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Score e Carteira</a>
+    <a href="#/mercado" data-route="mercado"><span class="nv"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>Mercado &amp; Benchmarks</a>
   </nav>
   <div class="foot"><b>Relatório de patrimônio</b><br>Seus dados organizados e seguros.<br><span id="sideStamp"></span></div>
 </aside>
@@ -326,6 +327,44 @@ footer.notes b{color:var(--sage);font-weight:600}
           <div class="ctrl"><label for="fBusca">Buscar ativo</label><input type="search" id="fBusca" placeholder="nome ou código"></div>
         </div>
         <div class="tbl-wrap" id="tblCarteira"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PÁGINA 5 — MERCADO & BENCHMARKS ================= -->
+  <section class="page" id="page-mercado">
+    <div class="card span12" id="mktEmpty" style="display:none">
+      <div class="empty"><b>Sem dados de mercado</b>Gere o relatório com os benchmarks (gerar_benchmarks.py) para popular esta página.</div>
+    </div>
+    <div class="grid" id="mktBody">
+      <div class="card hero span5">
+        <div class="eyebrow">Carteira vs. mercado — desde <span id="mktBase">—</span></div>
+        <div class="big" id="mktCartCons">—</div>
+        <div class="big-sub" id="mktCartSub"></div>
+        <div class="chips" id="mktChips"></div>
+        <div class="aux" id="mktAux"></div>
+      </div>
+      <div class="card span7">
+        <h2>Evolução acumulada — base 100</h2>
+        <div class="h-sub">carteira vs. 40/60, CDI (IMA-S) e IMA-B — rebaseado no início da janela consolidada</div>
+        <div id="benchEvoHost" class="chart-box tall"><canvas id="chartBenchEvo" role="img" aria-label="Evolução acumulada da carteira ante benchmarks"></canvas></div>
+      </div>
+      <div class="card span12">
+        <h2>Retorno por janela — carteira vs. benchmarks</h2>
+        <div class="h-sub">retorno total por índice: mês, ano (YTD), 12 meses e consolidado, com volatilidade anualizada</div>
+        <div class="tbl-wrap" id="tblBench"></div>
+      </div>
+      <div class="card span6">
+        <h2>Volatilidade anualizada (12m)</h2>
+        <div class="h-sub">desvio-padrão dos retornos mensais dos últimos 12 meses, anualizado</div>
+        <div class="chart-box"><canvas id="chartBenchVol" role="img" aria-label="Volatilidade anualizada por índice"></canvas></div>
+      </div>
+      <div class="card span6">
+        <h2>Taxas: carteira vs. referência</h2>
+        <div class="h-sub" id="mktTaxasSub">taxa média ponderada da carteira ante as curvas de referência</div>
+        <div class="tbl-wrap" id="tblTaxaInf"></div>
+        <div class="tbl-wrap mt" id="tblTaxaPre"></div>
+        <div class="aux" id="mktDur" style="margin-top:12px"></div>
       </div>
     </div>
   </section>
@@ -759,11 +798,90 @@ function renderCarteira(){
 document.getElementById('fBusca').addEventListener('input',e=>{state.filters.busca=e.target.value;renderCarteira();});
 
 /* ============ roteador & montagem ============ */
+/* ============ PÁGINA 5 — mercado & benchmarks ============ */
+const pctPlain=(v,d=2)=>(v==null||isNaN(v))?'—':(v>=0?'+':'')+fNum(v*100,d)+'%';
+const ppSpread=(v,d=2)=>(v==null||isNaN(v))?'—':(v>=0?'+':'')+fNum(v,d)+' p.p.';
+function ymLabelB(ym){const MS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];const s=String(ym);return MS[(+s.slice(4,6))-1]+'/'+s.slice(2,4);}
+function benchCota(ret,months){let v=100;const out=[100];for(let i=1;i<months.length;i++){const r=ret?ret[months[i]]:null;v=(r!=null&&!isNaN(r))?v*(1+r):v;out.push(v);}return out;}
+
+function renderMercado(){
+  const B=DATA.benchmarks;
+  const empt=document.getElementById('mktEmpty');
+  const body=document.getElementById('mktBody');
+  if(!B||!B.series||!B.carteira){empt.style.display='';if(body)body.style.display='none';return;}
+  empt.style.display='none';if(body)body.style.display='';
+
+  const bl=B.meta||{}, cj=(B.carteira.ret_janela)||{};
+  const syn=(B.sintetico&&B.sintetico.B40IMAB60CDI)||{}, imas=B.series.IMAS||{}, imab=B.series.IMAB||{};
+  document.getElementById('mktBase').textContent=bl.consolidado_start_label||'—';
+  document.getElementById('mktCartCons').textContent=pctPlain(cj.consolidado);
+  document.getElementById('mktCartSub').textContent='retorno consolidado da carteira · competência de referência '+(bl.mes_ref_label||'—');
+  document.getElementById('mktChips').innerHTML=[['No mês',cj.mes],['No ano',cj.ano],['12 meses',cj['12m']],['Consolidado',cj.consolidado]]
+    .map(([l,v])=>`<div class="chip"><div class="cl">${l}</div><div class="cv">${pctCell(v)}</div></div>`).join('');
+  const dSyn=(cj.consolidado!=null&&syn.ret_janela&&syn.ret_janela.consolidado!=null)?cj.consolidado-syn.ret_janela.consolidado:null;
+  const dCdi=(cj.consolidado!=null&&imas.ret_janela&&imas.ret_janela.consolidado!=null)?cj.consolidado-imas.ret_janela.consolidado:null;
+  document.getElementById('mktAux').innerHTML=
+    `<div>vs. 40/60 IMA-B/CDI<b>${dSyn==null?'—':ppSpread(dSyn*100)}</b></div>`+
+    `<div>vs. CDI (IMA-S)<b>${dCdi==null?'—':ppSpread(dCdi*100)}</b></div>`+
+    `<div>Volatilidade 12m da carteira<b>${B.carteira.vol12m_anual==null?'—':fNum(B.carteira.vol12m_anual*100,1)+'%'}</b></div>`;
+
+  const cotaC=B.carteira.cota||{}, months=Object.keys(cotaC).sort();
+  if(months.length<2){
+    document.getElementById('benchEvoHost').innerHTML='<div class="empty"><b>Sem série suficiente</b>A evolução é exibida a partir de duas competências.</div>';
+  }else{
+    const host=document.getElementById('benchEvoHost');
+    if(!host.querySelector('canvas'))host.innerHTML='<canvas id="chartBenchEvo"></canvas>';
+    mkChart('chartBenchEvo',{type:'line',data:{labels:months.map(ymLabelB),datasets:[
+      {label:'Carteira',data:months.map(m=>cotaC[m]*100),borderColor:C.lime,borderWidth:2.6,pointRadius:0,tension:.3},
+      {label:'40/60 IMA-B/CDI',data:benchCota(syn.ret_mensal,months),borderColor:'#A7D08C',borderWidth:1.8,pointRadius:0,tension:.3},
+      {label:'CDI (IMA-S)',data:benchCota(imas.ret_mensal,months),borderColor:C.sage,borderWidth:1.6,borderDash:[5,3],pointRadius:0,tension:.3},
+      {label:'IMA-B',data:benchCota(imab.ret_mensal,months),borderColor:'#6FBF73',borderWidth:1.6,borderDash:[2,2],pointRadius:0,tension:.3}
+    ]},options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+fNum(c.parsed.y,1)}}},
+      scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fNum(v,0)},grid:{color:'rgba(30,51,30,.5)'}}}}});
+  }
+
+  const S=B.series, order=[
+    ['Carteira',B.carteira,true],['40% IMA-B / 60% CDI',syn,false],
+    ['IMA-S (CDI)',S.IMAS],['IMA-B',S.IMAB],['IRF-M',S.IRFM],['IDA-DI (Deb.)',S.IDADI],
+    ['IPCA',S.IPCA],['Ibovespa',S.IBOV],['IFIX',S.IFIX],['USD/BRL',S.USDBRL],['S&P 500',S.SP500]];
+  document.getElementById('tblBench').innerHTML=
+    `<table><thead><tr><th>Índice</th><th>Mês</th><th>Ano</th><th>12 m</th><th>Consolidado</th><th>Vol 12m</th></tr></thead><tbody>`+
+    order.map(([nm,o,hi])=>{const j=(o&&o.ret_janela)||{},v=o&&o.vol12m_anual;
+      return `<tr${hi?' class="hl-best"':''}><td class="name">${esc(nm)}</td><td>${pctCell(j.mes)}</td><td>${pctCell(j.ano)}</td><td>${pctCell(j['12m'])}</td><td>${pctCell(j.consolidado)}</td><td>${v==null?'—':fNum(v*100,1)+'%'}</td></tr>`;
+    }).join('')+`</tbody></table><div class="legend-note">IPCA divulgado com defasagem — janelas do IPCA usam sua última competência disponível.</div>`;
+
+  const volItems=[['Carteira',B.carteira.vol12m_anual,true],['40/60',syn.vol12m_anual],['IMA-S',S.IMAS.vol12m_anual],
+    ['IMA-B',S.IMAB.vol12m_anual],['IRF-M',S.IRFM.vol12m_anual],['IDA-DI',S.IDADI.vol12m_anual],
+    ['IFIX',S.IFIX.vol12m_anual],['IBOV',S.IBOV.vol12m_anual],['USD/BRL',S.USDBRL.vol12m_anual],['S&P 500',S.SP500.vol12m_anual]];
+  mkChart('chartBenchVol',{type:'bar',data:{labels:volItems.map(x=>x[0]),datasets:[{
+    data:volItems.map(x=>x[1]==null?null:x[1]*100),backgroundColor:volItems.map(x=>x[2]?C.lime:C.mid),borderRadius:4,maxBarThickness:34}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fNum(c.parsed.y,1)+'%'}}},
+      scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fNum(v,0)+'%'},grid:{color:'rgba(30,51,30,.5)'}}}}});
+
+  const cmp=(B.taxas_carteira&&B.taxas_carteira.comparativo)||{};
+  document.getElementById('mktTaxasSub').textContent='taxa média ponderada da carteira ante as curvas de referência · '+((B.taxas_carteira&&B.taxas_carteira.mes_label)||'—');
+  const taxaTbl=(host,block,titulo)=>{
+    const el=document.getElementById(host);
+    if(!block){el.innerHTML='';return;}
+    const rows=Object.keys(block.referencias||{}).map(k=>{const r=block.referencias[k];
+      return `<tr><td class="name">${esc(r.label)}</td><td>${r.taxa==null?'—':fNum(r.taxa,2)}</td><td>${ppSpread(r.spread_vs_carteira)}</td></tr>`;}).join('');
+    el.innerHTML=`<table><thead><tr><th>${esc(titulo)} — carteira ${block.carteira==null?'—':fNum(block.carteira,2)+'% a.a.'}</th><th>Ref. %</th><th>Spread</th></tr></thead><tbody>${rows}</tbody></table>`;
+  };
+  taxaTbl('tblTaxaInf',cmp.INF,'Inflação (NTN-B)');
+  taxaTbl('tblTaxaPre',cmp.PRE,'Prefixado (BZAD)');
+  const dur=(B.referencia&&B.referencia.IMAB_DUR)||null;
+  document.getElementById('mktDur').innerHTML=dur
+    ?`<div>Duration IMA-B (ref.)<b>${fNum(dur.ultimo,1)}</b></div><div>Duration da carteira<b>a plugar</b></div>`
+    :'';
+}
+
 const PAGES={
   visao:{title:'Visão Consolidada',sub:'Patrimônio consolidado da família',fn:renderVisao},
   retorno:{title:'Retorno por Ativo',sub:'Rentabilidade e contribuição por posição',fn:renderRetorno},
   liquidez:{title:'Liquidez e Instrumentos',sub:'Janelas de resgate e composição da carteira',fn:renderLiquidez},
   carteira:{title:'Score e Carteira Detalhada',sub:'Enquadramento de risco e posições completas',fn:renderCarteira},
+  mercado:{title:'Mercado & Benchmarks',sub:'Retornos por janela, volatilidade e taxas ante o mercado',fn:renderMercado},
 };
 function route(){
   const h=(location.hash||'#/visao').replace('#/','');
