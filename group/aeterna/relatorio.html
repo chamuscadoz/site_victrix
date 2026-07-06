@@ -443,7 +443,7 @@ footer.notes b{color:var(--sage);font-weight:600}
   </section>
 
   <footer class="notes">
-    <div><b>Metodologia.</b> Rentabilidade exibida é a variação da posição a mercado no mês; agregados por titular, gestor e classe são médias ponderadas pelo valor a mercado das posições com rentabilidade informada. Acumulados (ano e 12 meses) por capitalização composta dos retornos mensais.</div>
+    <div><b>Metodologia.</b> A rentabilidade de referência é a do portfólio consolidado. A rentabilidade mensal consolidada é a média das variações a mercado das posições no mês, ponderada pelo valor a mercado de cada posição com rentabilidade informada; os acumulados no ano e em 12 meses resultam da capitalização composta desses retornos mensais. Os recortes por gestor e classe seguem o mesmo critério de ponderação e têm caráter informativo. A Victrix não calcula performance por titular ou por ativo individual — quando exibida, essa informação é a reportada pelos provedores.</div>
     <div style="margin-top:6px"><b>Liquidez.</b> Janelas ordenadas: D+0 → D+1 → D+2 a D+30 → D+31 a D+180 → D+181 a D+365, seguidas de Mercado secundário, No vencimento e Previdência.</div>
     <div style="margin-top:6px"><b>Segurança.</b> Seus dados são tratados com segurança e discrição.</div>
     <div style="margin-top:6px" id="footStamp"></div>
@@ -1032,7 +1032,7 @@ render();
     if(cacheExt===null) cacheExt=await fetchJSON('extratos.json');
   }
   function rowsFor(data,set){ if(!data) return []; return data.filter(function(r){return set[r.comp];}); }
-  function toDate(iso){ if(!iso) return ''; var p=String(iso).split('-'); return (p.length===3)?new Date(+p[0],+p[1]-1,+p[2]):iso; }
+  function toDate(iso){ if(!iso) return ''; var p=String(iso).split('-'); return (p.length===3)?new Date(+p[0],+p[1]-1,+p[2],12,0,0):iso; }
   function aoa(rows,cols,isMov){
     var out=[cols.slice()];
     rows.forEach(function(r){ out.push(cols.map(function(c){
@@ -1041,6 +1041,17 @@ render();
       return v;
     })); });
     return out;
+  }
+  function makeSheet(rows,cols,dateColIdx){
+    var ws=XLSX.utils.aoa_to_sheet(aoa(rows,cols,dateColIdx>=0),{cellDates:true});
+    if(dateColIdx>=0 && ws['!ref']){
+      var range=XLSX.utils.decode_range(ws['!ref']);
+      for(var r=range.s.r+1;r<=range.e.r;r++){
+        var cell=ws[XLSX.utils.encode_cell({r:r,c:dateColIdx})];
+        if(cell&&cell.t==='d') cell.z='dd/mm/yyyy';
+      }
+    }
+    return ws;
   }
   async function generate(){
     var checks=[].slice.call(monthsBox.querySelectorAll('input:checked')).map(function(i){return i.value;});
@@ -1051,8 +1062,8 @@ render();
     var set={}; checks.forEach(function(c){set[c]=1;});
     var mov=rowsFor(cacheMov,set), ext=rowsFor(cacheExt,set);
     var wb=XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(aoa(mov,MOV_COLS,true)),'tbMovimentos');
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(aoa(ext,EXT_COLS,false)),'tbExtratos');
+    XLSX.utils.book_append_sheet(wb,makeSheet(mov,MOV_COLS,1),'tbMovimentos');
+    XLSX.utils.book_append_sheet(wb,makeSheet(ext,EXT_COLS,-1),'tbExtratos');
     var tag=(checks.length===M.length)?'completo':checks.slice().sort().join('_');
     XLSX.writeFile(wb,'Aeterna_Extracao_'+tag+'.xlsx');
     statusEl.textContent='Arquivo gerado: '+mov.length+' movimentos, '+ext.length+' extratos.';
