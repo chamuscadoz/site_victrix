@@ -122,7 +122,7 @@ Não referenciar arquivos de imagem de logo diretamente — usar a CSS custom pr
 
 ## Identidade de marca
 
-Referência completa em `BrandVictrix.md`. Pontos críticos:
+Referência completa na skill `victrix-brand` e no manual `assets/VictrixCapital_guidelines_v01.pdf`. Pontos críticos:
 - **Tom:** preciso, calmo, institucional — sem exclamações, sem drama, sem metáforas
 - **Vitrix é:** escritório de assessoria de investimentos / credenciado à XP
 - **Não é:** banco, asset, gestora, wealth manager, consultoria financeira independente

@@ -7,7 +7,7 @@
 ## Concluído
 
 ### Fundações
-- [x] Design system completo — variáveis CSS, tipografia, cores (BrandVictrix.md)
+- [x] Design system completo — variáveis CSS, tipografia, cores (skill `victrix-brand`)
 - [x] Layout one-page responsivo (`index.html`)
 - [x] Fontes Zalando Sans SemiExpanded — variável + estáticas em `assets/fonts/`
 - [x] Logo via CSS custom property (`victrix-logos.css`) — sem arquivo de imagem externo
@@ -102,6 +102,6 @@
 ## Referências
 
 - Manual de marca: `assets/VictrixCapital_guidelines_v01.pdf`
-- Identidade visual para código: `BrandVictrix.md`
+- Identidade visual para código: skill `victrix-brand`
 - Guia de deploy: `DEPLOY.md`
 - Referência de desenvolvimento: `QUICKSTART.md`

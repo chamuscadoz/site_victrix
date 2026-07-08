@@ -76,7 +76,6 @@ site_victrix/
 │   │
 │   └── VictrixCapital_guidelines_v01.pdf
 │
-├── BrandVictrix.md                # Identidade visual completa — consultar sempre
 ├── README.md
 ├── DEPLOY.md
 ├── QUICKSTART.md                  # Este arquivo
