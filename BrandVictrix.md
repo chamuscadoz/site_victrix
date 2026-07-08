@@ -16,6 +16,11 @@ description: >
 
 # Victrix Capital — Brand Identity Skill
 
+> ℹ️ **Fonte canônica da marca:** o manual `assets/VictrixCapital_guidelines_v01.pdf`
+> e a skill instalada `victrix-brand`. Este arquivo é uma cópia de trabalho do conteúdo
+> da skill — em caso de divergência, o PDF prevalece. Não edite a marca aqui sem
+> atualizar também a skill.
+
 > Source: VictrixCapital_guidelines_v01.pdf (Abril 2026)
 
 ## Overview

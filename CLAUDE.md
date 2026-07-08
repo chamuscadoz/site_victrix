@@ -4,7 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Site institucional da **Victrix Capital** — escritório credenciado à XP Investimentos. Stack: HTML/CSS/JS puro, zero dependências, deploy estático.
+Monorepo estático (HTML/CSS/JS puro, zero dependências, zero build) que serve **dois sites**:
+
+- **Victrix Capital** (`victrixcapital.com.br`) — servido da **raiz**. É o foco deste guia.
+- **Victrix Group** (`victrixgroup.com.br`) — servido da pasta **`group/`**, incluindo a área logada **Aeterna** (dashboard de cliente com Supabase).
+
+Arquitetura completa dos dois sites e do deploy em `README.md`. Setup da área logada em `docs/aeterna/`.
 
 ## Rodar localmente
 
@@ -28,14 +33,23 @@ Push na branch `main` atualiza automaticamente via Vercel. Detalhes em `DEPLOY.m
 
 ## Arquitetura
 
-Quatro páginas HTML independentes, sem roteamento ou framework:
+### Capital (raiz) — três páginas HTML independentes, sem roteamento ou framework:
 
 | Página | Estado |
 |--------|--------|
 | `index.html` | Completa — Hero · Narrativa · Abordagem · Filosofia · Equipe · Insights · Closing · Footer |
-| `sobre.html` | Em desenvolvimento |
-| `servicos.html` | Em desenvolvimento |
-| `contato.html` | Em desenvolvimento (integrar FormSpree ou EmailJS) |
+| `para_voce.html` | Página Pessoa Física |
+| `empresa_pj.html` | Página Pessoa Jurídica |
+
+### Group (`group/`) — landing do Group + área logada Aeterna
+
+| Página | Função |
+|--------|--------|
+| `group/index.html` | Landing do Group (Investimentos → Capital · Organização Patrimonial → Aeterna) |
+| `group/aeterna/index.html` | Landing institucional Aeterna + formulário (Web3Forms) |
+| `group/aeterna/login.html` | Login do cliente (Supabase Auth) |
+| `group/aeterna/relatorio.html` | Casca do dashboard — baixa o JSON do cliente e renderiza (ver `docs/aeterna/DASHBOARD.md`) |
+| `group/aeterna/redefinir.html` | Redefinição de senha |
 
 ### CSS — três arquivos, papéis distintos
 

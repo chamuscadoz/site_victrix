@@ -1,7 +1,7 @@
 {
-  "name": "victrix-capital-website",
+  "name": "site-victrix",
   "version": "1.0.0",
-  "description": "Site institucional da Victrix Capital - Agente Autônomo de Investimentos",
+  "description": "Monorepo estático dos sites Victrix Capital e Victrix Group (área logada Aeterna).",
   "main": "index.html",
   "scripts": {
     "start": "python -m http.server 8000",
@@ -22,7 +22,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/victrix-capital/website"
+    "url": "https://github.com/chamuscadoz/site_victrix"
   },
   "engines": {
     "node": ">=14.0.0"

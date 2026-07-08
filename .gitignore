@@ -33,7 +33,3 @@ logs/
 tmp/
 temp/
 *.tmp
-
-# Fontes locais do dashboard (contêm dados reais — nunca publicar)
-group/aeterna/dashboard_aeterna.html
-group/aeterna/dados_dashboard.json

@@ -21,10 +21,15 @@ npx serve .
 ```
 site_victrix/
 │
-├── index.html                     # One-page principal
-├── sobre.html
-├── servicos.html
-├── contato.html
+├── index.html                     # Capital — home one-page
+├── para_voce.html                 # Capital — Pessoa Física
+├── empresa_pj.html                # Capital — Pessoa Jurídica
+│
+├── group/                         # Victrix Group (victrixgroup.com.br)
+│   ├── index.html                 # Landing do Group
+│   └── aeterna/                   # Área logada (login, relatorio, redefinir, config.js)
+│
+├── docs/                          # Documentação (não publicada) — inclui docs/aeterna/
 │
 ├── assets/
 │   ├── css/

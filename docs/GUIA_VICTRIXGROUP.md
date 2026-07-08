@@ -1,10 +1,14 @@
 # Guia — Colocar o victrixgroup.com.br no ar
 
+> ⚠️ **HISTÓRICO / PARCIALMENTE OBSOLETO (jul/2026).** A arquitetura de roteamento
+> por `vercel.json` descrita abaixo **foi abandonada** por ser frágil. Hoje são
+> **dois projetos Vercel independentes** (um por domínio, cada um com sua raiz física):
+> Capital = raiz `.`, Group = pasta `group`. Não existe mais `vercel.json`.
+> **Fonte da verdade atual: `README.md` e `DEPLOY.md`.** Mantido apenas o passo a passo
+> de Supabase e DNS, que continua válido.
+
 Este guia liga o novo domínio **www.victrixgroup.com.br** ao mesmo repositório do
 site, ativa a área logada (Aeterna) e mantém o **victrixcapital.com.br** intacto.
-
-> **Um repositório, um projeto Vercel, dois domínios.** O `vercel.json` na raiz cuida
-> de mostrar o hub no `victrixgroup.com.br` sem afetar o `victrixcapital.com.br`.
 
 ---
 
