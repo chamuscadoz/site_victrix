@@ -15,207 +15,476 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.victrixcapital.com.br/empresa_pj.html">
 <meta property="og:site_name" content="Victrix Capital">
-<link rel="preload" href="assets/images/blur_backgrounds/Slide 16_9 - 67.png" as="image">
 <link rel="stylesheet" href="assets/css/zalando-sans.css">
-<link rel="stylesheet" href="assets/css/victrix-logos.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/motion.css">
+<style>
+  /* ═══════════════════════════════════════════════════════════
+     VICTRIX — Para sua empresa · Liquid Glass
+     Paleta: forest #0E1C0E · surface #152615 · lime #88E833
+             mid-green #2E6F3A · sage #D5DAD0 · white #FFFFFF
+     ═══════════════════════════════════════════════════════════ */
+  :root {
+    --forest: #0E1C0E;
+    --surface: #152615;
+    --lime: #88E833;
+    --lime-bright: #9BF04E;
+    --green: #2E6F3A;
+    --sage: #D5DAD0;
+    --font: 'Zalando Sans SemiExpanded', Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { background: var(--forest); }
+  body {
+    font-family: var(--font);
+    color: var(--sage);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+    min-height: 100vh;
+  }
+
+  a { color: var(--sage); text-decoration: none; }
+  a:hover { color: var(--lime); }
+  :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 2px; }
+  ::selection { background: var(--lime); color: var(--forest); }
+
+  /* ─── animações de fundo ─── */
+  @keyframes vx-drift-a {
+    0%   { transform: translate3d(-6%, -4%, 0) scale(1); }
+    50%  { transform: translate3d(7%, 6%, 0) scale(1.12); }
+    100% { transform: translate3d(-6%, -4%, 0) scale(1); }
+  }
+  @keyframes vx-drift-b {
+    0%   { transform: translate3d(5%, 8%, 0) scale(1.05); }
+    50%  { transform: translate3d(-8%, -5%, 0) scale(1); }
+    100% { transform: translate3d(5%, 8%, 0) scale(1.05); }
+  }
+  @keyframes vx-fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── NAV ─── */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 16px clamp(20px, 5vw, 64px);
+    background: rgba(14, 28, 14, 0.72);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    border-bottom: 1px solid rgba(213, 218, 208, 0.08);
+  }
+  .nav-brand { display: flex; align-items: baseline; gap: 10px; color: #fff; }
+  .nav-brand b { font-weight: 800; letter-spacing: 0.08em; font-size: 17px; }
+  .nav-brand span { font-weight: 200; letter-spacing: 0.3em; font-size: 10px; color: rgba(213,218,208,0.6); text-transform: uppercase; }
+  nav.nav-links { display: flex; align-items: center; gap: clamp(12px, 2.2vw, 30px); font-size: 13px; letter-spacing: 0.04em; }
+  nav.nav-links a { color: rgba(213, 218, 208, 0.85); }
+  nav.nav-links a:hover { color: var(--lime); }
+  nav.nav-links a.cta { color: var(--forest); background: var(--lime); padding: 9px 18px; border-radius: 999px; font-weight: 600; }
+  nav.nav-links a.cta:hover { background: var(--lime-bright); color: var(--forest); }
+  .nav-hide { display: inline; }
+  @media (max-width: 860px) { .nav-hide { display: none; } }
+
+  /* ─── campo de luz (blobs à deriva) ─── */
+  .lightfield { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; will-change: transform; transform: translateZ(0); }
+  .blob-a {
+    top: -20%; right: -15%; width: 70vw; height: 70vw; max-width: 1100px; max-height: 1100px;
+    background: radial-gradient(circle, rgba(136,232,51,0.13) 0%, rgba(136,232,51,0.04) 45%, transparent 70%);
+    animation: vx-drift-a 46s ease-in-out infinite;
+  }
+  .blob-b {
+    bottom: -10%; left: -20%; width: 80vw; height: 80vw; max-width: 1200px; max-height: 1200px;
+    background: radial-gradient(circle, rgba(46,111,58,0.35) 0%, rgba(46,111,58,0.1) 50%, transparent 72%);
+    animation: vx-drift-b 58s ease-in-out infinite;
+  }
+  .grain {
+    position: absolute; inset: 0; opacity: 0.5;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22/%3E%3CfeColorMatrix values=%220 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0%22/%3E%3C/filter%3E%3Crect width=%22160%22 height=%22160%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+  }
+
+  /* ─── tipografia utilitária ─── */
+  .kicker { font-weight: 200; font-size: 12px; letter-spacing: 0.34em; text-transform: uppercase; color: rgba(213,218,208,0.65); }
+  .kicker-lime { color: rgba(136,232,51,0.8); }
+  .container { max-width: 1240px; margin: 0 auto; box-sizing: border-box; }
+
+  section { position: relative; }
+  .wrap { position: relative; z-index: 1; padding: clamp(40px, 8vh, 96px) clamp(20px, 6vw, 96px); max-width: 1240px; margin: 0 auto; box-sizing: border-box; }
+
+  /* ─── HERO ─── */
+  #hero .wrap {
+    min-height: 72svh; display: flex; flex-direction: column; justify-content: center;
+    padding-top: clamp(96px, 14vh, 150px); padding-bottom: clamp(40px, 7vh, 80px);
+  }
+  #hero h1 {
+    margin: 0; max-width: 18ch; font-size: clamp(40px, 6.4vw, 78px); line-height: 1.06;
+    font-weight: 800; color: #fff; letter-spacing: -0.015em; text-wrap: balance;
+    animation: vx-fade-up 0.9s ease-out 0.12s both;
+  }
+  #hero h1 em { font-style: italic; font-weight: 700; color: var(--lime); }
+  #hero .lead { margin: 32px 0 0; max-width: 62ch; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.65; font-weight: 300; color: rgba(213,218,208,0.9); animation: vx-fade-up 0.9s ease-out 0.24s both; }
+  #hero .kicker { animation: vx-fade-up 0.9s ease-out both; margin-bottom: 28px; }
+  .scroll-cue { margin-top: 44px; display: inline-flex; align-items: center; gap: 12px; width: fit-content; font-weight: 200; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(213,218,208,0.7); animation: vx-fade-up 0.9s ease-out 0.36s both; }
+  .scroll-cue span { display: inline-block; width: 1px; height: 34px; background: linear-gradient(to bottom, rgba(136,232,51,0.9), transparent); }
+
+  /* ─── cabeçalho de seção ─── */
+  .sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: clamp(36px, 5vh, 56px); }
+  .sec-head h2 { margin: 6px 0 0; font-size: clamp(26px, 3.2vw, 40px); font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+  .sec-head .sec-note { margin: 0; max-width: 42ch; font-size: 15px; line-height: 1.6; font-weight: 300; color: rgba(213,218,208,0.75); }
+
+  /* ─── LIQUID GLASS: sistema de 3 camadas ─── */
+  .glass-field { display: grid; gap: clamp(16px, 2vw, 24px); }
+  .cols-3 { grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
+
+  .glass {
+    position: relative; overflow: hidden; border-radius: 24px;
+    padding: clamp(28px, 3vw, 40px); min-height: 300px;
+    display: flex; flex-direction: column; box-sizing: border-box;
+    transform: translateZ(0); will-change: transform;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), inset 0 -18px 40px rgba(14,28,14,0.4), 0 24px 60px rgba(0,0,0,0.35);
+    transition: box-shadow 0.4s ease;
+  }
+  .glass-base {
+    position: absolute; inset: -2px; border-radius: 26px;
+    backdrop-filter: blur(var(--glass-blur, 14px)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur, 14px)) saturate(180%);
+    background: linear-gradient(160deg, oklch(0.86 0.19 131 / 0.07), oklch(0.28 0.05 145 / 0.28) 55%, oklch(0.22 0.04 145 / 0.4));
+  }
+  .glass-edge {
+    position: absolute; inset: 0; border-radius: 24px; padding: 1px; pointer-events: none;
+    background: linear-gradient(135deg, oklch(0.9 0.21 131 / 0.55), transparent 28%, oklch(0.82 0.12 200 / 0.22) 52%, transparent 74%, oklch(0.88 0.2 115 / 0.4));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .glass-sheen {
+    position: absolute; inset: 0; border-radius: 24px; pointer-events: none;
+    mix-blend-mode: screen; opacity: var(--so, 0);
+    background: radial-gradient(340px circle at var(--sx, 50%) var(--sy, -10%), rgba(220,255,180,0.16), rgba(136,232,51,0.06) 42%, transparent 72%);
+  }
+  .glass-body { position: relative; display: flex; flex-direction: column; flex: 1; }
+  .glass-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .glass-top .pilar { font-weight: 200; font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(213,218,208,0.65); }
+  .glass h3 { font-size: clamp(21px, 2.2vw, 27px); font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+  .glass p { font-size: 15px; line-height: 1.65; font-weight: 300; color: rgba(213,218,208,0.88); }
+
+  /* variante serviço: ícone + número + conteúdo */
+  .glass.feature { min-height: 300px; }
+  .glass.feature .ficon { width: 46px; height: 46px; margin-bottom: 22px; }
+  .glass.feature .ficon img { width: 100%; height: 100%; object-fit: contain; }
+  .glass.feature h3 { margin: 0 0 12px; }
+  .glass.feature p { margin: 0; }
+
+  /* ─── seções em superfície sólida ─── */
+  .surface { background: var(--surface); border-top: 1px solid rgba(213,218,208,0.07); }
+
+  /* ─── FECHAMENTO ─── */
+  #closing .wrap { text-align: center; padding-top: clamp(90px,13vh,150px); padding-bottom: clamp(90px,13vh,150px); }
+  #closing .closing-lead { margin: 0 auto; max-width: 46ch; font-weight: 200; font-size: clamp(13px,1.3vw,15px); letter-spacing: 0.06em; text-transform: uppercase; color: rgba(213,218,208,0.6); }
+  #closing h2 { margin: 26px auto 0; max-width: 26ch; font-size: clamp(28px, 4vw, 54px); line-height: 1.14; font-weight: 800; color: #fff; letter-spacing: -0.015em; text-wrap: balance; }
+  #closing h2 em { font-style: italic; font-weight: 700; color: var(--lime); }
+
+  /* ─── FOOTER ─── */
+  footer { background: #0a140a; border-top: 1px solid rgba(213,218,208,0.08); padding: clamp(48px,7vh,80px) clamp(20px,6vw,96px) clamp(32px,5vh,56px); }
+  .f-logos { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; }
+  .f-logos b { font-weight: 800; letter-spacing: 0.08em; font-size: 16px; color: #fff; }
+  .f-logos .f-div { width: 1px; height: 22px; background: rgba(213,218,208,0.25); }
+  .f-logos img { height: 22px; opacity: 0.9; }
+  .f-phone { font-size: 13px; color: rgba(213,218,208,0.75); margin-bottom: 24px; }
+  .f-phone a { color: var(--lime); }
+  .disclaimer { font-size: 11px; line-height: 1.7; font-weight: 300; color: rgba(213,218,208,0.45); max-width: 1000px; }
+  .disclaimer strong { color: rgba(213,218,208,0.65); font-weight: 600; }
+  .f-copy { margin-top: 24px; font-size: 12px; color: rgba(213,218,208,0.4); }
+
+  /* ─── reveal on scroll ─── */
+  [data-reveal] { opacity: 0; transform: translateY(22px); }
+  [data-reveal].in { opacity: 1; transform: translateY(0); transition: opacity 0.7s ease, transform 0.7s ease; }
+
+  /* ─── acessibilidade / reduced-motion ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .blob { animation: none !important; }
+    .glass-sheen { display: none !important; }
+    .glass { transition: none !important; transform: none !important; }
+    .glass-base { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(21,38,21,0.95) !important; }
+    #hero h1, #hero .lead, #hero .kicker, .scroll-cue { animation: none !important; }
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ═══ NAV (mesmo padrão do restante do site) ═══ -->
-<nav id="nav">
+<!-- ═══ NAV ═══ -->
+<header class="nav">
   <a href="index.html" class="nav-brand">
-    <div class="nav-victrix" role="img" aria-label="Victrix Capital"></div>
-    <div class="nav-sep"></div>
-    <img src="assets/images/xp-branco.png" alt="XP Investimentos" class="nav-xp">
+    <b>VICTRIX</b><span>Capital · XP</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#cambio" data-hover>Câmbio</a></li>
-    <li><a href="#riscos" data-hover>Riscos</a></li>
-    <li><a href="#credito" data-hover>Crédito</a></li>
-    <li><a href="#investimentos" data-hover>Investimentos</a></li>
-    <li><a href="#seguros" data-hover>Seguros</a></li>
-    <li><a href="para_voce.html" class="nav-link-pf" data-hover>Para você</a></li>
-  </ul>
-</nav>
+  <nav class="nav-links">
+    <a href="#cambio" class="nav-hide">Câmbio</a>
+    <a href="#riscos" class="nav-hide">Riscos</a>
+    <a href="#credito" class="nav-hide">Crédito</a>
+    <a href="#investimentos" class="nav-hide">Investimentos</a>
+    <a href="#seguros" class="nav-hide">Seguros</a>
+    <a href="para_voce.html" class="nav-hide">Para você</a>
+    <a href="#contato" class="cta">Fale com um assessor</a>
+  </nav>
+</header>
 
-<!-- ═══ HERO INTERNO ═══ -->
-<section class="page-hero">
-  <div class="blur-layer"><img src="assets/images/blur_backgrounds/Slide 16_9 - 67.png" alt="" class="blur-img"></div>
-  <div class="overlay overlay-hero"></div>
-  <div class="page-hero-inner">
-    <h1>Soluções para <em>sua empresa</em></h1>
-    <p>Como escritório credenciado à XP Investimentos, a Victrix Capital oferece às empresas acesso a câmbio, gestão de riscos, crédito, investimentos e seguros — com o mesmo processo, disciplina e proximidade que definem nossa assessoria.</p>
+<!-- ═══ HERO ═══ -->
+<div id="top" style="position:relative; isolation:isolate;">
+  <div class="lightfield" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="grain"></div>
   </div>
-</section>
 
-<!-- ═══ CÂMBIO ═══ -->
-<section id="cambio">
-  <div class="grid-texture"></div>
-  <div class="container">
-    <span class="section-label reveal">Operações internacionais</span>
-    <h2 class="section-title reveal">Câmbio</h2>
-    <p class="section-sub reveal reveal-d1">Cotação, fechamento e proteção cambial com condições diferenciadas.</p>
-    <div class="cards">
-      <div class="card reveal reveal-d1" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/03_moeda.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">01</span>
-        <h3>Cotação e Fechamento com Tarifa Zero</h3>
-        <p>Cotação e fechamento de operações de câmbio com acompanhamento próximo, do início à liquidação — tarifa zero para todos os serviços, com política de preços clara e sem custos ocultos.</p>
+  <section id="hero">
+    <div class="wrap">
+      <p class="kicker" data-reveal>Para sua empresa — Soluções corporativas</p>
+      <h1 data-reveal>Soluções para <em>sua empresa</em></h1>
+      <p class="lead" data-reveal>Como escritório credenciado à XP Investimentos, a Victrix Capital oferece às empresas acesso a câmbio, gestão de riscos, crédito, investimentos e seguros — com o mesmo processo, disciplina e proximidade que definem nossa assessoria.</p>
+      <a href="#cambio" class="scroll-cue" data-reveal>As soluções <span aria-hidden="true"></span></a>
+    </div>
+  </section>
+
+  <!-- ═══ CÂMBIO ═══ -->
+  <section id="cambio">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker kicker-lime" data-reveal>Operações internacionais</p>
+          <h2 data-reveal>Câmbio</h2>
+        </div>
+        <p class="sec-note" data-reveal>Cotação, fechamento e proteção cambial com condições diferenciadas.</p>
       </div>
-      <div class="card reveal reveal-d2" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/014_global.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">02</span>
-        <h3>Multimoeda com Liquidação em D+5</h3>
-        <p>Operações em Dólar, Yuan, Iene, Euro, Peso mexicano e outras moedas, com liquidação em D+5 — sem necessidade de garantia ou limite de crédito.</p>
-      </div>
-      <div class="card reveal reveal-d3" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/022_ciclo.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">03</span>
-        <h3>Câmbio Futuro</h3>
-        <p>Trava cambial para proteção contra variações de moeda, trazendo previsibilidade a contratos e margens.</p>
+      <div class="glass-field cols-3">
+        <article class="glass feature" data-glass tabindex="0" data-reveal>
+          <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+          <div class="glass-body">
+            <div class="ficon"><img src="assets/images/Icons/Green/03_moeda.svg" alt="" aria-hidden="true"></div>
+            <div class="glass-top"><span class="pilar">01</span></div>
+            <h3>Cotação e Fechamento com Tarifa Zero</h3>
+            <p>Cotação e fechamento de operações de câmbio com acompanhamento próximo, do início à liquidação — tarifa zero para todos os serviços, com política de preços clara e sem custos ocultos.</p>
+          </div>
+        </article>
+        <article class="glass feature" data-glass tabindex="0" data-reveal>
+          <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+          <div class="glass-body">
+            <div class="ficon"><img src="assets/images/Icons/Green/014_global.svg" alt="" aria-hidden="true"></div>
+            <div class="glass-top"><span class="pilar">02</span></div>
+            <h3>Multimoeda com Liquidação em D+5</h3>
+            <p>Operações em Dólar, Yuan, Iene, Euro, Peso mexicano e outras moedas, com liquidação em D+5 — sem necessidade de garantia ou limite de crédito.</p>
+          </div>
+        </article>
+        <article class="glass feature" data-glass tabindex="0" data-reveal>
+          <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+          <div class="glass-body">
+            <div class="ficon"><img src="assets/images/Icons/Green/022_ciclo.svg" alt="" aria-hidden="true"></div>
+            <div class="glass-top"><span class="pilar">03</span></div>
+            <h3>Câmbio Futuro</h3>
+            <p>Trava cambial para proteção contra variações de moeda, trazendo previsibilidade a contratos e margens.</p>
+          </div>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <!-- ═══ GESTÃO DE RISCOS ═══ -->
-<section id="riscos" style="background: var(--alt);">
-  <div class="container">
-    <span class="section-label reveal">Proteção e previsibilidade</span>
-    <h2 class="section-title reveal">Gestão de Riscos</h2>
-    <p class="section-sub reveal reveal-d1">Estratégias de proteção para moedas, commodities, juros e inflação.</p>
-    <div class="cards">
-      <div class="card reveal reveal-d1" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/05_transferencia.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">01</span>
-        <h3>Derivativos de Moedas</h3>
-        <p>Previsibilidade para empresas com contas a pagar ou a receber em moeda estrangeira.</p>
+<section id="riscos" class="surface">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker kicker-lime" data-reveal>Proteção e previsibilidade</p>
+        <h2 data-reveal>Gestão de Riscos</h2>
       </div>
-      <div class="card reveal reveal-d2" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/016_diversificacao.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">02</span>
-        <h3>Derivativos de Commodities</h3>
-        <p>Seguro de preços para proteger margens contra oscilações nos mercados de commodities.</p>
-      </div>
-      <div class="card reveal reveal-d3" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/018_risco.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">03</span>
-        <h3>Juros e Inflação</h3>
-        <p>Estratégias de proteção contra oscilações de juros e inflação, alinhadas ao fluxo de caixa da empresa.</p>
-      </div>
+      <p class="sec-note" data-reveal>Estratégias de proteção para moedas, commodities, juros e inflação.</p>
+    </div>
+    <div class="glass-field cols-3">
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/05_transferencia.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">01</span></div>
+          <h3>Derivativos de Moedas</h3>
+          <p>Previsibilidade para empresas com contas a pagar ou a receber em moeda estrangeira.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/016_diversificacao.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">02</span></div>
+          <h3>Derivativos de Commodities</h3>
+          <p>Seguro de preços para proteger margens contra oscilações nos mercados de commodities.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/018_risco.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">03</span></div>
+          <h3>Juros e Inflação</h3>
+          <p>Estratégias de proteção contra oscilações de juros e inflação, alinhadas ao fluxo de caixa da empresa.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ═══ CRÉDITO ═══ -->
 <section id="credito">
-  <div class="blur-layer blur-subtle"><img src="assets/images/blur_backgrounds/Slide 16_9 - 699.png" alt="" class="blur-img" loading="lazy"></div>
-  <div class="overlay overlay-heavy"></div>
-  <div class="container">
-    <span class="section-label reveal">Capital de giro e estrutura</span>
-    <h2 class="section-title reveal">Crédito</h2>
-    <p class="section-sub reveal reveal-d1">Soluções de crédito com transparência de preços e zero tarifas adicionais.</p>
-    <div class="cards">
-      <div class="card reveal reveal-d1" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/021_analise.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">01</span>
-        <h3>Política Transparente</h3>
-        <p>Política de preços transparente e zero tarifas adicionais — o custo da operação é conhecido antes da contratação.</p>
+  <div class="lightfield" aria-hidden="true">
+    <div class="blob blob-b" style="opacity:0.7;"></div>
+    <div class="grain"></div>
+  </div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker kicker-lime" data-reveal>Capital de giro e estrutura</p>
+        <h2 data-reveal>Crédito</h2>
       </div>
-      <div class="card reveal reveal-d2" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/017_liquidez.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">02</span>
-        <h3>Antecipação de Recebíveis</h3>
-        <p>Antecipação de recebíveis para organização do fluxo de caixa e maior previsibilidade financeira.</p>
-      </div>
-      <div class="card reveal reveal-d3" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/06_contrato.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">03</span>
-        <h3>Crédito com Garantia XP</h3>
-        <p>Operações a partir de R$ 300 mil para pessoa jurídica, estruturadas via CCB padrão com garantia XP.</p>
-      </div>
+      <p class="sec-note" data-reveal>Soluções de crédito com transparência de preços e zero tarifas adicionais.</p>
+    </div>
+    <div class="glass-field cols-3">
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/021_analise.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">01</span></div>
+          <h3>Política Transparente</h3>
+          <p>Política de preços transparente e zero tarifas adicionais — o custo da operação é conhecido antes da contratação.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/017_liquidez.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">02</span></div>
+          <h3>Antecipação de Recebíveis</h3>
+          <p>Antecipação de recebíveis para organização do fluxo de caixa e maior previsibilidade financeira.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/06_contrato.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">03</span></div>
+          <h3>Crédito com Garantia XP</h3>
+          <p>Operações a partir de R$ 300 mil para pessoa jurídica, estruturadas via CCB padrão com garantia XP.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ═══ INVESTIMENTOS ═══ -->
-<section id="investimentos" style="background: var(--alt);">
-  <div class="container">
-    <span class="section-label reveal">Caixa e patrimônio</span>
-    <h2 class="section-title reveal">Investimentos</h2>
-    <p class="section-sub reveal reveal-d1">Gestão do caixa da empresa com o mesmo processo que aplicamos ao patrimônio.</p>
-    <div class="cards">
-      <div class="card reveal reveal-d1" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/04_carteira.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">01</span>
-        <h3>Caixa de Curtíssimo Prazo</h3>
-        <p>Aplicação de caixa de curtíssimo prazo sem IOF e com liquidez diária — o recurso disponível quando a empresa precisa.</p>
+<section id="investimentos" class="surface">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker kicker-lime" data-reveal>Caixa e patrimônio</p>
+        <h2 data-reveal>Investimentos</h2>
       </div>
-      <div class="card reveal reveal-d2" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/02_barras.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">02</span>
-        <h3>Renda Fixa</h3>
-        <p>Títulos Públicos e Privados de Renda Fixa, selecionados conforme prazo, liquidez e objetivo do caixa.</p>
-      </div>
-      <div class="card reveal reveal-d3" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/023_fundos.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">03</span>
-        <h3>Fundos de Investimento</h3>
-        <p>Mais de 700 fundos e 150 gestores disponíveis na plataforma, com curadoria e acompanhamento contínuo.</p>
-      </div>
+      <p class="sec-note" data-reveal>Gestão do caixa da empresa com o mesmo processo que aplicamos ao patrimônio.</p>
+    </div>
+    <div class="glass-field cols-3">
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/04_carteira.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">01</span></div>
+          <h3>Caixa de Curtíssimo Prazo</h3>
+          <p>Aplicação de caixa de curtíssimo prazo sem IOF e com liquidez diária — o recurso disponível quando a empresa precisa.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/02_barras.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">02</span></div>
+          <h3>Renda Fixa</h3>
+          <p>Títulos Públicos e Privados de Renda Fixa, selecionados conforme prazo, liquidez e objetivo do caixa.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/023_fundos.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">03</span></div>
+          <h3>Fundos de Investimento</h3>
+          <p>Mais de 700 fundos e 150 gestores disponíveis na plataforma, com curadoria e acompanhamento contínuo.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ═══ SEGUROS ═══ -->
 <section id="seguros">
-  <div class="grid-texture"></div>
-  <div class="container">
-    <span class="section-label reveal">Proteção corporativa</span>
-    <h2 class="section-title reveal">Seguros</h2>
-    <p class="section-sub reveal reveal-d1">Proteção para a empresa, os sócios e as equipes.</p>
-    <div class="cards">
-      <div class="card reveal reveal-d1" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/07_seguranca.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">01</span>
-        <h3>Saúde e Odonto</h3>
-        <p>Seguro Saúde e Odonto empresarial, com condições adequadas ao porte e ao perfil da equipe.</p>
+  <div class="lightfield" aria-hidden="true">
+    <div class="blob blob-a" style="opacity:0.8;"></div>
+    <div class="grain"></div>
+  </div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker kicker-lime" data-reveal>Proteção corporativa</p>
+        <h2 data-reveal>Seguros</h2>
       </div>
-      <div class="card reveal reveal-d2" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/010_meta.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">02</span>
-        <h3>Seguro de Vida</h3>
-        <p>Seguro de Vida para sócios e funcionários, como instrumento de proteção e retenção de pessoas.</p>
-      </div>
-      <div class="card reveal reveal-d3" data-hover>
-        <div class="card-icon"><img src="assets/images/Icons/Green/011_ativoreal.svg" alt="" aria-hidden="true"></div>
-        <span class="card-n">03</span>
-        <h3>Seguro Garantia</h3>
-        <p>Seguro Garantia em modalidades tradicionais e estruturadas, para contratos, licitações e obrigações regulatórias.</p>
-      </div>
+      <p class="sec-note" data-reveal>Proteção para a empresa, os sócios e as equipes.</p>
+    </div>
+    <div class="glass-field cols-3">
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/07_seguranca.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">01</span></div>
+          <h3>Saúde e Odonto</h3>
+          <p>Seguro Saúde e Odonto empresarial, com condições adequadas ao porte e ao perfil da equipe.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/010_meta.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">02</span></div>
+          <h3>Seguro de Vida</h3>
+          <p>Seguro de Vida para sócios e funcionários, como instrumento de proteção e retenção de pessoas.</p>
+        </div>
+      </article>
+      <article class="glass feature" data-glass tabindex="0" data-reveal>
+        <div class="glass-base" aria-hidden="true"></div><div class="glass-edge" aria-hidden="true"></div><div class="glass-sheen" aria-hidden="true"></div>
+        <div class="glass-body">
+          <div class="ficon"><img src="assets/images/Icons/Green/011_ativoreal.svg" alt="" aria-hidden="true"></div>
+          <div class="glass-top"><span class="pilar">03</span></div>
+          <h3>Seguro Garantia</h3>
+          <p>Seguro Garantia em modalidades tradicionais e estruturadas, para contratos, licitações e obrigações regulatórias.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ═══ CLOSING ═══ -->
-<section id="closing">
-  <div class="blur-layer"><img src="assets/images/blur_backgrounds/Slide 16_9 - 66.png" alt="" class="blur-img" loading="lazy"></div>
-  <div class="overlay"></div>
-  <div class="container closing-inner">
-    <p class="closing-lead reveal">O mesmo processo. A mesma disciplina.</p>
-    <h2 class="reveal reveal-d1">Assessoria construída para acompanhar<br>sua empresa com <em>consistência</em> ao longo do tempo.</h2>
+<!-- ═══ FECHAMENTO ═══ -->
+<section id="closing" class="surface">
+  <div class="lightfield" aria-hidden="true">
+    <div class="blob blob-b" style="opacity:0.6;"></div>
+    <div class="grain"></div>
+  </div>
+  <div class="wrap">
+    <p class="closing-lead" data-reveal>O mesmo processo. A mesma disciplina.</p>
+    <h2 data-reveal>Assessoria construída para acompanhar sua empresa com <em>consistência</em> ao longo do tempo.</h2>
   </div>
 </section>
 
-<!-- ═══ FOOTER (mesmo do restante do site) ═══ -->
-<footer>
+<!-- ═══ FOOTER ═══ -->
+<footer id="contato">
   <div class="container">
     <div class="f-logos">
-      <div class="f-victrix" role="img" aria-label="Victrix Capital"></div>
+      <b>VICTRIX</b>
       <div class="f-div"></div>
-      <img src="assets/images/xp-branco.png" alt="XP Investimentos" class="f-xp">
+      <img src="assets/images/xp-branco.png" alt="XP Investimentos">
     </div>
     <div class="f-phone">Ouvidoria XP Investimentos: <a href="tel:08007223730">0800 722 3730</a></div>
     <div class="disclaimer">
@@ -225,21 +494,70 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js"></script>
+<!-- ═══ MOTOR LIQUID GLASS + REVEAL ═══ -->
 <script>
-/* Fail-safe: se o motion engine (main.js) não carregar — por ex. arquivo
-   corrompido/truncado no deploy — revela todo o conteúdo para que a página
-   nunca apareça em branco. Roda de um <script> separado, então um erro no
-   main.js não o impede de executar. */
 (function () {
-  function revealAll() {
-    if (window.__victrixReady) return;
-    document.documentElement.classList.add('motion-failsafe');
-    var els = document.querySelectorAll('.reveal');
-    for (var i = 0; i < els.length; i++) els[i].classList.add('visible');
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── reveal on scroll ── */
+  var reveals = document.querySelectorAll('[data-reveal]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    reveals.forEach(function (el) { io.observe(el); });
   }
-  if (document.readyState === 'complete') setTimeout(revealAll, 250);
-  else window.addEventListener('load', function () { setTimeout(revealAll, 250); });
+
+  /* ── glass engine: brilho especular + tilt com física de mola ── */
+  if (reduce) return;
+  var coarse = window.matchMedia('(hover: none)').matches;
+  var springs = new WeakMap();
+  var pointer = null;
+  document.addEventListener('pointermove', function (e) { pointer = { x: e.clientX, y: e.clientY }; }, { passive: true });
+  document.documentElement.addEventListener('pointerleave', function () { pointer = null; });
+
+  function spring(card) {
+    var s = springs.get(card);
+    if (!s) { s = { sx: 50, sy: -10, so: 0, rx: 0, ry: 0, sc: 1, tsx: 50, tsy: -10, tso: 0, trx: 0, try_: 0, tsc: 1 }; springs.set(card, s); }
+    return s;
+  }
+  var k = 0.11;
+  function frame() {
+    var cards = document.querySelectorAll('[data-glass]');
+    var vh = window.innerHeight;
+    cards.forEach(function (card) {
+      var s = spring(card);
+      var r = card.getBoundingClientRect();
+      if (coarse) {
+        var t = 1 - Math.min(1, Math.max(0, (r.top + r.height / 2) / vh));
+        s.tsx = 30 + t * 40; s.tsy = 110 - t * 130; s.tso = 0.55; s.trx = 0; s.try_ = 0; s.tsc = 1;
+      } else if (pointer && r.width > 0) {
+        var px = ((pointer.x - r.left) / r.width) * 100;
+        var py = ((pointer.y - r.top) / r.height) * 100;
+        var near = px > -60 && px < 160 && py > -60 && py < 160;
+        var inside = px >= 0 && px <= 100 && py >= 0 && py <= 100;
+        s.tsx = Math.max(-40, Math.min(140, px));
+        s.tsy = Math.max(-40, Math.min(140, py));
+        s.tso = inside ? 1 : (near ? 0.25 : 0);
+        s.trx = inside ? -((py - 50) / 50) * 1.6 : 0;
+        s.try_ = inside ? ((px - 50) / 50) * 1.6 : 0;
+        s.tsc = inside ? 1.012 : 1;
+      } else { s.tso = 0; s.trx = 0; s.try_ = 0; s.tsc = 1; }
+      s.sx += (s.tsx - s.sx) * k; s.sy += (s.tsy - s.sy) * k; s.so += (s.tso - s.so) * k;
+      s.rx += (s.trx - s.rx) * k; s.ry += (s.try_ - s.ry) * k; s.sc += (s.tsc - s.sc) * k;
+      card.style.setProperty('--sx', s.sx.toFixed(2) + '%');
+      card.style.setProperty('--sy', s.sy.toFixed(2) + '%');
+      card.style.setProperty('--so', s.so.toFixed(3));
+      card.style.transform = 'translateZ(0) perspective(900px) rotateX(' + s.rx.toFixed(3) + 'deg) rotateY(' + s.ry.toFixed(3) + 'deg) scale(' + s.sc.toFixed(4) + ')';
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
