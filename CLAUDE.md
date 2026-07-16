@@ -140,4 +140,18 @@ Não referenciar arquivos de imagem de logo diretamente — usar a CSS custom pr
 ## Onde alterar o quê
 
 | O que mudar | Arquivo | Local |
-|------------
+|-------------|---------|-------|
+| Textos das seções | `index.html` | Bloco HTML da seção |
+| Dados da equipe | `assets/js/main.js` | Array `members` — linhas 15–64 |
+| Cores / variáveis | `assets/css/style.css` | Bloco `:root` |
+| Logo no nav/hero | `assets/css/victrix-logos.css` | Variável `--vc-logo-lime-landscape` |
+| Velocidade carrossel | `assets/js/main.js` | `target -= 0.0032` (~linha 180) |
+
+## Identidade de marca
+
+Referência completa na skill `victrix-brand` e no manual `assets/VictrixCapital_guidelines_v01.pdf`. Pontos críticos:
+- **Tom:** preciso, calmo, institucional — sem exclamações, sem drama, sem metáforas
+- **Vitrix é:** escritório de assessoria de investimentos / credenciado à XP
+- **Não é:** banco, asset, gestora, wealth manager, consultoria financeira independente
+- **Fonte:** Zalando Sans SemiExpanded (self-hosted em `assets/fonts/`)
+- **Manual de marca:** `assets/VictrixCapital_guidelines_v01.pdf`
