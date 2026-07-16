@@ -13,16 +13,28 @@ Arquitetura completa dos dois sites e do deploy em `README.md`. Setup da área l
 
 ## Convenções de shell
 
-**Sempre iniciar todo comando bash com um `cd` para a pasta correta** antes de qualquer outra coisa — cada chamada de shell é independente (não há `cd` acumulado entre comandos). Nunca assumir o diretório de trabalho.
+**Sempre iniciar todo comando com um `cd` para a pasta correta** antes de qualquer outra coisa — cada chamada de shell é independente (não há `cd` acumulado entre comandos). Nunca assumir o diretório de trabalho.
 
-```bash
-cd "<caminho da pasta do projeto>" && <comando>
+**Regra ao entregar comandos para o Zé rodar no terminal:** todo comando entregue para execução manual DEVE vir precedido do `cd` com o caminho **real e completo** da pasta do projeto, pronto para copiar e colar. Nunca entregar um comando "solto" (ex.: só `git push`) — sempre o par `cd` + comando. Isso vale para push, deploy, limpeza de lock, servidor local, etc.
+
+Caminho real da pasta (Windows / PowerShell):
+
+```powershell
+cd "C:\Users\jvpca\OneDrive\Documentos\Claude\Projects\Site Victrix\site_victrix"
 ```
 
-Exemplo:
+Exemplo completo:
 
-```bash
-cd "/caminho/para/site_victrix" && git status
+```powershell
+cd "C:\Users\jvpca\OneDrive\Documentos\Claude\Projects\Site Victrix\site_victrix"
+git status
+```
+
+Observação sobre OneDrive: a pasta é sincronizada pelo OneDrive. Ocasionalmente sobra um `.git\index.lock` travado que impede novos commits. Se aparecer o erro `Unable to create '...index.lock'`, rode:
+
+```powershell
+cd "C:\Users\jvpca\OneDrive\Documentos\Claude\Projects\Site Victrix\site_victrix"
+del .git\index.lock
 ```
 
 ## Rodar localmente
@@ -37,10 +49,11 @@ Sem build step. Alterações em HTML/CSS/JS são imediatas no browser (Ctrl+Shif
 
 ## Deploy
 
-```bash
+```powershell
+cd "C:\Users\jvpca\OneDrive\Documentos\Claude\Projects\Site Victrix\site_victrix"
 git add <arquivos>
 git commit -m "descrição clara"
-git push
+git push origin main
 ```
 
 Push na branch `main` atualiza automaticamente via Vercel. Detalhes em `DEPLOY.md`.
@@ -127,18 +140,4 @@ Não referenciar arquivos de imagem de logo diretamente — usar a CSS custom pr
 ## Onde alterar o quê
 
 | O que mudar | Arquivo | Local |
-|-------------|---------|-------|
-| Textos das seções | `index.html` | Bloco HTML da seção |
-| Dados da equipe | `assets/js/main.js` | Array `members` — linhas 15–64 |
-| Cores / variáveis | `assets/css/style.css` | Bloco `:root` |
-| Logo no nav/hero | `assets/css/victrix-logos.css` | Variável `--vc-logo-lime-landscape` |
-| Velocidade carrossel | `assets/js/main.js` | `target -= 0.0032` (~linha 180) |
-
-## Identidade de marca
-
-Referência completa na skill `victrix-brand` e no manual `assets/VictrixCapital_guidelines_v01.pdf`. Pontos críticos:
-- **Tom:** preciso, calmo, institucional — sem exclamações, sem drama, sem metáforas
-- **Vitrix é:** escritório de assessoria de investimentos / credenciado à XP
-- **Não é:** banco, asset, gestora, wealth manager, consultoria financeira independente
-- **Fonte:** Zalando Sans SemiExpanded (self-hosted em `assets/fonts/`)
-- **Manual de marca:** `assets/VictrixCapital_guidelines_v01.pdf`
+|------------
