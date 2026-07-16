@@ -37,6 +37,9 @@ nav.menu a .nv{width:17px;height:17px;flex:none;opacity:.85}
 nav.menu a svg{stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .side .foot{margin-top:auto;font-size:10.5px;font-weight:200;color:var(--sage-dim);line-height:1.6}
 .side .foot b{color:var(--sage);font-weight:600}
+.logout-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;padding:10px 12px;font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--sage);background:transparent;border:1px solid var(--line);border-radius:8px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.logout-btn:hover{background:var(--alt-row);color:var(--white);border-color:var(--mid-green)}
+.logout-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
 main{padding:26px 32px 90px;max-width:1340px;width:100%;margin:0 auto}
 header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:24px}
@@ -212,6 +215,10 @@ footer.notes b{color:var(--sage);font-weight:600}
     <a href="#/metodologia" data-route="metodologia"><span class="nv"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M9 8h7M9 12h7M9 16h4"/></svg></span>Metodologia</a>
   </nav>
   <div class="foot"><b>Relatório de patrimônio</b><br>Dados agregados por ativo.<br>Contas mascaradas — LGPD.<br><span id="sideStamp"></span></div>
+  <button id="btnLogout" type="button" class="logout-btn" aria-label="Sair da área restrita">
+    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+    Sair
+  </button>
 </aside>
 
 <main>
@@ -1225,8 +1232,27 @@ render();
     window.__DATA=JSON.parse(await dl.data.text());
     window.__AETERNA={sb:sb,uid:uid,bucket:BUCKET};
     try{ await sb.from('acessos_log').insert({email:sess.user.email,user_agent:navigator.userAgent}); }catch(_e){}
+    async function doLogout(motivo){
+      try{ await sb.auth.signOut(); }catch(_e){}
+      var q = motivo ? ('?motivo='+motivo) : '';
+      location.replace('./login.html'+q);
+    }
     var lo=document.getElementById('btnLogout');
-    if(lo){ lo.addEventListener('click',async function(){ await sb.auth.signOut(); location.replace('./login.html'); }); }
+    if(lo){ lo.addEventListener('click',function(){ doLogout(); }); }
+
+    /* ===== Logout automático por inatividade (10 min) ===== */
+    var INATIVIDADE_MS = 10*60*1000;
+    var inatTimer=null;
+    function resetInatividade(){
+      if(inatTimer) clearTimeout(inatTimer);
+      inatTimer=setTimeout(function(){ doLogout('inatividade'); }, INATIVIDADE_MS);
+    }
+    ['mousemove','mousedown','keydown','scroll','touchstart','click'].forEach(function(ev){
+      window.addEventListener(ev, resetInatividade, {passive:true});
+    });
+    // Se a aba ficar oculta e voltar, também reinicia a contagem
+    document.addEventListener('visibilitychange', function(){ if(!document.hidden) resetInatividade(); });
+    resetInatividade();
     var code=document.getElementById('__renderCode').textContent;
     var sc=document.createElement('script'); sc.textContent=code; document.body.appendChild(sc);
   }catch(e){ console.error(e); fail('Erro ao carregar o relatorio.'); }
