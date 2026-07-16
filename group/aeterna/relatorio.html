@@ -198,6 +198,33 @@ footer.notes b{color:var(--sage);font-weight:600}
 .metod-content h2{color:var(--white);font-size:19px;margin:0 0 6px}
 .metod-content h3{color:var(--lime);font-size:14px;margin:14px 0 5px}
 .metod-content p{color:var(--sage);font-size:13px;line-height:1.65;margin:0 0 8px}
+/* ===== Exportar Excel (Aeterna) ===== */
+.ctrl-actions{display:flex;flex-direction:column;gap:4px}
+.xls-btn{font-family:var(--font);font-weight:600;font-size:13px;cursor:pointer;background:var(--lime);color:var(--deep-forest);border:1px solid var(--lime);border-radius:8px;padding:8px 14px;transition:filter .15s,transform .05s}
+.xls-btn:hover{filter:brightness(1.06)}
+.xls-btn:active{transform:translateY(1px)}
+.xls-btn[disabled]{opacity:.55;cursor:default}
+.xls-overlay{position:fixed;inset:0;background:rgba(6,12,6,.72);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.xls-overlay[hidden]{display:none}
+.xls-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(520px,100%);max-height:86vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.5);overflow:hidden}
+.xls-box h3{font-size:17px;font-weight:700;color:var(--white);padding:18px 20px 4px}
+.xls-sub{font-size:12.5px;color:var(--sage-dim);padding:0 20px 12px;line-height:1.5}
+.xls-sub b{color:var(--lime);font-weight:600}
+.xls-quick{display:flex;gap:8px;padding:0 20px 10px}
+.xls-quick button{font-family:var(--font);font-size:12px;cursor:pointer;color:var(--sage);background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:5px 12px}
+.xls-quick button:hover{border-color:var(--lime);color:var(--lime)}
+.xls-mlist{overflow:auto;padding:4px 20px;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px}
+.xls-mchk{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sage);padding:5px 6px;border-radius:6px;cursor:pointer}
+.xls-mchk:hover{background:var(--panel2)}
+.xls-mchk input{accent-color:var(--lime);width:15px;height:15px;cursor:pointer}
+.xls-status{font-size:12.5px;color:var(--sage-dim);padding:8px 20px;min-height:20px}
+.xls-status.err{color:var(--red)}
+.xls-status.ok{color:var(--lime)}
+.xls-bar{display:flex;justify-content:flex-end;gap:10px;padding:12px 20px 18px;border-top:1px solid var(--line)}
+.xls-btn.ghost{background:transparent;color:var(--sage);border-color:var(--line)}
+.xls-btn.ghost:hover{border-color:var(--sage);filter:none}
+@media(max-width:520px){.xls-mlist{grid-template-columns:1fr}}
+@media print{.ctrl-actions,.xls-overlay{display:none!important}}
 </style>
 </head>
 <body>
@@ -230,11 +257,27 @@ footer.notes b{color:var(--sage);font-weight:600}
     <div class="ctrls">
       <div class="ctrl"><label for="selMonth">Competência</label><select id="selMonth" aria-label="Selecionar competência"></select></div>
       <div class="ctrl"><label>Titular</label><div id="titularChips" class="tit-chips" role="group" aria-label="Filtrar por titularidade"></div></div>
+      <div class="ctrl ctrl-actions"><label>Exportar</label><button type="button" id="btnXLS" class="xls-btn">Baixar Excel</button></div>
       <div class="stamp" id="topStamp"></div>
     </div>
   </header>
 
   <div id="errorHost"></div>
+
+  <!-- Modal Exportar Excel -->
+  <div class="xls-overlay" id="xlsModal" hidden>
+    <div class="xls-box" role="dialog" aria-modal="true" aria-labelledby="xlsTitle">
+      <h3 id="xlsTitle">Baixar Excel</h3>
+      <div class="xls-sub">O arquivo ter&aacute; as abas <b>tbFundos</b>, <b>tbMovimentos</b> e <b>tbExtratos</b>. Selecione as compet&ecirc;ncias abaixo &mdash; o filtro vale para movimentos e extratos; o cadastro de fundos entra sempre completo.</div>
+      <div class="xls-quick"><button type="button" data-x="all">Todos os meses</button><button type="button" data-x="none">Nenhum</button></div>
+      <div class="xls-mlist" id="xlsMonths"></div>
+      <div class="xls-status" id="xlsStatus"></div>
+      <div class="xls-bar">
+        <button type="button" class="xls-btn ghost" data-x="close">Cancelar</button>
+        <button type="button" class="xls-btn" data-x="gen">Gerar e baixar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ================= PÁGINA 1 — VISÃO CONSOLIDADA ================= -->
   <section class="page" id="page-visao" aria-labelledby="pgTitle">
@@ -459,6 +502,103 @@ footer.notes b{color:var(--sage);font-weight:600}
 //# sourceMappingURL=chart.umd.min.js.map
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* ===== Exportacao Excel (Aeterna) -> 3 abas: tbFundos, tbMovimentos, tbExtratos =====
+   Fonte: <uid>/dados_export.json no Supabase Storage (mesmo bucket do dashboard).
+   Extracao fiel: valores sao escritos como estao no JSON; null/undefined -> celula vazia.
+   O campo 'comp' serve apenas de filtro por mes e NAO vira coluna. */
+(function(){
+  var btn=document.getElementById('btnXLS');
+  var modal=document.getElementById('xlsModal');
+  if(!btn||!modal) return;
+  var monthsBox=modal.querySelector('#xlsMonths');
+  var statusEl=modal.querySelector('#xlsStatus');
+  var genBtn=modal.querySelector('[data-x=gen]');
+  var EXPORT_FILE='dados_export.json';
+  var cache=null;
+  var META={months:[],labels:[]};
+
+  var FUND_COLS=['CodFundo','NomeGestor','CodFundoBanco','NomeFundo','Classificacao','Subclassificacao','IsentoIR','dtPrimeiraAplicacao','Vencimento_ResgateTotal','CNPJ / ISIN','Titularidade'];
+  var MOV_COLS =['CodFundo','DATA','Entradas','Saidas','Tributos','Taxas','Dividendos','QdeCotas','Respostas'];
+  var EXT_COLS =['CodFundo','Data','SaldoLiquido','SaldoBruto','Rentabilidade','QdeCotas'];
+
+  function setStatus(msg,kind){ statusEl.className='xls-status'+(kind?(' '+kind):''); statusEl.textContent=msg||''; }
+
+  async function fetchExport(){
+    var A=window.__AETERNA;
+    if(!A||!A.sb) throw new Error('Sessao indisponivel. Recarregue a pagina.');
+    var dl=await A.sb.storage.from(A.bucket).download(A.uid+'/'+EXPORT_FILE);
+    if(dl.error||!dl.data) throw new Error('Arquivo de exportacao (dados_export.json) nao encontrado para esta conta.');
+    return JSON.parse(await dl.data.text());
+  }
+
+  function renderMonths(){
+    var M=META.months, L=META.labels;
+    if(!M.length){ monthsBox.innerHTML='<div class="xls-mchk" style="color:var(--sage-dim)">Sem competencias disponiveis.</div>'; return; }
+    monthsBox.innerHTML=M.map(function(m,i){
+      return '<label class="xls-mchk"><input type="checkbox" value="'+m+'" checked> '+(L[i]||m)+'</label>';
+    }).join('');
+  }
+
+  async function openModal(){
+    modal.hidden=false; setStatus('');
+    if(!cache){
+      setStatus('Carregando competencias...');
+      try{ cache=await fetchExport(); }
+      catch(e){ setStatus(e.message,'err'); return; }
+      var mt=(cache&&cache.meta)||{};
+      META.months=(mt.months||[]).slice();
+      META.labels=(mt.months_label||[]).slice();
+    }
+    setStatus(''); renderMonths();
+  }
+  function closeModal(){ modal.hidden=true; }
+
+  function cell(v,col){
+    if(v===null||v===undefined) return '';
+    if(col==='CNPJ / ISIN' && typeof v==='number') return String(v); /* evita notacao cientifica em ids longos */
+    return v;
+  }
+  function sheet(rows,cols){
+    var out=[cols.slice()];
+    (rows||[]).forEach(function(r){ out.push(cols.map(function(c){ return cell(r[c],c); })); });
+    var ws=XLSX.utils.aoa_to_sheet(out);
+    ws['!cols']=cols.map(function(c){ return {wch:Math.min(46,Math.max(11,c.length+3))}; });
+    return ws;
+  }
+
+  async function generate(){
+    var checks=[].slice.call(monthsBox.querySelectorAll('input:checked')).map(function(i){return i.value;});
+    if(!checks.length){ setStatus('Selecione pelo menos uma competencia.','err'); return; }
+    if(!cache){ setStatus('Dados nao carregados. Reabra a janela.','err'); return; }
+    var set={}; checks.forEach(function(c){ set[c]=1; });
+    var fundos=(cache.fundos||[]);
+    var mov=(cache.movimentos||[]).filter(function(r){ return set[r.comp]; });
+    var ext=(cache.extratos||[]).filter(function(r){ return set[r.comp]; });
+
+    genBtn.disabled=true; setStatus('Gerando arquivo...');
+    try{
+      var wb=XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, sheet(fundos,FUND_COLS), 'tbFundos');
+      XLSX.utils.book_append_sheet(wb, sheet(mov,MOV_COLS),    'tbMovimentos');
+      XLSX.utils.book_append_sheet(wb, sheet(ext,EXT_COLS),    'tbExtratos');
+      var tag=(checks.length===META.months.length)?'completo':checks.slice().sort().join('-');
+      XLSX.writeFile(wb,'Aeterna_Extracao_'+tag+'.xlsx');
+      setStatus('Arquivo gerado -> '+fundos.length+' fundos, '+mov.length+' movimentos, '+ext.length+' extratos.','ok');
+    }catch(e){ console.error(e); setStatus('Erro ao gerar o arquivo: '+e.message,'err'); }
+    finally{ genBtn.disabled=false; }
+  }
+
+  btn.addEventListener('click',openModal);
+  modal.querySelector('[data-x=close]').addEventListener('click',closeModal);
+  genBtn.addEventListener('click',generate);
+  modal.querySelector('[data-x=all]').addEventListener('click',function(){ monthsBox.querySelectorAll('input').forEach(function(i){i.checked=true;}); });
+  modal.querySelector('[data-x=none]').addEventListener('click',function(){ monthsBox.querySelectorAll('input').forEach(function(i){i.checked=false;}); });
+  modal.addEventListener('click',function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!modal.hidden) closeModal(); });
+})();
+</script>
 <script src="./config.js"></script>
 <script type="application/x-render" id="__renderCode">
 "use strict";
