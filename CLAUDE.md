@@ -11,6 +11,20 @@ Monorepo estático (HTML/CSS/JS puro, zero dependências, zero build) que serve 
 
 Arquitetura completa dos dois sites e do deploy em `README.md`. Setup da área logada em `docs/aeterna/`.
 
+## Convenções de shell
+
+**Sempre iniciar todo comando bash com um `cd` para a pasta correta** antes de qualquer outra coisa — cada chamada de shell é independente (não há `cd` acumulado entre comandos). Nunca assumir o diretório de trabalho.
+
+```bash
+cd "<caminho da pasta do projeto>" && <comando>
+```
+
+Exemplo:
+
+```bash
+cd "/caminho/para/site_victrix" && git status
+```
+
 ## Rodar localmente
 
 ```bash
