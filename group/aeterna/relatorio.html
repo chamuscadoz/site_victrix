@@ -555,15 +555,42 @@ footer.notes b{color:var(--sage);font-weight:600}
   }
   function closeModal(){ modal.hidden=true; }
 
+  /* Colunas que devem sair como DATA real do Excel (permitem filtro por periodo). */
+  var DATE_COLS={'DATA':1,'Data':1,'dtPrimeiraAplicacao':1,'Vencimento_ResgateTotal':1};
+  var DATE_FMT='dd/mm/yyyy';
+
+  /* Converte 'dd-mm-aaaa', 'dd/mm/aaaa' ou 'aaaa-mm-dd' em serial do Excel (dias desde 1899-12-30).
+     Calculo em UTC -> sem desvio de fuso. Retorna null se nao reconhecer. */
+  function toSerial(v){
+    if(v===null||v===undefined||v==='') return null;
+    if(typeof v==='number') return v; /* ja e serial */
+    if(v instanceof Date) return v.getTime()/86400000+25569-(v.getTimezoneOffset()/1440);
+    var s=String(v).trim(), d,mo,y,m;
+    if((m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/))){ d=+m[1]; mo=+m[2]; y=+m[3]; }
+    else if((m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))){ y=+m[1]; mo=+m[2]; d=+m[3]; }
+    else return null;
+    if(mo<1||mo>12||d<1||d>31) return null;
+    return Date.UTC(y,mo-1,d)/86400000+25569;
+  }
+
   function cell(v,col){
     if(v===null||v===undefined) return '';
     if(col==='CNPJ / ISIN' && typeof v==='number') return String(v); /* evita notacao cientifica em ids longos */
+    if(DATE_COLS[col]){ var s=toSerial(v); if(s!==null) return s; }
     return v;
   }
   function sheet(rows,cols){
     var out=[cols.slice()];
     (rows||[]).forEach(function(r){ out.push(cols.map(function(c){ return cell(r[c],c); })); });
     var ws=XLSX.utils.aoa_to_sheet(out);
+    /* aplica formato de data nas colunas de data (celulas numericas viram data de verdade) */
+    cols.forEach(function(c,ci){
+      if(!DATE_COLS[c]) return;
+      for(var ri=1; ri<out.length; ri++){
+        var ref=XLSX.utils.encode_cell({c:ci,r:ri}), cl=ws[ref];
+        if(cl && cl.t==='n'){ cl.z=DATE_FMT; }
+      }
+    });
     ws['!cols']=cols.map(function(c){ return {wch:Math.min(46,Math.max(11,c.length+3))}; });
     return ws;
   }
