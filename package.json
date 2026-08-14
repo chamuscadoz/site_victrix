@@ -6,16 +6,16 @@
   "scripts": {
     "start": "python -m http.server 8000",
     "dev": "python -m http.server 8000",
-    "serve": "npx serve .",
-    "validate-html": "echo 'HTML validation would go here'",
-    "format": "echo 'Code formatting would go here'"
+    "serve": "npx serve ."
   },
   "keywords": [
     "victrix",
     "capital",
+    "group",
+    "aeterna",
     "investimentos",
     "xp",
-    "agente-autonomo"
+    "assessoria-de-investimentos"
   ],
   "author": "Victrix Capital",
   "license": "UNLICENSED",
