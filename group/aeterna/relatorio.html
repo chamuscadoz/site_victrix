@@ -345,8 +345,6 @@ footer.notes b{color:var(--sage);font-weight:600}
           <h2>Alocação detalhada — classe › indexador › instrumento</h2>
           <div><button class="ci-linkbtn" id="ciExpand">Expandir tudo</button><button class="ci-linkbtn" id="ciCollapse">Recolher tudo</button></div>
         </div>
-        <div class="h-sub">Filtrar por titular (agrega a seleção)</div>
-        <div class="ci-bar" id="ciTitBar"></div>
         <div class="h-sub">Filtrar por gestor (agrega a seleção)</div>
         <div class="ci-bar" id="ciGestBar"></div>
         <div class="tbl-wrap"><table id="ciTable"><thead><tr><th>Classe › Indexador › Instrumento</th><th>Nº ativos</th><th>Valor a mercado</th><th>% do total</th></tr></thead><tbody></tbody><tfoot></tfoot></table></div>
@@ -1089,13 +1087,12 @@ document.getElementById('fBusca').addEventListener('input',e=>{state.filters.bus
 
 /* ============ roteador & montagem ============ */
 /* ============ PAGINA — Carteira de Investimentos (alocacao detalhada) ============ */
-let ciTit=new Set(), ciGest=new Set(), ciExp=new Set(), ciMonth=null;
+let ciGest=new Set(), ciExp=new Set(), ciMonth=null;
 const CI_IDX_META={POS:{pre:'CDI + ',suf:''},PRE:{pre:'',suf:'% a.a.'},INF:{pre:'IPCA + ',suf:''}};
 const CI_RF_ORDER=["Soberano e Quase-Soberano","Crédito High Grade","CDB","Debênture","CRI","CRA","Crédito High Yield"];
 function ciTaxa(code,x){if(x==null)return '<span class="ci-muted">ND</span>';const mt=CI_IDX_META[code];if(!mt)return fNum(x)+'%';return (mt.pre||'')+fNum(x)+(mt.suf||'%');}
 function ciRowsMonth(mo){
-  let r=assetsAll(mo).filter(x=>x.mv>0);
-  if(ciTit.size)r=r.filter(x=>ciTit.has(x.titular));else r=r.filter(x=>!INTERNAL_TIT.has(x.titular));
+  let r=assets(mo).filter(x=>x.mv>0);   /* titular: segue os chips do topo */
   if(ciGest.size)r=r.filter(x=>ciGest.has(x.gestor));
   return r;
 }
@@ -1117,14 +1114,9 @@ function ciChipBar(hostId,keys,sel){
     ciExp=new Set();ciMonth=null;renderCarteiraInv();});
 }
 function renderCarteiraInv(){
-  const TORD=['D1','A','N','D','R','M','S','T','L','S2'];
-  const A=assetsAll(state.month).filter(x=>x.mv>0);
-  const titSet=new Set(A.map(a=>a.titular).filter(Boolean));
-  const titKeys=TORD.filter(x=>titSet.has(x)).concat([...titSet].filter(x=>!TORD.includes(x)).sort());
+  const A=assets(state.month).filter(x=>x.mv>0);
   const gestKeys=[...new Set(A.map(a=>a.gestor).filter(Boolean))].sort();
-  ciTit=new Set([...ciTit].filter(x=>titSet.has(x)));
   ciGest=new Set([...ciGest].filter(x=>gestKeys.includes(x)));
-  ciChipBar('ciTitBar',titKeys,ciTit);
   ciChipBar('ciGestBar',gestKeys,ciGest);
   const bt=ciBuildTree(),tree=bt.tree,pl=bt.pl;
   const classes=Object.keys(tree).sort((a,b)=>tree[b].mv-tree[a].mv);
