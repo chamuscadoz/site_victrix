@@ -229,6 +229,25 @@ footer.notes b{color:var(--sage);font-weight:600}
 .xls-btn.ghost{background:transparent;color:var(--sage);border-color:var(--line)}
 .xls-btn.ghost:hover{border-color:var(--sage);filter:none}
 @media(max-width:520px){.xls-mlist{grid-template-columns:1fr}}
+/* ===== Ficha do ativo ===== */
+a.asset-link{color:var(--white)}
+a.asset-link:hover .trunc{color:var(--lime);text-decoration:underline;text-underline-offset:3px}
+.af-back{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--lime);margin-bottom:14px}
+.af-name{font-size:22px;font-weight:700;color:var(--white);line-height:1.2}
+.af-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.af-tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 10px;color:var(--sage-dim);font-weight:300}
+.af-tag b{color:var(--sage);font-weight:600}
+.af-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.af-kpi{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.af-kpi .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-dim);font-weight:200}
+.af-kpi .v{font-size:19px;font-weight:700;color:var(--white);margin-top:4px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.af-kpi .s{font-size:11px;color:var(--sage-dim);font-weight:300;margin-top:2px}
+.af-kpi.main{border-color:var(--mid-green)}
+.af-kpi.main .v{color:var(--lime);font-size:22px}
+.af-note{font-size:11.5px;font-weight:300;color:var(--sage-dim);line-height:1.6;margin-top:10px}
+.af-note b{color:var(--sage);font-weight:600}
+.af-warn{border-left:2px solid var(--lime);padding:8px 12px;background:var(--panel2);border-radius:0 8px 8px 0;font-size:12px;color:var(--sage);margin-top:12px;line-height:1.55}
+tr.af-term td{color:var(--white);font-weight:600;border-top:1px solid var(--mid-green)}
 @media print{.ctrl-actions,.xls-overlay{display:none!important}}
 </style>
 </head>
@@ -402,8 +421,37 @@ footer.notes b{color:var(--sage);font-weight:600}
       <div class="card span6"><div class="h-sub">Atribuição por ativo: contribuições e detratores (bps)</div><div class="chart-box tall"><canvas id="chartAttrib"></canvas></div></div>
       <div class="card span12">
         <h2>Rentabilidade e contribuição por ativo</h2>
-        <div class="h-sub">clique nos cabeçalhos para ordenar — melhores e piores contribuições destacadas</div>
+        <div class="h-sub">clique no nome do ativo para abrir a ficha completa · clique nos cabeçalhos para ordenar — melhores e piores contribuições destacadas</div>
         <div class="tbl-wrap" id="tblRetorno"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FICHA DO ATIVO (#/ativo/<cod>) ================= -->
+  <section class="page" id="page-ativo">
+    <a class="af-back" href="#/retorno">← Retorno por Ativo</a>
+    <div class="grid">
+      <div class="card span12" id="afHead"></div>
+      <div class="card span12">
+        <h2>Resultado desde o ingresso</h2>
+        <div class="h-sub" id="afKpiSub"></div>
+        <div class="af-kpis" id="afKpis"></div>
+        <div id="afKpiNote"></div>
+      </div>
+      <div class="card span12">
+        <h2>Evolução</h2>
+        <div class="h-sub">valor a mercado no fim de cada mês (barras) e rentabilidade acumulada da posição (linha) — meses sem rentabilidade ficam em branco</div>
+        <div class="chart-box tall" id="afEvoHost"><canvas id="chartAtivoEvo" role="img" aria-label="Evolução do valor a mercado e da rentabilidade acumulada do ativo"></canvas></div>
+      </div>
+      <div class="card span12">
+        <h2>Fluxo de caixa</h2>
+        <div class="h-sub">visão do investidor: negativo = aplicado, positivo = recebido · última linha = posição marcada a mercado</div>
+        <div class="tbl-wrap" id="afFluxo"></div>
+      </div>
+      <div class="card span12">
+        <h2>Histórico mensal</h2>
+        <div class="h-sub">dados do fechamento de cada competência</div>
+        <div class="tbl-wrap" id="afMensal"></div>
       </div>
     </div>
   </section>
@@ -560,13 +608,22 @@ footer.notes b{color:var(--sage);font-weight:600}
 
   function setStatus(msg,kind){ statusEl.className='xls-status'+(kind?(' '+kind):''); statusEl.textContent=msg||''; }
 
-  async function fetchExport(){
-    var A=window.__AETERNA;
-    if(!A||!A.sb) throw new Error('Sessao indisponivel. Recarregue a pagina.');
-    var dl=await A.sb.storage.from(A.bucket).download(A.uid+'/'+EXPORT_FILE);
-    if(dl.error||!dl.data) throw new Error('Arquivo de exportacao (dados_export.json) nao encontrado para esta conta.');
-    return JSON.parse(await dl.data.text());
+  /* Download unico por sessao, compartilhado com a ficha do ativo (window.aeternaLoadExport).
+     Em caso de erro a promessa e descartada, para a proxima tentativa baixar de novo. */
+  var exportPromise=null;
+  function fetchExport(){
+    if(exportPromise) return exportPromise;
+    exportPromise=(async function(){
+      var A=window.__AETERNA;
+      if(!A||!A.sb) throw new Error('Sessao indisponivel. Recarregue a pagina.');
+      var dl=await A.sb.storage.from(A.bucket).download(A.uid+'/'+EXPORT_FILE);
+      if(dl.error||!dl.data) throw new Error('Arquivo de exportacao (dados_export.json) nao encontrado para esta conta.');
+      return JSON.parse(await dl.data.text());
+    })();
+    exportPromise.catch(function(){ exportPromise=null; });
+    return exportPromise;
   }
+  window.aeternaLoadExport=fetchExport;
 
   function renderMonths(){
     var M=META.months, L=META.labels;
@@ -979,7 +1036,7 @@ function renderRetorno(){
   /* tabela densa */
   const tbl='ret';
   if(!state.sort[tbl])state.sort[tbl]={key:'contrib',dir:-1};
-  const rows=sortRows(withRent.map(a=>({nome:a.nome,classe:a.classe,gestor:a.gestor,conta:a.conta,mv:a.mv,peso:a.peso,rent:a.rent,contrib:a.contrib})),tbl);
+  const rows=sortRows(withRent.map(a=>({cod:a.cod,nome:a.nome,classe:a.classe,gestor:a.gestor,conta:a.conta,mv:a.mv,peso:a.peso,rent:a.rent,contrib:a.contrib})),tbl);
   const bestN=byContrib.slice(0,3).map(a=>a.nome);
   const worstN=byContrib.slice(-3).filter(a=>(a.contrib??0)<0).map(a=>a.nome);
   document.getElementById('tblRetorno').innerHTML=`<table><thead><tr>
@@ -987,7 +1044,7 @@ function renderRetorno(){
     ${thSort(tbl,'mv','Valor a mercado')}${thSort(tbl,'peso','% PL')}${thSort(tbl,'rent','Rent. mês')}${thSort(tbl,'contrib','Contribuição')}
     </tr></thead><tbody>${rows.map(r=>{
       const hl=bestN.includes(r.nome)?' class="hl-best"':(worstN.includes(r.nome)?' class="hl-worst"':'');
-      return `<tr${hl}><td class="name">${trunc(r.nome)}</td><td style="text-align:left">${esc(r.classe)}</td><td style="text-align:left">${esc(r.conta)}</td><td>${fBRL(r.mv,0)}</td><td>${fPct(r.peso,1)}</td><td>${pctCell(r.rent)}</td><td>${pctCell(r.contrib,3)}</td></tr>`;}).join('')}
+      return `<tr${hl}><td class="name">${assetLink(r.cod,trunc(r.nome))}</td><td style="text-align:left">${esc(r.classe)}</td><td style="text-align:left">${esc(r.conta)}</td><td>${fBRL(r.mv,0)}</td><td>${fPct(r.peso,1)}</td><td>${pctCell(r.rent)}</td><td>${pctCell(r.contrib,3)}</td></tr>`;}).join('')}
     </tbody><tfoot><tr><td colspan="3">Carteira (${rows.length} posições com rentabilidade)</td>
       <td>${fBRL(withRent.reduce((s,a)=>s+a.mv,0),0)}</td><td></td><td>${pctCell(rc)}</td><td>${pctCell(withRent.reduce((s,a)=>s+(a.contrib||0),0),3)}</td></tr></tfoot></table>`;
 }
@@ -1382,6 +1439,222 @@ function renderMetodologia(){
   document.getElementById('metodContent').innerHTML=(METOD[state.metodSel]||{}).html||'';
 }
 
+/* ============ FICHA DO ATIVO (#/ativo/<cod>) ============
+   Fontes: dados_dashboard.json (posicao e rentabilidade mensais, igual ao resto do painel)
+   e dados_export.json (tbMovimentos datados + tbExtratos + cadastro), baixado sob demanda.
+   Convencao de sinal da tbMovimentos (carga_tbMov.py): valores do ponto de vista do ATIVO —
+   aplicacao positiva; resgate e dividendo negativos; IR e taxa debitados positivos. Logo o
+   fluxo do INVESTIDOR em cada lancamento e -(Entradas+Saidas+Tributos+Taxas+Dividendos). */
+const assetLink=(cod,inner)=>cod?`<a class="asset-link" href="#/ativo/${encodeURIComponent(cod)}" title="Abrir a ficha do ativo">${inner}</a>`:inner;
+const AF_COLS=[['Entradas','Aplicação'],['Saidas','Resgate / amortização'],['Dividendos','Juros / dividendos'],['Tributos','IR / tributos'],['Taxas','Taxas']];
+function afDate(v){
+  if(v==null||v==='')return null;
+  const s=String(v).trim();let m;
+  if((m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)))return new Date(Date.UTC(+m[1],+m[2]-1,+m[3]));
+  if((m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/)))return new Date(Date.UTC(+m[3],+m[2]-1,+m[1]));
+  return null;
+}
+const afMonthEnd=ym=>new Date(Date.UTC(+ym.slice(0,4),+ym.slice(4,6),0));
+const fDate=d=>d?d.toLocaleDateString('pt-BR',{timeZone:'UTC'}):'—';
+const fBRLs=v=>(v==null||isNaN(v))?'—':(v<0?'−':'+')+fBRL(Math.abs(v));
+const afCode=()=>{try{return decodeURIComponent((location.hash||'').replace(/^#\/ativo\//,''));}catch(_e){return '';}};
+
+/* TIR por datas, mesma convencao do XIRR do Excel (ano de 365 dias corridos).
+   flows: [{d:Date,v}] com v>0 = recebido pelo investidor e v<0 = aplicado.
+   Devolve a taxa anual efetiva, ou null se nao houver solucao (exige fluxos de sinais opostos). */
+function xirr(flows){
+  if(flows.length<2||!flows.some(f=>f.v>0)||!flows.some(f=>f.v<0))return null;
+  const t0=Math.min(...flows.map(f=>f.d.getTime()));
+  const T=flows.map(f=>({t:(f.d.getTime()-t0)/864e5/365,v:f.v}));
+  const npv=r=>T.reduce((s,f)=>s+f.v/Math.pow(1+r,f.t),0);
+  const dnpv=r=>T.reduce((s,f)=>s-f.t*f.v/Math.pow(1+r,f.t+1),0);
+  let r=0.1;
+  for(let i=0;i<60;i++){
+    const f=npv(r),df=dnpv(r);
+    if(!isFinite(f)||!isFinite(df)||df===0)break;
+    const nr=r-f/df;
+    if(!isFinite(nr)||nr<=-0.9999)break;
+    if(Math.abs(nr-r)<1e-10)return nr;
+    r=nr;
+  }
+  /* Newton nao convergiu: bisseccao num intervalo com troca de sinal */
+  let lo=-0.9999,hi=1,flo=npv(lo),fhi=npv(hi);
+  while(flo*fhi>0&&hi<1e6){hi*=4;fhi=npv(hi);}
+  if(!(flo*fhi<=0))return null;
+  for(let i=0;i<400&&hi-lo>1e-12;i++){
+    const mid=(lo+hi)/2,fm=npv(mid);
+    if(fm===0)return mid;
+    if(flo*fm<0){hi=mid;fhi=fm;}else{lo=mid;flo=fm;}
+  }
+  return (lo+hi)/2;
+}
+
+/* Fluxos do investidor ate endDate (inclusive) + saldo de abertura quando a compra nao
+   esta na base (posicao anterior ao inicio do historico de movimentos). */
+function afBuildFlows(exp,cod,endDate,rowsByMonth){
+  let flows=[];
+  for(const r of (exp.movimentos||[])){
+    if(String(r.CodFundo)!==cod)continue;
+    const d=afDate(r.DATA);if(!d||d>endDate)continue;
+    for(const [k,lab] of AF_COLS){
+      const x=Number(r[k]);if(!x||!isFinite(x))continue;
+      flows.push({d,v:-x,tipo:lab,col:k,hist:r.Respostas||''});
+    }
+  }
+  flows.sort((a,b)=>a.d-b.d);
+  /* primeiro saldo conhecido: tbExtratos; na falta, a primeira competencia do painel */
+  let first=null;
+  const ext=(exp.extratos||[]).filter(e=>String(e.CodFundo)===cod&&Number(e.SaldoBruto)>0&&/^\d{6}$/.test(String(e.comp||e.Data)))
+    .map(e=>({ym:String(e.comp||e.Data),v:Number(e.SaldoBruto)})).sort((a,b)=>a.ym<b.ym?-1:1);
+  if(ext.length)first=ext[0];
+  else{const ym=Object.keys(rowsByMonth).sort()[0];if(ym&&rowsByMonth[ym].mv>0)first={ym,v:rowsByMonth[ym].mv};}
+  let opening=null;
+  if(first){
+    const fe=afMonthEnd(first.ym);
+    const firstBuy=flows.find(f=>f.col==='Entradas'&&f.v<0);
+    if(fe<=endDate&&(!firstBuy||firstBuy.d>fe)){
+      opening={d:fe,v:-first.v,tipo:'Saldo inicial',col:'Abertura',hist:'posição em '+fDate(fe)+' tratada como aporte (compra anterior ao histórico)'};
+      flows=[opening,...flows.filter(f=>f.d>fe)];
+    }
+  }
+  return {flows,opening};
+}
+
+let afToken=0;
+async function renderAtivo(){
+  const tok=++afToken;
+  const cod=afCode();
+  const endYM=state.month,endDate=afMonthEnd(endYM);
+  const rowsByMonth={};
+  for(const m of M){if(m>endYM)break;const a=assetsAll(m).find(x=>x.cod===cod);if(a)rowsByMonth[m]=a;}
+  const months=Object.keys(rowsByMonth).sort();
+  const head=document.getElementById('afHead');
+  const ids=['afKpis','afKpiNote','afFluxo','afMensal'];
+  if(!months.length){
+    const any=M.some(m=>assetsAll(m).some(x=>x.cod===cod));
+    head.innerHTML=`<div class="empty"><b>${any?'Ativo sem posição até esta competência':'Ativo não encontrado'}</b>${any?'Escolha uma competência mais recente no seletor do topo.':'Volte ao Retorno por Ativo e escolha uma posição na tabela.'}</div>`;
+    ids.forEach(i=>document.getElementById(i).innerHTML='');
+    document.getElementById('afKpiSub').textContent='';
+    document.getElementById('afEvoHost').innerHTML='';
+    return;
+  }
+  const aEnd=rowsByMonth[endYM]||null;          /* posicao na competencia selecionada */
+  const aRef=aEnd||rowsByMonth[months[months.length-1]];
+  const mvEnd=aEnd?aEnd.mv:0, liqEnd=aEnd?(aEnd.liq??aEnd.mv):0;
+  document.getElementById('pgTitle').textContent=aRef.nome;
+
+  /* rentabilidade acumulada (encadeada mes a mes) e benchmarks no mesmo periodo */
+  const span=M.slice(mi(months[0]),mi(endYM)+1);
+  const imas=DATA.meta.imas_mensal||{},ipca=DATA.meta.ipca_mensal||{};
+  const useIpca=aRef.idx_code==='IPCA'&&Object.keys(ipca).length;
+  let accA=1,accB=1,accI=1;
+  const evo=span.map(m=>{
+    const a=rowsByMonth[m],r=a&&a.rent!=null?a.rent:null,b=imas[m],c=ipca[m];
+    if(r!=null)accA*=1+r;if(typeof b==='number')accB*=1+b;if(typeof c==='number')accI*=1+c;
+    return {m,mv:a?a.mv:null,peso:a?a.peso:null,rent:r,contrib:a?a.contrib:null,
+      acc:r!=null?accA-1:null,accB:typeof b==='number'?accB-1:null,accI:typeof c==='number'?accI-1:null};
+  });
+  const twr=comp(evo.map(e=>e.rent));
+  const bTwr=comp(span.map(m=>typeof imas[m]==='number'?imas[m]:null));
+
+  /* cabecalho */
+  const tag=(l,v)=>v==null||v===''||v==='—'?'':`<span class="af-tag">${l} <b>${esc(v)}</b></span>`;
+  const renderHead=(fund)=>{
+    const ing=fund&&afDate(fund.dtPrimeiraAplicacao),venc=fund&&afDate(fund.Vencimento_ResgateTotal);
+    head.innerHTML=`<div class="af-name">${esc(aRef.nome)}</div>
+      <div class="h-sub" style="margin:4px 0 0">${esc(aRef.classe)} · ${esc(aRef.instrumento)} · ${esc(aRef.emissor)}</div>
+      <div class="af-tags">${tag('Código',aRef.cod)}${tag('Titular / Gestor',aRef.conta)}${tag('Indexador',aRef.indexacao)}
+      ${tag('Taxa',aRef.taxa!=null?ciTaxa(aRef.idx_code,aRef.taxa):null)}${tag('Liquidez',aRef.liquidez)}${tag('Tributação',aRef.tributacao)}
+      ${tag('Score',aRef.sc_total!=null?fNum(aRef.sc_total,0):null)}${tag('1ª aplicação',ing?fDate(ing):null)}${tag('Vencimento',venc?fDate(venc):null)}</div>`;
+  };
+  renderHead(null);
+
+  /* grafico de evolucao */
+  const host=document.getElementById('afEvoHost');
+  if(!host.querySelector('canvas'))host.innerHTML='<canvas id="chartAtivoEvo" role="img" aria-label="Evolução do valor a mercado e da rentabilidade acumulada do ativo"></canvas>';
+  const ds=[
+    {type:'bar',label:'Valor a mercado',data:evo.map(e=>e.mv),backgroundColor:'rgba(46,111,58,.55)',borderRadius:3,yAxisID:'y',order:3},
+    {type:'line',label:'Rentabilidade acumulada',data:evo.map(e=>e.acc==null?null:e.acc*100),borderColor:C.lime,backgroundColor:C.lime,borderWidth:2,pointRadius:2.5,spanGaps:false,tension:.25,yAxisID:'y1',order:1},
+    {type:'line',label:'IMA-S acumulado',data:evo.map(e=>e.accB==null?null:e.accB*100),borderColor:C.sage,borderDash:[5,4],borderWidth:1.5,pointRadius:0,spanGaps:false,tension:.25,yAxisID:'y1',order:2}];
+  if(useIpca)ds.push({type:'line',label:'IPCA acumulado',data:evo.map(e=>e.accI==null?null:e.accI*100),borderColor:C.dim,borderDash:[2,3],borderWidth:1.5,pointRadius:0,spanGaps:false,tension:.25,yAxisID:'y1',order:2});
+  mkChart('chartAtivoEvo',{data:{labels:span.map(mLabel),datasets:ds},
+    options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:C.dim}},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+(c.dataset.yAxisID==='y'?fBRL(c.parsed.y,0):fNum(c.parsed.y,2)+'%')}}},
+      scales:{x:{grid:{display:false}},y:{position:'left',ticks:{callback:v=>fCompact(v)},grid:{color:'rgba(30,51,30,.5)'}},
+        y1:{position:'right',ticks:{callback:v=>fNum(v,1)+'%'},grid:{display:false}}}}});
+
+  /* historico mensal (mais recente primeiro) */
+  document.getElementById('afMensal').innerHTML=`<table><thead><tr><th>Competência</th><th>Valor a mercado</th><th>% PL</th><th>Rent. mês</th><th>Acumulada</th><th>Contribuição</th></tr></thead><tbody>
+    ${[...evo].reverse().map(e=>`<tr><td>${mLabel(e.m)}</td><td>${e.mv==null?'—':fBRL(e.mv,0)}</td><td>${e.peso==null?'—':fPct(e.peso,1)}</td><td>${pctCell(e.rent)}</td><td>${pctCell(e.acc)}</td><td>${pctCell(e.contrib,3)}</td></tr>`).join('')}
+    </tbody></table>`;
+
+  /* KPIs que dependem so do dashboard; os de fluxo entram quando o export chegar */
+  const kpiBox=(l,v,s,main)=>`<div class="af-kpi${main?' main':''}"><div class="l">${l}</div><div class="v">${v}</div>${s?`<div class="s">${s}</div>`:''}</div>`;
+  document.getElementById('afKpiSub').textContent='posição marcada a mercado em '+fDate(endDate)+' (competência '+mLabel(endYM)+')';
+  const baseKpis=[
+    kpiBox('Valor a mercado',fBRL(mvEnd,0),aEnd?fPct(aEnd.peso,1)+' do PL · rent. mês '+(aEnd.rent==null?'—':fPct(aEnd.rent)):'posição encerrada'),
+    kpiBox('Rentabilidade acumulada',pctCell(twr),'desde '+mLabel(months[0])+' · IMA-S '+fPct(bTwr))];
+  const kpis=document.getElementById('afKpis'),note=document.getElementById('afKpiNote'),fx=document.getElementById('afFluxo');
+  kpis.innerHTML=kpiBox('TIR (a.a.)','…','carregando fluxo de caixa',true)+baseKpis.join('');
+  note.innerHTML='';fx.innerHTML='<div class="empty"><b>Carregando fluxo de caixa…</b></div>';
+
+  let exp;
+  try{
+    if(typeof window.aeternaLoadExport!=='function')throw new Error('Carregador do arquivo de movimentos indisponível.');
+    exp=await window.aeternaLoadExport();
+  }catch(e){
+    if(tok!==afToken)return;
+    kpis.innerHTML=kpiBox('TIR (a.a.)','—','sem fluxo de caixa',true)+baseKpis.join('');
+    fx.innerHTML=`<div class="empty"><b>Fluxo de caixa indisponível</b>${esc(e.message||'')}</div>`;
+    return;
+  }
+  if(tok!==afToken||route()!=='ativo')return;   /* o usuario ja saiu ou trocou de ativo */
+
+  const fundRows=(exp.fundos||[]).filter(f=>String(f.CodFundo)===cod);
+  const fund=fundRows[fundRows.length-1]||null;  /* gerar_export ordena por Mes de Ref: o ultimo e o cadastro mais recente */
+  renderHead(fund);
+
+  const {flows,opening}=afBuildFlows(exp,cod,endDate,rowsByMonth);
+  const term={d:endDate,v:mvEnd,tipo:'Posição marcada a mercado',col:'Posicao',hist:aEnd?'valor a mercado em '+fDate(endDate):'posição encerrada'};
+  const all=mvEnd>0?[...flows,term]:flows;
+  const irr=xirr(all);
+  const irrLiq=mvEnd>0?xirr([...flows,{d:endDate,v:liqEnd}]):irr;
+  const sumBy2=(pred)=>flows.filter(pred).reduce((s,f)=>s+f.v,0);
+  const aplicado=0-sumBy2(f=>(f.col==='Entradas'||f.col==='Abertura')&&f.v<0)||0;   /* ||0 evita "-0" */
+  const recebido=sumBy2(f=>(f.col==='Saidas'||f.col==='Dividendos')&&f.v>0);
+  const custos=0-sumBy2(f=>f.col==='Tributos'||f.col==='Taxas')||0;
+  const resultado=flows.reduce((s,f)=>s+f.v,0)+mvEnd;
+  const t0=flows.length?flows[0].d:null;
+  const ing=(fund&&afDate(fund.dtPrimeiraAplicacao))||t0;
+  const dias=t0?Math.round((endDate-t0)/864e5):null;            /* periodo coberto pela TIR */
+  const diasIng=ing?Math.round((endDate-ing)/864e5):null;
+
+  const irrTxt=irr==null?'—':pctCell(irr);
+  const irrSub=irr==null?'sem fluxos suficientes para calcular'
+    :'≈ '+fPct(Math.pow(1+irr,1/12)-1)+' a.m.'+(mvEnd>0&&irrLiq!=null?' · líquida de IR estimado: '+fPct(irrLiq):'');
+  kpis.innerHTML=kpiBox('TIR (a.a.)',irrTxt,irrSub,true)+baseKpis.join('')+
+    kpiBox('Resultado em R$',`<span class="${resultado>=0?'up':'down'}">${fBRLs(resultado)}</span>`,'posição + recebido − aplicado')+
+    kpiBox('Total aplicado',fBRL(aplicado,0),opening?'inclui saldo inicial de '+fDate(opening.d):'aportes no período')+
+    kpiBox('Total recebido',fBRL(recebido,0),'resgates, amortizações, juros e dividendos')+
+    kpiBox('IR e taxas pagos',fBRL(custos,0),'debitados nos movimentos')+
+    kpiBox('Ingresso',fDate(ing),diasIng!=null?diasIng+' dias na carteira'+(opening?' · TIR desde '+fDate(opening.d):''):'');
+
+  const warns=[];
+  if(opening)warns.push(`A compra deste ativo é anterior ao histórico de movimentos. A TIR parte do saldo de <b>${fDate(opening.d)}</b> (${fBRL(-opening.v,0)}), tratado como se fosse um aporte naquela data.`);
+  if(dias!=null&&dias<90&&irr!=null)warns.push('Período inferior a 90 dias: a TIR anualizada amplia muito qualquer oscilação. Prefira a rentabilidade acumulada.');
+  if(!aEnd)warns.push('Sem posição na competência selecionada: a TIR considera a posição encerrada, só com os fluxos já realizados.');
+  if(!flows.length)warns.push('Nenhum movimento registrado para este ativo no arquivo de movimentos.');
+  note.innerHTML=`<div class="af-note"><b>Como a TIR é calculada.</b> Taxa que zera o valor presente de todos os fluxos do investidor nas datas reais — aplicações (negativas), resgates, amortizações, juros e dividendos recebidos (positivos), IR e taxas debitados (negativos) — com a posição marcada a mercado entrando como recebimento na data de fechamento. Ano de 365 dias corridos, mesma convenção do XIRR do Excel. Ela difere da rentabilidade acumulada porque pondera pelo dinheiro investido em cada momento.</div>`+
+    warns.map(w=>`<div class="af-warn">${w}</div>`).join('');
+
+  /* tabela de fluxo de caixa */
+  if(!all.length){fx.innerHTML='<div class="empty"><b>Sem movimentos</b>Nenhum lançamento encontrado para este ativo.</div>';return;}
+  fx.innerHTML=`<table><thead><tr><th>Data</th><th style="text-align:left">Tipo</th><th style="text-align:left">Histórico</th><th>Valor</th></tr></thead><tbody>
+    ${flows.map(f=>`<tr><td style="text-align:left">${fDate(f.d)}</td><td style="text-align:left">${esc(f.tipo)}</td><td style="text-align:left">${trunc(f.hist,200)}</td><td class="${f.v>=0?'up':'down'}">${fBRLs(f.v)}</td></tr>`).join('')}
+    ${mvEnd>0?`<tr class="af-term"><td style="text-align:left">${fDate(endDate)}</td><td style="text-align:left">${esc(term.tipo)}</td><td style="text-align:left">${esc(term.hist)}</td><td class="up">${fBRLs(mvEnd)}</td></tr>`:''}
+    </tbody><tfoot><tr><td colspan="3">Resultado (soma dos fluxos + posição)</td><td class="${resultado>=0?'up':'down'}">${fBRLs(resultado)}</td></tr></tfoot></table>`;
+}
+
 const PAGES={
   visao:{title:'Visão Consolidada',sub:'Patrimônio consolidado da família',fn:()=>{renderVisao();renderSummaryVis();renderEvoCombo();}},
   'carteira-inv':{title:'Carteira de Investimentos',sub:'Alocação detalhada — classe › indexador › instrumento',fn:renderCarteiraInv},
@@ -1390,16 +1663,19 @@ const PAGES={
   liquidez:{title:'Liquidez e Instrumentos',sub:'Janelas de resgate e composição da carteira',fn:()=>{renderLiquidez();renderLiqExtra();}},
   carteira:{title:'Score e Carteira Detalhada',sub:'Enquadramento de risco e posições completas',fn:renderCarteira},
   metodologia:{title:'Metodologia',sub:'Notas metodológicas por visão',fn:renderMetodologia},
+  ativo:{title:'Ficha do Ativo',sub:'Métricas, evolução e fluxo de caixa desde o ingresso',fn:renderAtivo,nav:'retorno'},
 };
 function route(){
   const h=(location.hash||'#/visao').replace('#/','');
+  if(h.startsWith('ativo/'))return 'ativo';
   return PAGES[h]?h:'visao';
 }
 function render(){
   const r=route();
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+r));
+  const navR=PAGES[r].nav||r;
   document.querySelectorAll('nav.menu a').forEach(a=>{
-    if(a.dataset.route===r)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+    if(a.dataset.route===navR)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   document.getElementById('pgTitle').textContent=PAGES[r].title;
   document.getElementById('pgSub').textContent=PAGES[r].sub;
   try{PAGES[r].fn();}catch(err){
