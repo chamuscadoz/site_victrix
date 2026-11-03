@@ -249,6 +249,82 @@ a.asset-link:hover .trunc{color:var(--lime);text-decoration:underline;text-under
 .af-warn{border-left:2px solid var(--lime);padding:8px 12px;background:var(--panel2);border-radius:0 8px 8px 0;font-size:12px;color:var(--sage);margin-top:12px;line-height:1.55}
 tr.af-term td{color:var(--white);font-weight:600;border-top:1px solid var(--mid-green)}
 @media print{.ctrl-actions,.xls-overlay{display:none!important}}
+/* ===== Fluxo de Recebimentos (fx-) ===== */
+.fx-sum{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:10px}
+@media (max-width:900px){.fx-sum{grid-template-columns:1fr 1fr}.fx-sum .fx-root{grid-column:1/-1}}
+.fx-tile{background:var(--alt-row);border:1px solid var(--line);border-top:3px solid var(--mid-green);border-radius:10px;padding:14px 16px;min-width:0}
+.fx-tile.fx-root{border-top-color:var(--lime);background:rgba(136,232,51,.07)}
+.fx-tk{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage-dim);margin-bottom:8px}
+.fx-tv{font-weight:800;font-size:20px;color:var(--white);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fx-root .fx-tv{font-size:28px;color:var(--lime)}
+.fx-ts{font-weight:300;font-size:11px;line-height:1.5;color:var(--sage-dim);margin-top:6px;font-variant-numeric:tabular-nums}
+.fx-ts b{color:var(--white);font-weight:600}
+.fx-split{display:flex;height:5px;margin-top:10px;gap:2px;border-radius:3px;overflow:hidden}
+.fx-split i{display:block;height:100%}
+.fx-note{margin-top:10px;font-weight:300;font-size:11px;color:var(--sage-dim)}
+.fx-note b{color:#D9A62E;font-weight:600}
+.fx-frow{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;margin-bottom:12px}
+.fx-flab{font-weight:600;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-dim)}
+.fx-legend{display:flex;gap:8px 16px;flex-wrap:wrap;margin-bottom:10px}
+.fx-lg{display:inline-flex;align-items:center;gap:7px;font-size:11px}
+.fx-lg span{width:10px;height:10px;flex:none;border-radius:2px}
+.fx-lg.proj span{background:repeating-linear-gradient(45deg,var(--sage) 0 2px,transparent 2px 5px);border:1px dashed var(--sage)}
+.fx-scroll{overflow-x:auto}
+.fx-svg text{font-family:var(--font);fill:var(--sage)}
+.fx-svg .axl{font-size:9.5px;font-weight:300;opacity:.7}
+.fx-svg .axv{font-size:9px;font-weight:300;opacity:.55}
+.fx-svg .gl{stroke:rgba(46,111,58,.22);stroke-width:1}
+.fx-svg .bl{stroke:rgba(46,111,58,.6);stroke-width:1}
+.fx-svg .dlab{font-size:9.5px;font-weight:600;fill:var(--white)}
+.fx-svg .zlab{font-size:9px;font-weight:600;letter-spacing:.14em;fill:var(--lime)}
+.fx-svg .bar:hover{opacity:.72}
+.fx-mtx{width:100%;border-collapse:separate;border-spacing:2px;font-size:12px;font-variant-numeric:tabular-nums}
+.fx-mtx th{font-weight:600;font-size:9.5px;letter-spacing:.10em;text-transform:uppercase;color:var(--sage-dim);padding:6px 8px;text-align:right;white-space:nowrap}
+.fx-mtx th.rh{text-align:left}
+.fx-mtx td{padding:9px 10px;text-align:right;color:var(--white);background:var(--alt-row);white-space:nowrap}
+.fx-mtx td.rh{text-align:left;background:transparent;color:var(--sage);font-weight:600;font-size:11.5px}
+.fx-mtx td.tot,.fx-mtx tr.totrow td{background:rgba(46,111,58,.25);font-weight:700}
+.fx-mtx .sub{display:block;font-weight:300;font-size:9.5px;color:var(--sage-dim);margin-top:2px}
+.fx-mtx td.zero{opacity:.35}
+.fx-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.fx-cal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:1180px){.fx-cal{grid-template-columns:1fr}}
+.fx-mon h3{font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--white);display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+.fx-mon h3 span{color:var(--lime);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.fx-g7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.fx-dow{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-dim);text-align:center;padding:2px 0 4px}
+.fx-day{min-height:52px;background:var(--alt-row);padding:4px 5px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid transparent;border-radius:4px;font-variant-numeric:tabular-nums;font-family:inherit;color:var(--sage);text-align:left}
+.fx-day.off{background:transparent;opacity:.35}
+.fx-day.wk{background:rgba(21,38,21,.45);opacity:.7}
+.fx-day .dn{font-size:10px;opacity:.7}
+.fx-day .dv{font-size:10.5px;font-weight:700;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-day.has{cursor:pointer}
+.fx-day.has:hover,.fx-day.sel{border-color:var(--lime)}
+.fx-day.venc .dv{color:#D9A62E}
+.fx-hol{font-size:8px;opacity:.7}
+.fx-det{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+.fx-dhead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px 16px;margin-bottom:10px}
+.fx-dhead b{font-weight:800;color:var(--white);font-size:16px}
+.fx-dhead span{font-weight:700;color:var(--lime);font-size:16px;font-variant-numeric:tabular-nums}
+.fx-tt{font-weight:300;font-size:11px;color:var(--sage-dim)}
+.fx-pill{display:inline-block;font-weight:600;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--line);border-radius:10px;white-space:nowrap}
+.fx-pill.m{border-color:var(--lime);color:var(--lime)}
+.fx-pill.s{border-color:#5FB3E0;color:#5FB3E0}
+.fx-pill.x{border-color:#D9A62E;color:#D9A62E}
+.fx-pill.inf::after{content:' · inferida';font-weight:300;text-transform:none;letter-spacing:0}
+td.fx-rg{min-width:220px}td.fx-nm{min-width:180px}
+.fx-av{list-style:none;display:grid;gap:6px;font-size:12px;font-weight:300}
+.fx-av li{padding:8px 12px;background:var(--alt-row);border-left:2px solid #D9A62E;border-radius:4px}
+.fx-av li b{color:var(--white);font-weight:600}
+.fx-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.fx-out .fx-tile{border-top-color:#5b5b48}
+.fx-out .fx-tv{font-size:16px}
+.fx-empty{border:1px dashed rgba(217,166,46,.5);border-radius:10px;padding:16px 18px;font-weight:300;font-size:12.5px;line-height:1.6}
+.fx-empty b{display:block;color:#D9A62E;font-weight:700;margin-bottom:4px}
+#fxTip{position:fixed;z-index:99;pointer-events:none;opacity:0;transition:opacity .1s;background:#050D05;border:1px solid var(--lime);border-radius:6px;padding:9px 12px;font-size:11px;line-height:1.5;max-width:300px;box-shadow:0 6px 22px rgba(0,0,0,.6)}
+#fxTip b{color:var(--white);font-weight:700;display:block;margin-bottom:3px}
+#fxTip .r{display:flex;justify-content:space-between;gap:14px}
+#fxTip .r span{opacity:.7}#fxTip .r i{font-style:normal;color:var(--lime);font-weight:700}
 </style>
 </head>
 <body>
@@ -263,6 +339,7 @@ tr.af-term td{color:var(--white);font-weight:600;border-top:1px solid var(--mid-
     <a href="#/metricas" data-route="metricas"><span class="nv"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M4 20h16"/></svg></span>Métricas</a>
     <a href="#/liquidez" data-route="liquidez"><span class="nv"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h11M4 18h7"/></svg></span>Liquidez e Instrumentos</a>
     <a href="#/carteira" data-route="carteira"><span class="nv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Score e Carteira</a>
+    <a href="#/fluxo" data-route="fluxo"><span class="nv"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 15h3M13 15h3M8 18h3"/></svg></span>Fluxo de Recebimentos</a>
     <a href="#/metodologia" data-route="metodologia"><span class="nv"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M9 8h7M9 12h7M9 16h4"/></svg></span>Metodologia</a>
   </nav>
   <div class="foot"><b>Relatório de patrimônio</b><br>Dados agregados por ativo.<br>Contas mascaradas — LGPD.<br><span id="sideStamp"></span></div>
@@ -527,6 +604,61 @@ tr.af-term td{color:var(--white);font-weight:600;border-top:1px solid var(--mid-
         <div class="tbl-wrap" id="tblCarteira"></div>
       </div>
     </div>
+  </section>
+
+  <!-- ================= PÁGINA — FLUXO DE RECEBIMENTOS ================= -->
+  <section class="page" id="page-fluxo">
+    <div class="grid">
+      <div class="card span12" id="fxHost">
+        <h2 id="fxTitulo">Fluxo de recebimentos</h2>
+        <div class="h-sub" id="fxDek"></div>
+        <div class="fx-sum" id="fxSum"></div>
+        <p class="fx-note" id="fxSumNote"></p>
+      </div>
+      <div class="card span12">
+        <h2>Visão mensal</h2>
+        <div class="h-sub" id="fxCapM"></div>
+        <div class="fx-frow"><span class="fx-flab">Empilhar por</span><span class="ci-bar" style="margin:0" id="fxStack"></span>
+          <span class="fx-flab">Realizado</span><span class="ci-bar" style="margin:0" id="fxReal"></span></div>
+        <div class="fx-legend" id="fxLegM"></div>
+        <div class="fx-scroll"><svg class="fx-svg" id="fxChM" role="img" aria-label="Recebimentos por mês, realizados e projetados"></svg></div>
+      </div>
+      <div class="card span12">
+        <h2>Quebra da projeção</h2>
+        <div class="h-sub">gestor · titular · conta × mês</div>
+        <div class="fx-frow"><span class="fx-flab">Linhas</span><span class="ci-bar" style="margin:0" id="fxRows"></span></div>
+        <div class="tbl-wrap"><table class="fx-mtx" id="fxMtx"></table></div>
+      </div>
+      <div class="card span12">
+        <h2>Visão diária</h2>
+        <div class="h-sub">clique num dia para ver o que cai nele · fins de semana e feriados nacionais rolam para o dia útil seguinte</div>
+        <div class="fx-cal" id="fxCal"></div>
+        <div class="fx-det" id="fxDet"></div>
+      </div>
+      <div class="card span12">
+        <h2>Por ativo</h2>
+        <div class="h-sub">regra aplicada e valor projetado em cada mês</div>
+        <div class="fx-frow"><span class="fx-flab">Mostrar</span><span class="ci-bar" style="margin:0" id="fxAtF"></span></div>
+        <div class="tbl-wrap" style="max-height:620px;overflow:auto"><table id="fxAt"></table></div>
+      </div>
+      <div class="card span6">
+        <h2>Vencimentos na janela</h2>
+        <div class="h-sub">principal que volta e precisa ser reinvestido</div>
+        <div id="fxVIn"></div>
+      </div>
+      <div class="card span6">
+        <h2>Próximos vencimentos</h2>
+        <div class="h-sub">fora da janela, como referência · valor = saldo bruto a mercado no fechamento</div>
+        <div class="tbl-wrap"><table id="fxVx"></table></div>
+      </div>
+      <div class="card span12">
+        <h2>Fora da projeção</h2>
+        <div class="h-sub">o que entrou nos últimos 12 meses e ainda não é projetado · pontos de atenção</div>
+        <div class="fx-out" id="fxOut"></div>
+        <ul class="fx-av" id="fxAv"></ul>
+      </div>
+    </div>
+    <div id="fxTip" role="tooltip"></div>
   </section>
 
   <section class="page" id="page-metodologia">
@@ -1423,6 +1555,22 @@ function renderSummaryCI(){
   el.innerHTML='Em <b>'+mLabel(m)+'</b>, PL a mercado <b style="color:var(--lime)">'+fBRL(pl,0)+'</b> em <b>'+na+'</b> ativos. Retorno no mês <b style="color:var(--lime)">'+sPct(rc)+'</b> (<b>'+sPct(ac)+'</b> acum.). Maior exposição em <b>'+(maior?esc(maior[0]):'—')+'</b> ('+fPct(maior?maior[1]/totE:null,1)+' do PL).'+(best?' Destaque: <b>'+esc(best.nome)+'</b> ('+sPct(best.rent)+')':'')+(worst?'; maior queda: <b>'+esc(worst.nome)+'</b> ('+sPct(worst.rent)+')':'')+(topC?'. Principal contribuição: <b>'+esc(topC.nome)+'</b> ('+fNum(topC.contrib*10000,1)+' bps).':'.');
 }
 const METOD={
+ fluxo:{html:`
+<h2>Fluxo de Recebimentos</h2>
+<p>A tela mostra os <b>12 meses de recebimentos realizados</b>, lidos do extrato de movimentos (<code>Saida_tbMovimentos_Consolidado</code>), e a <b>projeção dos 3 meses seguintes à competência mais recente</b>. Com a base de setembro a janela é outubro, novembro e dezembro; quando outubro fecha, ela passa a novembro, dezembro e janeiro. A projeção é gerada pelo pipeline (<code>gerar_fluxo.py</code>) e gravada no bloco <code>fluxo</code> do arquivo de dados: <b>nenhum valor é digitado à mão</b>.</p>
+<h2>O que é projetado</h2>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Caso</th><th>Regra</th></tr></thead><tbody>
+<tr><td><b>Periodicidade</b></td><td>lida do histórico: intervalo mediano entre os meses com pagamento de juros ou rendimento. Com pouco histórico num titular, usa os meses dos outros titulares do mesmo papel. Com um único pagamento, a periodicidade semestral é inferida quando o mês de vencimento do papel bate com o ciclo de seis meses.</td></tr>
+<tr><td><b>Pagamento mensal</b></td><td>média dos pagamentos dos últimos 12 meses (ou dos meses que existirem), lançada no dia em que o ativo costuma pagar.</td></tr>
+<tr><td><b>Semestral, trimestral, anual</b></td><td>o último pagamento é repetido no mês de competência, se ele cair dentro da janela.</td></tr>
+<tr><td><b>Rendimento de FII</b></td><td>tratado como pagamento mensal.</td></tr>
+<tr><td><b>Vencimento</b></td><td>data de vencimento do cadastro do ativo; valor igual ao saldo bruto a mercado no fechamento. É referência de caixa a reinvestir, não o valor exato de resgate.</td></tr>
+<tr><td><b>Dia útil</b></td><td>datas em fim de semana ou feriado nacional (calendário ANBIMA) passam para o dia útil seguinte.</td></tr>
+</tbody></table></div>
+<h2>O que ainda fica de fora</h2>
+<p>Amortizações, dividendos e JCP de ações, reembolsos de evento e aluguel de ações. Eles aparecem no realizado e no quadro <b>Fora da projeção</b>, e passam a ser projetados quando o fluxo por ativo estiver disponível. A projeção cobre apenas os gestores que têm extrato de movimentos no pipeline.</p>
+<h2>Limitações</h2>
+<p>É uma estimativa por média histórica: não considera mudança de taxa ou de inflação, eventos de crédito, nem compras e vendas futuras. A quebra por <b>conta</b> usa o mesmo rótulo titular / gestor da Carteira, e o filtro de titular do topo vale para toda a tela.</p>`},
  geral:{html:'<h2>Princípios gerais</h2><p>A rentabilidade é sempre <b>ponderada pelo valor a mercado</b> das posições, usando a performance <b>fornecida pelos prestadores/gestores</b> das contas — não calculamos retorno por ativo internamente. Acumulados de ano e 12 meses são obtidos por <b>capitalização composta</b> dos retornos mensais ponderados. Onde não há dado de performance, exibimos <b>ND</b>.</p><p>Os titulares <b>S, S2 e T</b> são instrumentos investidos por outros titulares (veículos internos) e ficam <b>fora das consolidações</b> para evitar dupla contagem; permanecem visíveis ao selecioná-los. A <b>titularidade</b> vem da letra final do CodFundo (A, N, D, D1, R, M, L, T, S, S2).</p>'},
  visao:{html:'<h2>Visão Consolidada</h2><p>PL a mercado e líquido do mês. A evolução do patrimônio traz também o <b>PL inicial corrigido pelo IPCA</b>. A evolução histórica mostra o PL em barras e o <b>retorno acumulado</b> da carteira em linha, comparado ao <b>IMA-S</b> (ou <b>Ibovespa</b> quando o filtro é apenas D1) e à carteira <b>60/40 IMA-S/IMA-B</b> no consolidado. Inclui o consolidado por titular/gestor (tabela alternável + pizza + evolução da composição) e a leitura automática do mês.</p>'},
  'carteira-inv':{html:'<h2>Carteira de Investimentos</h2><p>Alocação detalhada em árvore <b>classe → indexador → instrumento</b>, colapsável e filtrável por titular e por gestor (a seleção agrega). Abaixo, alocação por <b>classe (Nível 1)</b> e por <b>indexador (Nível 2)</b>, com donut e evolução da composição.</p>'},
@@ -1431,8 +1579,168 @@ const METOD={
  liquidez:{html:'<h2>Liquidez e Instrumentos</h2><p>Escada de liquidez por janela (D+0 → … → no vencimento). Evolução da liquidez por mês em <b>% do PL</b> e liquidez imediata (D+0) e curto prazo (até D+30) em <b>R$</b>, filtráveis por titular e gestor. Composição por instrumento e concentração por emissor.</p>'},
  carteira:{html:'<h2>Score e Carteira</h2><p>Score ponderado (escala 5–25) nas dimensões mercado, crédito, estruturação, liquidez e operacional. Carteira detalhada com filtros de titular/conta, gestor, classe e busca.</p>'}
 };
+/* ============ FLUXO DE RECEBIMENTOS ============ */
+const FXS={stack:'tipo',real:'cmp',rows:'conta',at:'proj',sel:null};
+function renderFluxo(){
+  const F=DATA.fluxo;
+  const host=document.getElementById('page-fluxo');
+  if(!F||!Array.isArray(F.projecao)){
+    document.getElementById('fxSum').innerHTML='';
+    document.getElementById('fxDek').innerHTML='<div class="empty">Este arquivo de dados ainda não traz o bloco de fluxo. Rode o gerar_dashboard.py atualizado para gerá-lo.</div>';
+    host.querySelectorAll('.card:not(#fxHost)').forEach(c=>c.style.display='none');
+    return;
+  }
+  host.querySelectorAll('.card').forEach(c=>c.style.display='');
+  const MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  const MESF=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  const nf=(v,d)=>Number(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const fC=v=>'R$ '+nf(v,2), f0=v=>'R$ '+nf(v,0);
+  const fK=v=>Math.abs(v)>=1e6?nf(v/1e6,2)+' mi':Math.abs(v)>=1000?nf(v/1000,1)+' mil':nf(v,0);
+  const fD=v=>v>=1000?nf(v/1000,1)+'k':nf(v,0);
+  const fP=v=>nf(v,1)+'%';
+  const ym=s=>s.slice(0,4)+s.slice(5,7), ymLab=k=>MES[+k.slice(4)-1]+'/'+k.slice(2,4), jf=k=>MESF[+k.slice(4)-1];
+  const dBR=s=>s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(0,4);
+  const sum=a=>a.reduce((s,x)=>s+x.v,0);
+  const TORD=['D1','A','N','D'];
+  const TCOL={A:'#4CAB34',D:'#0D76AD',N:'#A45721',D1:'#A053FD'};
+  const GCOL={VICTRIX:'#0D76AD',ASA:'#4CAB34',WHG:'#A45721',C6:'#A053FD'};
+  const TIPOS=['Juros','Rendimento FII','Vencimento','Amortização','Dividendos','JCP','Reembolso de evento'];
+  const TYCOL={'Juros':'#88E833','Rendimento FII':'#3FA7D6','Vencimento':'#D9A62E','Amortização':'#A45721','Dividendos':'#A053FD','JCP':'#C978B8','Reembolso de evento':'#7d8a78'};
+  const PROJT=new Set(['Juros','Rendimento FII']);
+  const tf=state.titulares&&state.titulares.length?(x=>state.titulares.includes(x.titular)):(()=>true);
+  const JAN=F.janela, P=F.projecao.filter(tf), R=F.realizado.filter(tf), REG=F.regras.filter(tf);
+  const tip=document.getElementById('fxTip');
+  const mv=e=>{const r=tip.getBoundingClientRect();let x=e.clientX+14,y=e.clientY+14;if(x+r.width>innerWidth-8)x=e.clientX-r.width-14;if(y+r.height>innerHeight-8)y=e.clientY-r.height-14;tip.style.left=x+'px';tip.style.top=y+'px'};
+  const bt=(el,h)=>{el.addEventListener('mouseenter',e=>{tip.innerHTML=h;tip.style.opacity=1;mv(e)});el.addEventListener('mousemove',mv);el.addEventListener('mouseleave',()=>tip.style.opacity=0)};
+  const radios=(id,items,key)=>{const h=document.getElementById(id);h.innerHTML='';items.forEach(([v,l])=>{const b=document.createElement('button');b.type='button';b.className='ci-dimbtn'+(FXS[key]===v?' on':'');b.textContent=l;b.setAttribute('aria-pressed',FXS[key]===v);b.onclick=()=>{FXS[key]=v;renderFluxo()};h.appendChild(b)})};
+  const keysOf=(dim,rows)=>{
+    if(dim==='tipo')return TIPOS.filter(t=>rows.some(x=>x.tipo===t));
+    if(dim==='titular')return TORD.filter(t=>rows.some(x=>x.titular===t)).concat([...new Set(rows.map(x=>x.titular))].filter(t=>!TORD.includes(t)));
+    if(dim==='gestor')return [...new Set(rows.map(x=>x.gestor))].sort();
+    return [...new Set(rows.map(x=>x.conta))].sort();
+  };
+  const colOf=(dim,k)=>dim==='tipo'?TYCOL[k]:dim==='titular'?(TCOL[k]||'#888'):dim==='gestor'?(GCOL[k]||'#888'):(TCOL[k.split(' / ')[0]]||'#888');
+
+  /* cabeçalho + resumo */
+  const baseLab=MESF[+F.latest.slice(4)-1]+'/'+F.latest.slice(0,4);
+  document.getElementById('fxTitulo').textContent=`Projeção de ${jf(JAN[0])} a ${jf(JAN[2])}/${JAN[2].slice(0,4)}`;
+  const gm=(F.gestores_com_movimento||[]).join(', ');
+  document.getElementById('fxDek').innerHTML=`Base: fechamento de <b>${baseLab}</b> · juros de renda fixa e rendimentos de FII projetados pelo histórico de pagamentos, mais vencimentos de principal como referência`+
+    (state.month!==F.latest?` · <b style="color:#D9A62E">a projeção usa sempre a competência mais recente, não a selecionada no topo</b>`:'')+
+    (gm?` · gestores com extrato de movimentos: ${esc(gm)}`:'')+
+    (state.titulares&&state.titulares.length?` · filtrado pelos titulares ${esc(state.titulares.join(', '))}`:'');
+  const tot=sum(P), byM=k=>P.filter(x=>ym(x.data)===k);
+  const bar=a=>`<div class="fx-split">${['Juros','Rendimento FII','Vencimento'].map(t=>{const v=sum(a.filter(x=>x.tipo===t));return v>0?`<i style="flex:${v};background:${TYCOL[t]}"></i>`:''}).join('')}</div>`;
+  const parts=a=>['Juros','Rendimento FII','Vencimento'].map(t=>`${t==='Rendimento FII'?'FII':t} <b>${f0(sum(a.filter(x=>x.tipo===t)))}</b>`).join(' · ');
+  let h=`<div class="fx-tile fx-root"><div class="fx-tk">Total projetado · 3 meses</div><div class="fx-tv">${fC(tot)}</div><div class="fx-ts">${parts(P)}</div>${bar(P)}</div>`;
+  JAN.forEach(k=>{const a=byM(k),days=new Set(a.map(x=>x.data)).size;
+    h+=`<div class="fx-tile"><div class="fx-tk">${jf(k)}/${k.slice(0,4)}</div><div class="fx-tv">${fC(sum(a))}</div><div class="fx-ts"><b>${a.length}</b> pagamentos em <b>${days}</b> dias úteis · ${tot?fP(sum(a)/tot*100):'—'} da janela</div>${bar(a)}</div>`});
+  document.getElementById('fxSum').innerHTML=h;
+  const pv=(F.proximos_venc||[]).filter(tf)[0];
+  document.getElementById('fxSumNote').innerHTML=(P.some(x=>x.tipo==='Vencimento')?'':`<b>Nenhum vencimento</b> de principal na janela${pv?` — o próximo é ${esc(pv.nome)} em ${dBR(pv.data)} (${f0(pv.v)})`:''}. `)+
+    `Cores: <span style="color:${TYCOL.Juros}">juros</span>, <span style="color:${TYCOL['Rendimento FII']}">rendimento FII</span>, <span style="color:${TYCOL.Vencimento}">vencimento</span>.`;
+
+  /* visão mensal */
+  radios('fxStack',[['tipo','Tipo'],['gestor','Gestor'],['titular','Titular'],['conta','Conta']],'stack');
+  radios('fxReal',[['cmp','Juros e FII'],['venc','+ vencimentos'],['all','Todos os tipos']],'real');
+  const dim=FXS.stack;
+  const rr=FXS.real==='cmp'?R.filter(x=>PROJT.has(x.tipo)):FXS.real==='venc'?R.filter(x=>PROJT.has(x.tipo)||x.tipo==='Vencimento'):R;
+  const all=rr.concat(P);
+  const months=[];{const y=+F.latest.slice(0,4),m=+F.latest.slice(4);for(let i=11;i>=0;i--){let mm=m-i,yy=y;while(mm<1){mm+=12;yy--}months.push(yy+String(mm).padStart(2,'0'))}}
+  const ms=months.concat(JAN), keys=keysOf(dim,all);
+  document.getElementById('fxLegM').innerHTML=keys.map(k=>`<span class="fx-lg"><span style="background:${colOf(dim,k)}"></span>${esc(k)}</span>`).join('')+`<span class="fx-lg proj"><span></span>Projetado</span>`;
+  const avgR=sum(R.filter(x=>PROJT.has(x.tipo)))/12;
+  document.getElementById('fxCapM').textContent=`12 meses realizados (${ymLab(months[0])} a ${ymLab(months[11])}, pelo extrato) + 3 projetados. Média mensal realizada de juros + FII: ${f0(avgR)}.`+(FXS.real!=='cmp'?' Os demais tipos aparecem só no realizado.':'');
+  const svg=document.getElementById('fxChM');svg.innerHTML='';
+  const W=Math.max(760,ms.length*62),Hh=310,ml=64,mr=12,mt=26,mb=44,pw=W-ml-mr,ph=Hh-mt-mb;
+  svg.setAttribute('viewBox',`0 0 ${W} ${Hh}`);svg.setAttribute('width',W);svg.setAttribute('height',Hh);
+  const NS='http://www.w3.org/2000/svg',el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e},tx=(x,y,s,c,an)=>{const t=el('text',{x,y,class:c});if(an)t.setAttribute('text-anchor',an);t.textContent=s;return t};
+  const defs=el('defs',{}),pat=el('pattern',{id:'fxHatch',width:5,height:5,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'});pat.appendChild(el('rect',{width:2,height:5,fill:'#0E1C0E',opacity:.55}));defs.appendChild(pat);svg.appendChild(defs);
+  const tots=ms.map(k=>sum(all.filter(x=>ym(x.data)===k))),mx=Math.max(...tots,1);
+  const raw=mx/4,mag=Math.pow(10,Math.floor(Math.log10(raw))),step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>s>=raw),top=Math.ceil(mx/step)*step,sc=v=>v/top*ph;
+  for(let v=0;v<=top+1e-6;v+=step){const y=mt+ph-sc(v);svg.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,class:v===0?'bl':'gl'}));svg.appendChild(tx(ml-8,y+3.5,'R$ '+fK(v),'axv','end'))}
+  const gap=pw/ms.length,bw=Math.min(40,gap*.64),xs=ml+gap*12;
+  svg.appendChild(el('rect',{x:xs,y:mt-18,width:gap*3,height:ph+18,fill:'#88E833',opacity:.05}));
+  svg.appendChild(tx(xs+gap*1.5,mt-6,'PROJEÇÃO','zlab','middle'));
+  svg.appendChild(el('line',{x1:xs,x2:xs,y1:mt-18,y2:mt+ph,stroke:'#88E833','stroke-dasharray':'3 3',opacity:.6}));
+  ms.forEach((k,i)=>{
+    const proj=i>=12,rows=all.filter(x=>ym(x.data)===k),x=ml+gap*i+(gap-bw)/2;let acc=0;
+    keys.forEach(kk=>{const sel=rows.filter(r=>r[dim]===kk),v=sum(sel);if(v<=0)return;
+      const y0=mt+ph-sc(acc+v),hh=Math.max(1.5,sc(v)-1.5);
+      const r=el('rect',{x,y:y0,width:bw,height:hh,fill:colOf(dim,kk),class:'bar',opacity:proj?.78:1});svg.appendChild(r);
+      if(proj)svg.appendChild(el('rect',{x,y:y0,width:bw,height:hh,fill:'url(#fxHatch)','pointer-events':'none'}));
+      bt(r,`<b>${esc(kk)} · ${ymLab(k)}${proj?' (projetado)':''}</b><div class="r"><span>Valor</span><i>${fC(v)}</i></div><div class="r"><span>Pagamentos</span><i>${sel.length}</i></div>`+[...sel].sort((a,b)=>b.v-a.v).slice(0,4).map(a=>`<div class="r"><span>${esc(String(a.nome).slice(0,28))} ${esc(a.titular)}</span><i>${fK(a.v)}</i></div>`).join(''));
+      acc+=v});
+    if(tots[i]>0)svg.appendChild(tx(x+bw/2,mt+ph-sc(tots[i])-5,fK(tots[i]),'dlab','middle'));
+    svg.appendChild(tx(x+bw/2,Hh-mb+17,ymLab(k),'axl','middle'));
+  });
+
+  /* matriz */
+  radios('fxRows',[['gestor','Gestor'],['titular','Titular'],['conta','Conta']],'rows');
+  const rd=FXS.rows;
+  let mh=`<thead><tr><th class="rh">${rd==='conta'?'Conta (titular / gestor)':rd==='titular'?'Titular':'Gestor'}</th>`+JAN.map(k=>`<th>${ymLab(k)}</th>`).join('')+`<th>Total 3m</th></tr></thead><tbody>`;
+  keysOf(rd,P).forEach(k=>{const rows=P.filter(x=>x[rd]===k),rs=sum(rows);
+    mh+=`<tr><td class="rh"><span class="fx-dot" style="background:${colOf(rd,k)}"></span>${esc(k)}</td>`+JAN.map(m=>{const a=rows.filter(x=>ym(x.data)===m),v=sum(a);
+      return `<td class="${v?'':'zero'}">${v?fC(v):'—'}${v?`<span class="sub">juros ${fK(sum(a.filter(x=>x.tipo==='Juros')))} · FII ${fK(sum(a.filter(x=>x.tipo==='Rendimento FII')))}${a.some(x=>x.tipo==='Vencimento')?' · venc. '+fK(sum(a.filter(x=>x.tipo==='Vencimento'))):''}</span>`:''}</td>`}).join('')+
+      `<td class="tot">${fC(rs)}<span class="sub">${tot?fP(rs/tot*100):'—'} da janela</span></td></tr>`});
+  mh+=`<tr class="totrow"><td class="rh" style="color:var(--white)">Total</td>`+JAN.map(m=>`<td>${fC(sum(byM(m)))}</td>`).join('')+`<td>${fC(tot)}</td></tr></tbody>`;
+  document.getElementById('fxMtx').innerHTML=mh;
+
+  /* calendário */
+  const byD={};P.forEach(x=>{(byD[x.data]=byD[x.data]||[]).push(x)});
+  const dts=Object.keys(byD).sort();
+  if(!FXS.sel||!byD[FXS.sel])FXS.sel=dts[0]||null;
+  const mxD=Math.max(...Object.values(byD).map(sum),1);
+  const pasc=y=>{const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),hh=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-hh-k)%7,m=Math.floor((a+11*hh+22*l)/451),mo=Math.floor((hh+l-7*m+114)/31),da=((hh+l-7*m+114)%31)+1;return new Date(y,mo-1,da)};
+  const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const HOL={};[...new Set(JAN.map(k=>+k.slice(0,4)))].forEach(y=>{
+    [['01-01','Confrat. Universal'],['04-21','Tiradentes'],['05-01','Dia do Trabalho'],['09-07','Independência'],['10-12','N. Sra. Aparecida'],['11-02','Finados'],['11-15','Proclamação'],['11-20','Consciência Negra'],['12-25','Natal']].forEach(([md,n])=>HOL[y+'-'+md]=n);
+    const p=pasc(y),ad=(n,s)=>{const d=new Date(p);d.setDate(d.getDate()+n);HOL[iso(d)]=s};ad(-48,'Carnaval');ad(-47,'Carnaval');ad(-2,'Sexta-feira Santa');ad(60,'Corpus Christi')});
+  let ch='';
+  JAN.forEach(k=>{const y=+k.slice(0,4),m=+k.slice(4),nd=new Date(y,m,0).getDate(),off=(new Date(y,m-1,1).getDay()+6)%7;
+    ch+=`<div class="fx-mon"><h3>${MESF[m-1]} ${y}<span>${f0(sum(byM(k)))}</span></h3><div class="fx-g7">`+['seg','ter','qua','qui','sex','sáb','dom'].map(d=>`<div class="fx-dow">${d}</div>`).join('');
+    for(let i=0;i<off;i++)ch+=`<div class="fx-day off" aria-hidden="true"></div>`;
+    for(let d=1;d<=nd;d++){const ds=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`,wd=new Date(y,m-1,d).getDay(),ev=byD[ds],v=ev?sum(ev):0;
+      if(ev){const bg=`background:rgba(136,232,51,${(0.08+Math.sqrt(v/mxD)*0.45).toFixed(3)})`;
+        ch+=`<button type="button" class="fx-day has${FXS.sel===ds?' sel':''}${ev.some(x=>x.tipo==='Vencimento')?' venc':''}" data-d="${ds}" style="${bg}" aria-label="${dBR(ds)}: ${fC(v)}"><span class="dn">${d}</span><span class="dv">${fD(v)}</span></button>`}
+      else ch+=`<div class="fx-day${(wd===0||wd===6||HOL[ds])?' wk':''}"><span class="dn">${d}</span>${HOL[ds]?`<span class="fx-hol">${HOL[ds]}</span>`:''}</div>`}
+    ch+=`</div></div>`});
+  const cal=document.getElementById('fxCal');cal.innerHTML=ch;
+  cal.querySelectorAll('.fx-day.has').forEach(b=>{b.onclick=()=>{FXS.sel=b.dataset.d;renderFluxo()};const ev=byD[b.dataset.d];bt(b,`<b>${dBR(b.dataset.d)}</b><div class="r"><span>Total</span><i>${fC(sum(ev))}</i></div><div class="r"><span>Pagamentos</span><i>${ev.length}</i></div>`)});
+  const evs=(byD[FXS.sel]||[]).slice().sort((a,b)=>b.v-a.v),WDN=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+  document.getElementById('fxDet').innerHTML=FXS.sel?`<div class="fx-dhead"><b>${dBR(FXS.sel)} · ${WDN[new Date(FXS.sel+'T12:00').getDay()]}</b><span>${fC(sum(evs))}</span></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Ativo</th><th>Conta</th><th>Tipo</th><th>Base</th><th class="num">Valor</th></tr></thead><tbody>${evs.map(x=>`<tr><td>${esc(x.nome)}</td><td><span class="fx-dot" style="background:${TCOL[x.titular]||'#888'}"></span>${esc(x.conta)}</td><td><span class="fx-dot" style="background:${TYCOL[x.tipo]}"></span>${esc(x.tipo)}</td><td class="fx-tt">${esc(x.base)}</td><td class="num" style="text-align:right">${fC(x.v)}</td></tr>`).join('')}</tbody></table></div>`
+    :'<div class="empty">Nenhum pagamento projetado na janela.</div>';
+
+  /* por ativo */
+  radios('fxAtF',[['proj','Com pagamento na janela'],['all','Todos os ativos com histórico']],'at');
+  let rs=REG.slice();if(FXS.at==='proj')rs=rs.filter(r=>r.projetado_janela>0);
+  rs.sort((a,b)=>b.projetado_janela-a.projetado_janela||String(a.nome).localeCompare(b.nome));
+  const pvv=(c,m)=>sum(P.filter(x=>x.cod===c&&ym(x.data)===m));
+  const pill=r=>{const p=r.periodicidade,c=p==='Mensal'?'m':/Semestral|Trimestral|Anual/.test(p)?'s':'x';return `<span class="fx-pill ${c}${r.inferido?' inf':''}">${esc(p)}</span>`};
+  const R2='style="text-align:right;white-space:nowrap"';
+  let ah=`<thead><tr><th>Ativo</th><th>Conta</th><th>Tipo</th><th>Periodicidade</th><th ${R2}>Pagtos</th><th>Último</th><th>Regra</th><th ${R2}>Valor-base</th>${JAN.map(k=>`<th ${R2}>${ymLab(k)}</th>`).join('')}<th ${R2}>Total 3m</th></tr></thead><tbody>`;
+  rs.forEach(r=>{ah+=`<tr><td class="fx-nm">${esc(r.nome)}<div class="fx-tt">${esc(r.cod)}</div></td><td style="white-space:nowrap"><span class="fx-dot" style="background:${TCOL[r.titular]||'#888'}"></span>${esc(r.conta)}</td><td class="fx-tt">${esc(r.tipo)}</td><td>${pill(r)}</td><td ${R2}>${r.n_pagtos}</td><td class="fx-tt" style="white-space:nowrap">${dBR(r.ult)}</td><td class="fx-tt fx-rg">${esc(r.regra)}</td><td ${R2}>${r.valor!=null?fC(r.valor):'—'}</td>`+
+    JAN.map(k=>{const v=pvv(r.cod,k);return `<td ${R2}${v?'':' class="fx-tt"'}>${v?fC(v):'—'}</td>`}).join('')+`<td ${R2}><b>${r.projetado_janela?fC(r.projetado_janela):'—'}</b></td></tr>`});
+  const tj=P.filter(x=>x.tipo!=='Vencimento');
+  ah+=`</tbody><tfoot><tr><td colspan="8">${rs.length} ativos</td>${JAN.map(k=>`<td ${R2}>${fC(sum(tj.filter(x=>ym(x.data)===k)))}</td>`).join('')}<td ${R2}>${fC(sum(tj))}</td></tr></tfoot>`;
+  document.getElementById('fxAt').innerHTML=ah;
+
+  /* vencimentos */
+  const vv=P.filter(x=>x.tipo==='Vencimento');
+  document.getElementById('fxVIn').innerHTML=vv.length?`<div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Ativo</th><th>Conta</th><th ${R2}>Valor</th></tr></thead><tbody>${vv.map(x=>`<tr><td>${dBR(x.data)}</td><td>${esc(x.nome)}</td><td>${esc(x.conta)}</td><td ${R2}>${fC(x.v)}</td></tr>`).join('')}</tbody></table></div>`
+    :`<div class="fx-empty"><b>Nenhum vencimento entre ${jf(JAN[0])} e ${jf(JAN[2])}/${JAN[2].slice(0,4)}</b>Nenhum ativo em carteira tem data de vencimento cadastrada nesses três meses. Todo o caixa da janela vem de juros e rendimentos.</div>`;
+  const px=(F.proximos_venc||[]).filter(tf);
+  document.getElementById('fxVx').innerHTML=`<thead><tr><th>Data</th><th>Ativo</th><th>Conta</th><th ${R2}>Saldo bruto</th></tr></thead><tbody>${px.map(x=>`<tr><td>${dBR(x.data)}</td><td>${esc(x.nome)}</td><td>${esc(x.conta)}</td><td ${R2}>${fC(x.v)}</td></tr>`).join('')||'<tr><td colspan="4">—</td></tr>'}</tbody>`;
+
+  /* fora da projeção */
+  document.getElementById('fxOut').innerHTML=['Amortização','Dividendos','JCP','Reembolso de evento','Vencimento'].map(t=>{const a=R.filter(x=>x.tipo===t);return `<div class="fx-tile"><div class="fx-tk">${t==='Vencimento'?'Vencimentos realizados':t}</div><div class="fx-tv">${fC(sum(a))}</div><div class="fx-ts">${a.length} lançamentos em 12 meses</div></div>`}).join('');
+  const g=new Map();(F.avisos||[]).forEach(a=>{const m=a.match(/^(\S+)(?: \((.*?)\))?: (.*)$/);if(!m)return;const k=(m[2]||'')+'|'+m[3];if(!g.has(k))g.set(k,{nome:m[2],msg:m[3],cods:[]});g.get(k).cods.push(m[1])});
+  document.getElementById('fxAv').innerHTML=[...g.values()].map(x=>`<li><b>${esc(x.nome||x.cods.join(', '))}</b>${x.nome?' <span class="fx-tt">'+esc(x.cods.join(', '))+'</span>':''} — ${esc(x.msg)}</li>`).join('');
+}
+
 function renderMetodologia(){
-  const items=[['geral','Princípios gerais'],['visao','Visão Consolidada'],['carteira-inv','Carteira de Investimentos'],['retorno','Retorno por Ativo'],['metricas','Métricas'],['liquidez','Liquidez e Instrumentos'],['carteira','Score e Carteira']];
+  const items=[['geral','Princípios gerais'],['visao','Visão Consolidada'],['carteira-inv','Carteira de Investimentos'],['retorno','Retorno por Ativo'],['metricas','Métricas'],['liquidez','Liquidez e Instrumentos'],['carteira','Score e Carteira'],['fluxo','Fluxo de Recebimentos']];
   if(!state.metodSel)state.metodSel='geral';
   document.getElementById('metodBtns').innerHTML=items.map(it=>'<button type="button" class="ci-dimbtn'+(it[0]===state.metodSel?' on':'')+'" data-k="'+it[0]+'">'+it[1]+'</button>').join('');
   document.querySelectorAll('#metodBtns button').forEach(b=>b.onclick=()=>{state.metodSel=b.dataset.k;renderMetodologia();});
@@ -1656,6 +1964,7 @@ async function renderAtivo(){
 }
 
 const PAGES={
+  fluxo:{title:'Fluxo de Recebimentos',sub:'Recebimentos realizados e projeção dos próximos 3 meses',fn:renderFluxo},
   visao:{title:'Visão Consolidada',sub:'Patrimônio consolidado da família',fn:()=>{renderVisao();renderSummaryVis();renderEvoCombo();}},
   'carteira-inv':{title:'Carteira de Investimentos',sub:'Alocação detalhada — classe › indexador › instrumento',fn:renderCarteiraInv},
   retorno:{title:'Retorno por Ativo',sub:'Rentabilidade e contribuição por posição',fn:()=>{renderRetorno();renderPerfAtivo();}},
