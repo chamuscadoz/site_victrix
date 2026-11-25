@@ -325,6 +325,14 @@ td.fx-rg{min-width:220px}td.fx-nm{min-width:180px}
 #fxTip b{color:var(--white);font-weight:700;display:block;margin-bottom:3px}
 #fxTip .r{display:flex;justify-content:space-between;gap:14px}
 #fxTip .r span{opacity:.7}#fxTip .r i{font-style:normal;color:var(--lime);font-weight:700}
+.fx-svg .wlab{font-size:8.5px;font-weight:600;letter-spacing:.14em;fill:var(--sage-dim)}
+.fx-lg b{font-weight:600;color:var(--white);font-variant-numeric:tabular-nums}
+.fx-lg em{font-style:normal;font-weight:300;color:var(--sage-dim)}
+.fx-lg.venc span{background:repeating-linear-gradient(45deg,#D9A62E 0 2px,transparent 2px 5px);border:1px solid #D9A62E}
+.fx-tview{margin-top:12px}
+.fx-tview summary{cursor:pointer;font-weight:600;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sage-dim);padding:4px 0}
+.fx-tview summary:hover{color:var(--lime)}
+.fx-tview[open] summary{margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -622,6 +630,16 @@ td.fx-rg{min-width:220px}td.fx-nm{min-width:180px}
           <span class="fx-flab">Realizado</span><span class="ci-bar" style="margin:0" id="fxReal"></span></div>
         <div class="fx-legend" id="fxLegM"></div>
         <div class="fx-scroll"><svg class="fx-svg" id="fxChM" role="img" aria-label="Recebimentos por mês, realizados e projetados"></svg></div>
+      </div>
+      <div class="card span12" id="fx12Card">
+        <h2>Próximos 12 meses</h2>
+        <div class="h-sub" id="fx12Cap"></div>
+        <div class="fx-frow"><span class="fx-flab">Corte</span><span class="ci-bar" style="margin:0" id="fx12Dim"></span>
+          <span class="fx-flab">Incluir</span><span class="ci-bar" style="margin:0" id="fx12Inc"></span></div>
+        <div class="fx-sum" id="fx12Sum"></div>
+        <div class="fx-legend" id="fx12Leg" style="margin-top:16px"></div>
+        <div class="fx-scroll"><svg class="fx-svg" id="fx12Ch" role="img" aria-label="Recebimentos projetados por mês nos próximos 12 meses"></svg></div>
+        <details class="fx-tview"><summary>Ver em tabela (R$)</summary><div class="tbl-wrap"><table class="fx-mtx" id="fx12Tbl"></table></div></details>
       </div>
       <div class="card span12">
         <h2>Quebra da projeção</h2>
@@ -1558,6 +1576,7 @@ const METOD={
  fluxo:{html:`
 <h2>Fluxo de Recebimentos</h2>
 <p>A tela mostra os <b>12 meses de recebimentos realizados</b>, lidos do extrato de movimentos (<code>Saida_tbMovimentos_Consolidado</code>), e a <b>projeção dos 3 meses seguintes à competência mais recente</b>. Com a base de setembro a janela é outubro, novembro e dezembro; quando outubro fecha, ela passa a novembro, dezembro e janeiro. A projeção é gerada pelo pipeline (<code>gerar_fluxo.py</code>) e gravada no bloco <code>fluxo</code> do arquivo de dados: <b>nenhum valor é digitado à mão</b>.</p>
+<p>O gráfico <b>Próximos 12 meses</b> estende a mesma projeção por um ano, com cortes por titular, gestora, conta ou tipo. As regras são as mesmas da janela de 3 meses, e os juros de um papel param no mês em que ele vence. Os vencimentos de principal ficam fora do gráfico por padrão, porque um único vencimento pode ser maior que um ano inteiro de juros; o botão <b>+ vencimentos de principal</b> os inclui, hachurados.</p>
 <h2>O que é projetado</h2>
 <div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Caso</th><th>Regra</th></tr></thead><tbody>
 <tr><td><b>Periodicidade</b></td><td>lida do histórico: intervalo mediano entre os meses com pagamento de juros ou rendimento. Com pouco histórico num titular, usa os meses dos outros titulares do mesmo papel. Com um único pagamento, a periodicidade semestral é inferida quando o mês de vencimento do papel bate com o ciclo de seis meses.</td></tr>
@@ -1580,7 +1599,7 @@ const METOD={
  carteira:{html:'<h2>Score e Carteira</h2><p>Score ponderado (escala 5–25) nas dimensões mercado, crédito, estruturação, liquidez e operacional. Carteira detalhada com filtros de titular/conta, gestor, classe e busca.</p>'}
 };
 /* ============ FLUXO DE RECEBIMENTOS ============ */
-const FXS={stack:'tipo',real:'cmp',rows:'conta',at:'proj',sel:null};
+const FXS={stack:'tipo',real:'cmp',rows:'conta',at:'proj',sel:null,d12:'titular',i12:'jf'};
 function renderFluxo(){
   const F=DATA.fluxo;
   const host=document.getElementById('page-fluxo');
@@ -1674,6 +1693,58 @@ function renderFluxo(){
     if(tots[i]>0)svg.appendChild(tx(x+bw/2,mt+ph-sc(tots[i])-5,fK(tots[i]),'dlab','middle'));
     svg.appendChild(tx(x+bw/2,Hh-mb+17,ymLab(k),'axl','middle'));
   });
+
+  /* próximos 12 meses */
+  radios('fx12Dim',[['titular','Titular'],['gestor','Gestora'],['conta','Conta'],['tipo','Tipo']],'d12');
+  radios('fx12Inc',[['jf','Juros e FII'],['venc','+ vencimentos de principal']],'i12');
+  (()=>{
+    const J12=F.janela12,cap=document.getElementById('fx12Cap'),sv=document.getElementById('fx12Ch');
+    if(!Array.isArray(J12)||!Array.isArray(F.projecao12)){
+      cap.innerHTML='<div class="empty">Este arquivo de dados traz só a projeção de 3 meses. Rode o gerar_dashboard.py atualizado para gerar o horizonte de 12 meses.</div>';
+      ['fx12Sum','fx12Leg','fx12Tbl'].forEach(id=>document.getElementById(id).innerHTML='');sv.innerHTML='';sv.removeAttribute('width');sv.removeAttribute('height');return;
+    }
+    const d=FXS.d12,inV=FXS.i12==='venc',A=F.projecao12.filter(tf),VEN=A.filter(x=>x.tipo==='Vencimento'),CP=A.filter(x=>x.tipo!=='Vencimento');
+    const P12=inV?A:CP,keys=keysOf(d,P12),byK=k=>P12.filter(x=>ym(x.data)===k);
+    const hatchV=inV&&d!=='tipo';                       // principal hachurado quando o corte não é por tipo
+    const tots=J12.map(k=>sum(byK(k))),t12=sum(P12),tc=sum(CP),imx=tots.indexOf(Math.max(...tots));
+    const lab=k=>jf(k)+'/'+k.slice(0,4);
+    cap.textContent=`${lab(J12[0])} a ${lab(J12[11])} · mesmas regras da janela de 3 meses, repetidas ao longo do ano. Quanto mais distante o mês, maior a incerteza: não considera mudança de taxa, eventos de crédito nem compras e vendas futuras.`;
+    const pv=VEN.slice().sort((a,b)=>a.data<b.data?-1:1)[0];
+    document.getElementById('fx12Sum').innerHTML=
+      `<div class="fx-tile fx-root"><div class="fx-tk">Total projetado · 12 meses</div><div class="fx-tv">${fC(t12)}</div><div class="fx-ts">${['Juros','Rendimento FII'].concat(inV?['Vencimento']:[]).map(t=>`${t==='Rendimento FII'?'FII':t} <b>${f0(sum(P12.filter(x=>x.tipo===t)))}</b>`).join(' · ')}</div>${bar(P12)}</div>`+
+      `<div class="fx-tile"><div class="fx-tk">Média mensal · juros e FII</div><div class="fx-tv">${fC(tc/12)}</div><div class="fx-ts">sem principal · realizado 12m: <b>${f0(avgR)}</b>/mês</div></div>`+
+      `<div class="fx-tile"><div class="fx-tk">Maior mês</div><div class="fx-tv">${t12?ymLab(J12[imx]):'—'}</div><div class="fx-ts"><b>${fC(tots[imx]||0)}</b> · ${t12?fP(tots[imx]/t12*100):'—'} do ano</div></div>`+
+      `<div class="fx-tile"><div class="fx-tk">Vencimentos de principal</div><div class="fx-tv">${fC(sum(VEN))}</div><div class="fx-ts">${VEN.length?`<b>${VEN.length}</b> papéis · próximo em <b>${dBR(pv.data)}</b>`:'nenhum nos próximos 12 meses'}${inV?'':' · fora do gráfico'}</div></div>`;
+    document.getElementById('fx12Leg').innerHTML=keys.map(k=>{const v=sum(P12.filter(x=>x[d]===k));return `<span class="fx-lg"><span style="background:${colOf(d,k)}"></span>${esc(k)} <b>${fK(v)}</b> <em>${t12?fP(v/t12*100):''}</em></span>`}).join('')+
+      (hatchV&&VEN.length?`<span class="fx-lg venc"><span></span>Vencimento de principal</span>`:'');
+    sv.innerHTML='';
+    const W=Math.max(640,(sv.parentElement.clientWidth||760)-2),Hh=300,ml=76,mr=12,mt=26,mb=40,pw=W-ml-mr,ph=Hh-mt-mb;
+    sv.setAttribute('viewBox',`0 0 ${W} ${Hh}`);sv.setAttribute('width',W);sv.setAttribute('height',Hh);
+    const df=el('defs',{}),pt=el('pattern',{id:'fx12Hatch',width:5,height:5,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'});pt.appendChild(el('rect',{width:2,height:5,fill:'#0E1C0E',opacity:.6}));df.appendChild(pt);sv.appendChild(df);
+    const mx=Math.max(...tots,1),rw=mx/4,mg=Math.pow(10,Math.floor(Math.log10(rw))),st=[1,2,2.5,5,10].map(m=>m*mg).find(s=>s>=rw),tp=Math.ceil(mx/st)*st,s2=v=>v/tp*ph;
+    for(let v=0;v<=tp+1e-6;v+=st){const y=mt+ph-s2(v);sv.appendChild(el('line',{x1:ml,x2:W-mr,y1:y,y2:y,class:v===0?'bl':'gl'}));sv.appendChild(tx(ml-8,y+3.5,'R$ '+fK(v),'axv','end'))}
+    const gp=pw/12,bw2=Math.min(40,gp*.6);
+    sv.appendChild(el('rect',{x:ml,y:mt-18,width:gp*3,height:ph+18,fill:'#88E833',opacity:.04}));
+    sv.appendChild(tx(ml+gp*1.5,mt-6,'JANELA DE 3 MESES','wlab','middle'));
+    J12.forEach((k,i)=>{
+      const rows=byK(k),x=ml+gp*i+(gp-bw2)/2;let acc=0;
+      const segs=hatchV?[[false,rows.filter(r=>r.tipo!=='Vencimento')],[true,rows.filter(r=>r.tipo==='Vencimento')]]:[[false,rows]];
+      segs.forEach(([isV,rr])=>keys.forEach(kk=>{const sel=rr.filter(r=>r[d]===kk),v=sum(sel);if(v<=0)return;
+        const y0=mt+ph-s2(acc+v),hh=Math.max(1.5,s2(v)-1.5);
+        const r=el('rect',{x,y:y0,width:bw2,height:hh,fill:colOf(d,kk),class:'bar'});sv.appendChild(r);
+        if(isV)sv.appendChild(el('rect',{x:x+.5,y:y0+.5,width:bw2-1,height:Math.max(.5,hh-1),fill:'url(#fx12Hatch)',stroke:'#D9A62E','stroke-width':1,'pointer-events':'none'}));
+        bt(r,`<b>${esc(kk)} · ${ymLab(k)}${isV?' · vencimento':''}</b><div class="r"><span>Valor</span><i>${fC(v)}</i></div><div class="r"><span>Pagamentos</span><i>${sel.length}</i></div>`+[...sel].sort((a,b)=>b.v-a.v).slice(0,4).map(a=>`<div class="r"><span>${esc(String(a.nome).slice(0,28))} ${esc(a.titular)}</span><i>${fK(a.v)}</i></div>`).join(''));
+        acc+=v}));
+      if(tots[i]>0)sv.appendChild(tx(x+bw2/2,mt+ph-s2(tots[i])-5,fK(tots[i]),'dlab','middle'));
+      sv.appendChild(tx(x+bw2/2,Hh-mb+17,ymLab(k),'axl','middle'));
+    });
+    const thd=d==='conta'?'Conta (titular / gestora)':d==='titular'?'Titular':d==='gestor'?'Gestora':'Tipo';
+    let th=`<thead><tr><th class="rh">${thd}</th>`+J12.map(k=>`<th>${ymLab(k)}</th>`).join('')+`<th>Total 12m</th></tr></thead><tbody>`;
+    const n0=v=>nf(v,0);                                  // valores em R$, sem o prefixo, para a tabela caber
+    keys.forEach(kk=>{const rr=P12.filter(x=>x[d]===kk);th+=`<tr><td class="rh"><span class="fx-dot" style="background:${colOf(d,kk)}"></span>${esc(kk)}</td>`+J12.map(m=>{const v=sum(rr.filter(x=>ym(x.data)===m));return `<td class="${v?'':'zero'}">${v?n0(v):'—'}</td>`}).join('')+`<td class="tot">${n0(sum(rr))}</td></tr>`});
+    th+=`<tr class="totrow"><td class="rh" style="color:var(--white)">Total (R$)</td>`+tots.map(v=>`<td>${n0(v)}</td>`).join('')+`<td>${n0(t12)}</td></tr></tbody>`;
+    document.getElementById('fx12Tbl').innerHTML=th;
+  })();
 
   /* matriz */
   radios('fxRows',[['gestor','Gestor'],['titular','Titular'],['conta','Conta']],'rows');
@@ -1964,7 +2035,7 @@ async function renderAtivo(){
 }
 
 const PAGES={
-  fluxo:{title:'Fluxo de Recebimentos',sub:'Recebimentos realizados e projeção dos próximos 3 meses',fn:renderFluxo},
+  fluxo:{title:'Fluxo de Recebimentos',sub:'Recebimentos realizados, projeção dos próximos 3 meses e horizonte de 12 meses',fn:renderFluxo},
   visao:{title:'Visão Consolidada',sub:'Patrimônio consolidado da família',fn:()=>{renderVisao();renderSummaryVis();renderEvoCombo();}},
   'carteira-inv':{title:'Carteira de Investimentos',sub:'Alocação detalhada — classe › indexador › instrumento',fn:renderCarteiraInv},
   retorno:{title:'Retorno por Ativo',sub:'Rentabilidade e contribuição por posição',fn:()=>{renderRetorno();renderPerfAtivo();}},
