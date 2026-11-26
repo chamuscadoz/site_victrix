@@ -89,6 +89,22 @@ select:hover,input[type=search]:hover{border-color:var(--mid-green)}
 .span9{grid-column:span 9}.span12{grid-column:span 12}
 .mt{margin-top:16px}
 
+/* ===== cards de indexador (Metricas) ===== */
+.idx-card{border-top:3px solid var(--idx)}
+.idx-head{display:flex;align-items:center;gap:8px}
+.idx-dot{width:10px;height:10px;border-radius:3px;background:var(--idx);flex:none}
+.idx-name{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--idx)}
+.idx-desc{font-size:10.5px;font-weight:200;color:var(--sage-dim);margin-top:3px}
+.idx-big{font-size:23px;font-weight:700;margin:8px 0 10px;color:var(--white);letter-spacing:-.01em;line-height:1.15}
+.idx-split{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0;display:flex;flex-direction:column;gap:6px}
+.idx-split .row{display:flex;align-items:baseline;gap:8px;font-size:11.5px}
+.idx-split .tag{display:inline-flex;align-items:center;gap:5px;color:var(--sage-dim);font-weight:200;letter-spacing:.04em;min-width:74px}
+.idx-split .swatch{width:14px;height:0;border-top:2.5px solid var(--idx);flex:none;border-radius:2px}
+.idx-split .swatch.dash{border-top-style:dashed;border-color:var(--idx-tint)}
+.idx-split .val{font-weight:700;color:var(--sage);margin-left:auto}
+.idx-split .val.nd{font-weight:200;color:var(--sage-dim)}
+.idx-foot{font-size:10.5px;color:var(--sage-dim);font-weight:200;margin-top:9px;line-height:1.5}
+
 /* ===== hero / KPI ===== */
 .hero .eyebrow{font-size:11px;font-weight:200;letter-spacing:.24em;text-transform:uppercase;color:var(--sage-dim)}
 .hero .big{font-size:44px;font-weight:900;color:var(--accent);line-height:1.05;margin:10px 0 2px;letter-spacing:-.01em}
@@ -100,6 +116,9 @@ select:hover,input[type=search]:hover{border-color:var(--mid-green)}
 .hero .aux{display:flex;gap:26px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap}
 .hero .aux div{font-size:12px;color:var(--sage-dim);font-weight:300}
 .hero .aux b{display:block;color:var(--white);font-weight:600;font-size:14px;margin-top:2px}
+/* indicadores de concentração (Métricas) usam .aux.hero no mesmo elemento */
+.aux.hero div{font-size:12px;color:var(--sage-dim);font-weight:300}
+.aux.hero b{display:block;color:var(--white);font-weight:600;font-size:14px;margin-top:2px}
 
 .up{color:var(--accent)} .down{color:var(--red)} .flat{color:var(--sage)}
 .arr{font-size:.82em;margin-right:3px}
@@ -254,6 +273,29 @@ footer.notes b{color:var(--sage);font-weight:600}
 .metod-content h2{color:var(--white);font-size:19px;margin:0 0 6px}
 .metod-content h3{color:var(--accent);font-size:14px;margin:14px 0 5px}
 .metod-content p{color:var(--sage);font-size:13px;line-height:1.65;margin:0 0 8px}
+.metod-content h3{border-top:1px solid var(--line);padding-top:15px;margin-top:24px}
+.metod-content h3:first-of-type{border-top:0;padding-top:0;margin-top:14px}
+.metod-content h4{color:var(--white);font-size:12.5px;font-weight:700;margin:15px 0 4px}
+.metod-content ul,.metod-content ol{margin:0 0 10px;padding-left:20px;color:var(--sage);font-size:13px;line-height:1.7}
+.metod-content li{margin-bottom:5px}
+.metod-content p b,.metod-content li b{color:var(--white);font-weight:600}
+.metod-content code{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:11.5px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--sage)}
+.metod-content .mt-tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0 14px}
+.metod-content .mt-tbl th{background:rgba(46,111,58,.2);color:var(--white);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;text-align:left;border-bottom:1px solid var(--mid-green)}
+.metod-content .mt-tbl td{overflow-wrap:anywhere;padding:7px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft);color:var(--sage);line-height:1.55}
+.metod-content .mt-tbl tbody tr:nth-child(even){background:var(--alt-row)}
+.metod-content .mt-tbl td b{color:var(--white);font-weight:600}
+.metod-content .mt-tbl th.mt-num{text-align:right}
+.metod-content .mt-tbl td.mt-num{text-align:right;white-space:nowrap;color:var(--accent);font-weight:600}
+.metod-content .f{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--lime);border-radius:8px;padding:12px 16px;margin:10px 0 12px;font-size:13px;line-height:2;color:var(--white)}
+.metod-content .f sub{font-size:.72em;opacity:.85}
+.metod-content .f .fdim{color:var(--sage-dim);font-weight:200;font-size:11.5px}
+.metod-content .ex{border-left:2px solid var(--mid-green);background:rgba(46,111,58,.07);border-radius:0 8px 8px 0;padding:10px 14px;margin:8px 0 12px;font-size:12.5px;line-height:1.7;color:var(--sage-dim)}
+.metod-content .ex b{color:var(--sage);font-weight:600}
+.metod-content span.mt-live{display:inline-block}
+.metod-content .mt-live{background:var(--alt-row);border:1px dashed var(--line);border-radius:8px;padding:9px 13px;font-size:12.5px;color:var(--sage-dim);margin:10px 0 12px}
+.metod-content .mt-live b{color:var(--accent);font-weight:600}
+@media (max-width:760px){.metod-content .mt-tbl{font-size:11.5px;min-width:480px}.metod-content .mt-tbl th,.metod-content .mt-tbl td{padding:6px 7px}.metod-content .f{font-size:12px;padding:10px 12px}}
 /* ===== Exportar Excel (Aeterna) ===== */
 .ctrl-actions{display:flex;flex-direction:column;gap:4px}
 .xls-btn{font-family:var(--font);font-weight:600;font-size:13px;cursor:pointer;background:var(--lime);color:#0E1C0E;border:1px solid var(--lime);border-radius:8px;padding:8px 14px;transition:filter .15s,transform .05s}
@@ -606,9 +648,10 @@ td.fx-rg{min-width:220px}td.fx-nm{min-width:180px}
 
   <section class="page" id="page-metricas">
     <div class="grid">
-      <div class="card span12"><h2>Taxa a mercado por indexador</h2><div class="h-sub">Pós e inflação são spreads (CDI + / IPCA +); pré é taxa absoluta a.a.</div></div>
+      <div class="card span12"><h2>Taxa a mercado por indexador</h2><div class="h-sub">Quatro regimes, quatro escalas: <b>CDI +</b> e <b>IPCA +</b> são spreads (p.p. a.a.), <b>% do CDI</b> é percentual do índice (≈100) e <b>Prefixado</b> é taxa absoluta a.a. Cada card abre em isento e tributado.</div></div>
       <div id="mIdxCards" style="display:contents"></div>
-      <div class="card span12"><h2>Evolução da taxa média ponderada por indexador</h2><div class="chart-box tall"><canvas id="mIdxChart"></canvas></div></div>
+      <div class="card span12"><h2>Evolução da taxa média ponderada — spreads e prefixado</h2><div class="h-sub">CDI + · IPCA + · Prefixado, em pontos percentuais ao ano · linha cheia = isento, tracejada = tributado</div><div class="chart-box tall"><canvas id="mIdxChart"></canvas></div></div>
+      <div class="card span12" id="mIdxPctCard"><h2>Evolução da taxa média ponderada — % do CDI</h2><div class="h-sub">Escala própria: percentual do CDI. Separado dos spreads de propósito — misturar as duas escalas num eixo só é o que produzia médias impossíveis (ex.: “CDI + 72,56%”).</div><div class="chart-box short"><canvas id="mIdxChartPct"></canvas></div><div class="idx-foot" id="mIdxPctNote"></div></div>
       <div class="card span12"><h2>Concentração e Diversificação</h2><div class="h-sub">Maiores posições e nº efetivo de posições</div><div class="hbars" id="topPosBars"></div><div class="aux hero" style="border:0;padding-top:14px;margin-top:8px;display:flex;gap:24px" id="divIndic"></div></div>
       <div class="card span12"><h2>Concentração por instrumento (classe_L3)</h2><div class="h-sub" id="l3Sub"></div><div class="ci-bar" id="l3Chips"></div><div class="hbars" id="l3Bars"></div><div class="aux hero" style="border:0;padding-top:14px;margin-top:8px;display:flex;gap:24px" id="l3Ind"></div></div>
     </div>
@@ -1641,27 +1684,78 @@ function renderEvoCombo(){
         x:{grid:{display:false}}}}});
 }
 
-const M_IDX_META={POS:{nm:'Pós-fixado',desc:'spread sobre CDI',pre:'CDI + ',suf:''},PRE:{nm:'Prefixado',desc:'taxa nominal',pre:'',suf:'% a.a.'},INF:{nm:'Inflação',desc:'spread sobre IPCA',pre:'IPCA + ',suf:''}};
-const M_IDX_ORDER=['POS','PRE','INF'];
-function taxaByIdx(mk){const r=assets(mk).filter(a=>a.mv>0);const o={};M_IDX_ORDER.forEach(k=>o[k]={w:0,wt:0,n:0,mv:0});
-  r.forEach(a=>{if(o[a.idx_code]){o[a.idx_code].mv+=a.mv;if(a.taxa!=null){o[a.idx_code].w+=a.taxa*a.mv;o[a.idx_code].wt+=a.mv;o[a.idx_code].n++;}}});
-  M_IDX_ORDER.forEach(k=>o[k].avg=o[k].wt>0?o[k].w/o[k].wt:null);return o;}
+/* Quatro regimes de taxa. POS_PCT (percentual do CDI) foi separado de POS (spread sobre
+   o CDI) porque as duas coisas vivem na mesma coluna TaxaMercado em escalas diferentes
+   — 101% do CDI entra como 102,9 e CDI+0,96% entra como 1,03. Media unica dos dois = lixo. */
+const M_IDX_META={
+  POS:    {nm:'CDI +',     desc:'spread sobre o CDI',   pre:'CDI + ',  suf:'',           unit:'p.p. a.a.'},
+  POS_PCT:{nm:'% do CDI',  desc:'percentual do CDI',    pre:'',        suf:'% do CDI',   unit:'% do CDI'},
+  INF:    {nm:'IPCA +',    desc:'spread sobre o IPCA',  pre:'IPCA + ', suf:'',           unit:'p.p. a.a.'},
+  PRE:    {nm:'Prefixado', desc:'taxa nominal',         pre:'',        suf:'% a.a.',     unit:'% a.a.'}
+};
+const M_IDX_ORDER=['POS','POS_PCT','INF','PRE'];
+const M_IDX_SPREAD=['POS','INF','PRE'];   /* mesma escala (p.p.) -> painel de cima */
+const M_IDX_PCT=['POS_PCT'];              /* escala ~100         -> painel de baixo */
+function fIdx(code,v){if(v==null)return null;const mt=M_IDX_META[code];return (mt.pre||'')+fNum(v)+(mt.suf||'%');}
+function taxaByIdx(mk){const r=assets(mk).filter(a=>a.mv>0);const o={};M_IDX_ORDER.forEach(k=>o[k]={w:0,wt:0,n:0,nTot:0,mv:0,sub:{is:{w:0,wt:0,n:0},tr:{w:0,wt:0,n:0}}});
+  r.forEach(a=>{const g=o[a.idx_code];if(!g)return;g.mv+=a.mv;g.nTot++;
+    if(a.taxa!=null){g.w+=a.taxa*a.mv;g.wt+=a.mv;g.n++;
+      const s=g.sub[a.tributacao==='Isento de IR'?'is':'tr'];s.w+=a.taxa*a.mv;s.wt+=a.mv;s.n++;}});
+  M_IDX_ORDER.forEach(k=>{o[k].avg=o[k].wt>0?o[k].w/o[k].wt:null;
+    ['is','tr'].forEach(s=>{const x=o[k].sub[s];x.avg=x.wt>0?x.w/x.wt:null;});});
+  return o;}
 function renderMetricas(){
   const m=state.month,o=taxaByIdx(m),k=kpi(m),pl=k.pl_bruto||1;
-  document.getElementById('mIdxCards').innerHTML=M_IDX_ORDER.map(code=>{const mt=M_IDX_META[code],g=o[code];
-    const val=g.avg==null?'<span class="ci-muted">ND</span>':((mt.pre||'')+fNum(g.avg)+(mt.suf||'%'));
-    return '<div class="card span4"><div class="h-sub" style="color:var(--accent)">'+mt.nm+'</div><div style="font-size:11px;color:var(--sage-dim)">'+mt.desc+'</div><div style="font-size:26px;font-weight:700;margin:6px 0;color:var(--white)">'+val+'</div><div style="font-size:11px;color:var(--sage-dim)">'+g.n+' ativos · '+fPct(g.mv/pl,1)+' do PL · '+fBRL(g.mv,0)+'</div></div>';}).join('');
-  const modes=[['is','isento',false],['tr','tributado',true]];
-  const ds=[];
-  M_IDX_ORDER.forEach((code,i)=>{modes.forEach(function(mm){const mode=mm[0],tag=mm[1],dash=mm[2];
-    ds.push({label:M_IDX_META[code].nm+' ('+tag+')',data:M.map(x=>taxaByIdxT(x,mode)[code]),borderColor:[C.lime,C.sage,C.blend][i],backgroundColor:[C.lime,C.sage,C.blend][i],borderWidth:dash?1.4:2.4,borderDash:dash?[5,4]:[],tension:.3,pointRadius:dash?0:3,spanGaps:true});});});
-  mkChart('mIdxChart',{type:'line',data:{labels:ML,datasets:ds},
-    options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{labels:{boxWidth:12,padding:9,color:C.dim,font:{size:10}}},
-        tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.raw==null?'ND':fNum(c.raw,2)+'%')}}},
-      scales:{y:{grid:{color:C.grid},ticks:{callback:v=>fNum(v,1)+'%'}},x:{grid:{display:false}}}}});
+  document.getElementById('mIdxCards').innerHTML=M_IDX_ORDER.map(code=>{
+    const mt=M_IDX_META[code],g=o[code],h=IDX_HUE[code];
+    const val=g.avg==null?'<span class="ci-muted">ND</span>':fIdx(code,g.avg);
+    const linha=(s,tag,dash)=>{const x=g.sub[s],t=fIdx(code,x.avg);
+      return '<div class="row"><span class="tag"><i class="swatch'+(dash?' dash':'')+'"></i>'+tag+'</span>'+
+             '<span class="val'+(t?'':' nd')+'">'+(t||'ND')+'</span></div>';};
+    return '<div class="card span3 idx-card" style="--idx:'+h.base+';--idx-tint:'+h.tint+'">'+
+      '<div class="idx-head"><i class="idx-dot"></i><span class="idx-name">'+mt.nm+'</span></div>'+
+      '<div class="idx-desc">'+mt.desc+'</div>'+
+      '<div class="idx-big">'+val+'</div>'+
+      '<div class="idx-split">'+linha('is','isento',false)+linha('tr','tributado',true)+'</div>'+
+      '<div class="idx-foot">'+g.nTot+' ativos · '+fPct(g.mv/pl,1)+' do PL · '+fBRL(g.mv,0)+
+      '<br>taxa apurada em '+g.n+' de '+g.nTot+' ('+fPct(g.wt/(g.mv||1),0)+' do bloco)</div></div>';}).join('');
+  mkIdxChart('mIdxChart',M_IDX_SPREAD,'p.p. ao ano (spread / taxa nominal)');
+  const nPct=mkIdxChart('mIdxChartPct',M_IDX_PCT,'% do CDI');
+  /* A carteira pode nao ter nenhum papel em % do CDI — nesse caso o painel some em vez
+     de ficar um eixo vazio. Com poucos meses, explica por que ainda nao ha linha. */
+  const card=document.getElementById('mIdxPctCard'),note=document.getElementById('mIdxPctNote');
+  if(card)card.style.display=nPct?'':'none';
+  if(note)note.textContent=nPct===1
+    ? 'Um único mês com taxa apurada até aqui — a linha aparece quando houver dois ou mais. Meses sem taxa ficam vazios em vez de virarem zero.'
+    : (nPct?'Meses sem taxa apurada ficam vazios (não são ligados por reta nem contados como zero).':'');
   renderConcentracao();
   renderConcL3();
+}
+/* Um painel por escala. Nunca os dois num eixo so: escalas diferentes no mesmo eixo
+   achatam os spreads e sugerem comparacao entre grandezas que nao se comparam. */
+function mkIdxChart(cid,codes,axisTitle){
+  const el=document.getElementById(cid);if(!el)return 0;
+  const modes=[['is','isento',false],['tr','tributado',true]];
+  const ds=[];
+  codes.forEach(code=>{const h=IDX_HUE[code];modes.forEach(function(mm){
+    const mode=mm[0],tag=mm[1],dash=mm[2],col=dash?h.tint:h.base;
+    ds.push({label:M_IDX_META[code].nm+' · '+tag,idxCode:code,
+      data:M.map(x=>taxaByIdxT(x,mode)[code]),
+      borderColor:col,backgroundColor:col,
+      borderWidth:dash?2:2.6,borderDash:dash?[7,4]:[],
+      pointStyle:dash?'triangle':'circle',pointRadius:dash?4:4.5,pointHoverRadius:7,
+      pointBackgroundColor:dash?C.surface:col,pointBorderColor:col,pointBorderWidth:2,
+      tension:.25,spanGaps:false});});});   /* nao liga pontos por cima de meses sem taxa:
+        a reta atravessando o buraco inventaria uma trajetoria que o dado nao tem */
+  mkChart(cid,{type:'line',data:{labels:ML,datasets:ds},
+    options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{boxWidth:14,usePointStyle:true,pointStyleWidth:18,padding:11,color:C.dim,font:{size:10.5}}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.raw==null?'ND':fIdx(c.dataset.idxCode,c.raw))}}},
+      scales:{y:{grid:{color:C.grid},ticks:{callback:v=>fNum(v,1)+'%'},
+                 title:{display:true,text:axisTitle,color:C.dim,font:{size:10.5}}},
+              x:{grid:{display:false}}}}});
+  /* nº de meses com ao menos uma taxa apurada — quem decide se o painel tem o que mostrar */
+  return M.filter((_,i)=>ds.some(d=>d.data[i]!=null)).length;
 }
 
 function renderPerfAtivo(){
@@ -1777,6 +1871,35 @@ function renderSummaryCI(){
   const el=document.getElementById('ciSummary');if(!el)return;
   el.innerHTML='Em <b>'+mLabel(m)+'</b>, PL a mercado <b style="color:var(--accent)">'+fBRL(pl,0)+'</b> em <b>'+na+'</b> ativos. Retorno no mês <b style="color:var(--accent)">'+sPct(rc)+'</b> (<b>'+sPct(ac)+'</b> acum.). Maior exposição em <b>'+(maior?esc(maior[0]):'—')+'</b> ('+fPct(maior?maior[1]/totE:null,1)+' do PL).'+(best?' Destaque: <b>'+esc(best.nome)+'</b> ('+sPct(best.rent)+')':'')+(worst?'; maior queda: <b>'+esc(worst.nome)+'</b> ('+sPct(worst.rent)+')':'')+(topC?'. Principal contribuição: <b>'+esc(topC.nome)+'</b> ('+fNum(topC.contrib*10000,1)+' bps).':'.');
 }
+function metodVars(){
+  const m=state.month, k=kpi(m), A=assets(m), me=DATA.meta||{};
+  const plmv=A.reduce((s,a)=>s+(a.mv||0),0)||1;
+  const may=retMAY(null);
+  const hhi=A.reduce((s,a)=>s+Math.pow((a.mv||0)/plmv,2),0);
+  const top5=[...A].sort((a,b)=>b.mv-a.mv).slice(0,5).reduce((s,a)=>s+a.mv/plmv,0);
+  const sc=A.filter(a=>a.sc_total!=null&&a.mv>0), scd=sc.reduce((s,a)=>s+a.mv,0);
+  const txd=A.filter(a=>a.taxa!=null&&a.mv>0).reduce((s,a)=>s+a.mv,0);
+  const iso=A.filter(a=>a.tributacao==='Isento de IR').reduce((s,a)=>s+a.mv,0);
+  const n=(v,d)=>(v==null?'—':fNum(v,d==null?0:d));
+  /* plural correto: um contador de 1 não pode imprimir "1 papéis" */
+  const pl=(v,s,p2)=>(v==null?'—':(fNum(v,0)+' '+(Math.abs(v)===1?s:p2)));
+  return {
+    CMP:mLabel(m), GER:me.gerado_em||'—', SV:me.schema_version==null?'1':String(me.schema_version),
+    NM:String(M.length), M1:ML[0]||'—', M2:ML[ML.length-1]||'—', HM1:ML[H0]||'—',
+    NFUND:n(me.n_fundos_dim), NATIVOS:n(k.n_ativos),
+    PLB:fBRL(k.pl_bruto,0), PLL:fBRL(k.pl_liquido,0),
+    RM:sPct(k.ret_carteira), RA:sPct(may[1]), R12:sPct(may[2]),
+    GPM:n(me.pct_cdi_manual), GPA:n(me.pct_cdi_auto), GZ:n(me.taxa_zero_nd),
+    GF:n(me.taxa_fora_faixa_nd), GDV:n(me.taxas_divergentes),
+    GPMP:pl(me.pct_cdi_manual,'papel','papéis'), GPAP:pl(me.pct_cdi_auto,'papel','papéis'),
+    GZL:pl(me.taxa_zero_nd,'linha','linhas'), GFL:pl(me.taxa_fora_faixa_nd,'linha','linhas'),
+    GDVC:pl(me.taxas_divergentes,'caso','casos'),
+    COBT:fPct(txd/plmv,1), COBS:fPct(scd/plmv,1), ISENTO:fPct(iso/plmv,1),
+    HHI:n(hhi*100,1), NEFF:n(hhi>0?1/hhi:null,1), TOP5:fPct(top5,1),
+    NTITP:pl(new Set(A.map(a=>a.titular).filter(Boolean)).size,'titular','titulares'),
+    NGESTP:pl(new Set(A.map(a=>a.gestor).filter(Boolean)).size,'gestor','gestores')
+  };
+}
 const METOD={
  fluxo:{html:`
 <h2>Fluxo de Recebimentos</h2>
@@ -1795,13 +1918,318 @@ const METOD={
 <p>Amortizações, dividendos e JCP de ações, reembolsos de evento e aluguel de ações. Eles aparecem no realizado e no quadro <b>Fora da projeção</b>, e passam a ser projetados quando o fluxo por ativo estiver disponível. A projeção cobre apenas os gestores que têm extrato de movimentos no pipeline.</p>
 <h2>Limitações</h2>
 <p>É uma estimativa por média histórica: não considera mudança de taxa ou de inflação, eventos de crédito, nem compras e vendas futuras. A quebra por <b>conta</b> usa o mesmo rótulo titular / gestor da Carteira, e o filtro de titular do topo vale para toda a tela.</p>`},
- geral:{html:'<h2>Princípios gerais</h2><p>A rentabilidade é sempre <b>ponderada pelo valor a mercado</b> das posições, usando a performance <b>fornecida pelos prestadores/gestores</b> das contas — não calculamos retorno por ativo internamente. Acumulados de ano e 12 meses são obtidos por <b>capitalização composta</b> dos retornos mensais ponderados. Onde não há dado de performance, exibimos <b>ND</b>.</p><p>Os titulares <b>S, S2 e T</b> são instrumentos investidos por outros titulares (veículos internos) e ficam <b>fora das consolidações</b> para evitar dupla contagem; permanecem visíveis ao selecioná-los. A <b>titularidade</b> vem da letra final do CodFundo (A, N, D, D1, R, M, L, T, S, S2).</p>'},
- visao:{html:'<h2>Visão Consolidada</h2><p>PL a mercado e líquido do mês. A evolução do patrimônio traz também o <b>PL inicial corrigido pelo IPCA</b>. A evolução histórica mostra o PL em barras e o <b>retorno acumulado</b> da carteira em linha, comparado ao <b>IMA-S</b> (ou <b>Ibovespa</b> quando o filtro é apenas D1) e à carteira <b>60/40 IMA-S/IMA-B</b> no consolidado. Inclui o consolidado por titular/gestor (tabela alternável + pizza + evolução da composição) e a leitura automática do mês.</p>'},
- 'carteira-inv':{html:'<h2>Carteira de Investimentos</h2><p>Alocação detalhada em árvore <b>classe → indexador → instrumento</b>, colapsável e filtrável por titular e por gestor (a seleção agrega). Abaixo, alocação por <b>classe (Nível 1)</b> e por <b>indexador (Nível 2)</b>, com donut e evolução da composição.</p>'},
- retorno:{html:'<h2>Retorno por Ativo</h2><p>Retorno da carteira no mês (ponderado). Composição do retorno por classe em pontos percentuais (waterfall). Performance por ativo: maiores e menores rentabilidades e atribuição por ativo em <b>bps</b> (contribuições e detratores), seguidas da tabela detalhada das posições.</p>'},
- metricas:{html:'<h2>Métricas</h2><p>Taxa a mercado por indexador — <b>pós</b> como spread (CDI +), <b>pré</b> como taxa absoluta a.a. e <b>inflação</b> como spread (IPCA +) — <b>separada entre isento e tributado</b>, pois somar as duas em uma média única distorce o resultado. Concentração e diversificação (Top 5, nº efetivo, HHI) e concentração por <b>instrumento (classe_L3)</b> selecionável.</p>'},
- liquidez:{html:'<h2>Liquidez e Instrumentos</h2><p>Escada de liquidez por janela (D+0 → … → no vencimento). Evolução da liquidez por mês em <b>% do PL</b> e liquidez imediata (D+0) e curto prazo (até D+30) em <b>R$</b>, filtráveis por titular e gestor. Composição por instrumento e concentração por emissor.</p>'},
- carteira:{html:'<h2>Score e Carteira</h2><p>Score ponderado (escala 5–25) nas dimensões mercado, crédito, estruturação, liquidez e operacional. Carteira detalhada com filtros de titular/conta, gestor, classe e busca.</p>'}
+ geral:{html:`
+<h2>Princípios gerais</h2>
+<p>Este painel é produzido por um <b>pipeline local e auditável</b>. Três compromissos valem em todas as telas:
+<b>(1)</b> nenhuma rentabilidade é estimada por nós — ela é a <b>informada pelo prestador/gestor</b> de cada conta;
+<b>(2)</b> toda agregação é <b>ponderada pelo valor a mercado</b>, nunca por média simples;
+<b>(3)</b> onde o dado não existe exibimos <b>ND</b>, jamais um zero ou uma aproximação.</p>
+<p class="mt-live">Competência em tela <b>{{CMP}}</b> · série de <b>{{M1}}</b> a <b>{{M2}}</b> ({{NM}} competências) · gráficos mensais a partir de <b>{{HM1}}</b> · dados gerados em <b>{{GER}}</b> · contrato de dados <b>schema v{{SV}}</b> · <b>{{NFUND}}</b> ativos catalogados.</p>
+<p><b>Como ler as telas.</b> Os gráficos mensais começam no <b>primeiro mês com patrimônio relevante</b> — o primeiro em que o PL chega a 10% do maior PL da série. Os meses anteriores, com saldo residual, achatariam as escalas e distorceriam as barras de composição; eles continuam disponíveis no seletor de competência e entram nos retornos acumulados. Tabelas longas mostram as <b>15 primeiras linhas</b> na ordem escolhida; o botão <b>Ver todas</b> abre a lista completa, com o cabeçalho fixo durante a rolagem. As cores seguem a <b>entidade</b>, não o ranking: o mesmo titular ou a mesma classe tem a mesma cor em todos os gráficos e competências. O botão <b>Dia / Noite</b> troca apenas o tema visual; os números são os mesmos.</p>
+
+<h3>1 · De onde vem cada dado</h3>
+<p>Quatro fontes, todas lidas localmente. Nada é buscado em serviço externo no momento em que você abre a página — a tela lê um único arquivo já consolidado.</p>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Fonte</th><th>Arquivo de origem</th><th>O que entrega ao painel</th></tr></thead><tbody>
+<tr><td>Posições e saldos</td><td><code>Saida_tbExtratos_Consolidado</code></td><td><code>CodFundo</code>, competência, <code>SaldoBruto</code>, <code>SaldoLiquido</code>, <code>TaxaMercado</code>, <code>Rentabilidade</code>, <code>QdeCotas</code></td></tr>
+<tr><td>Cadastro e classificação</td><td><code>tbFundos</code></td><td>classe, indexador, instrumento, emissor, liquidez, tributação, rating, perfil, marca <code>%doCDI</code> e as cinco notas de risco</td></tr>
+<tr><td>Rótulos</td><td><code>de_para_classificacoes</code></td><td>tradução de cada código para o nome exibido (ex.: <code>INF</code> → “Inflação”)</td></tr>
+<tr><td>Mercado</td><td>base Bloomberg → <code>dados_benchmarks</code></td><td>IPCA, IMA-S, IMA-B, Ibovespa e CDI, em retorno mensal</td></tr>
+</tbody></table></div>
+<p>O pipeline roda em duas etapas — primeiro os benchmarks, depois a carteira — e grava <b>um único arquivo</b>, o <code>dados_dashboard.json</code>, que é exatamente o que esta página lê para montar cada número, gráfico e tabela. <b>Nenhum valor é digitado à mão na tela.</b> Quando o cadastro de um ativo muda ao longo do tempo, vale sempre a linha do <b>mês de referência mais recente</b>, para que a classificação de um papel não mude só porque a planilha foi reordenada.</p>
+
+<h3>2 · Dicionário de campos — o que cada número é</h3>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Na tela</th><th>Origem</th><th>Como é obtido</th></tr></thead><tbody>
+<tr><td><b>Valor a mercado</b> (mv)</td><td><code>SaldoBruto</code></td><td>valor informado, sem transformação</td></tr>
+<tr><td><b>Valor líquido</b></td><td><code>SaldoLiquido</code></td><td>valor de resgate estimado pelo provedor (já líquido de IR/IOF quando ele assim informa)</td></tr>
+<tr><td><b>PL a mercado</b></td><td>derivado</td><td>Σ mv das posições consolidadas</td></tr>
+<tr><td><b>PL líquido</b></td><td>derivado</td><td>Σ do valor líquido das mesmas posições</td></tr>
+<tr><td><b>Peso (% do PL)</b></td><td>derivado</td><td>mv da posição ÷ PL a mercado</td></tr>
+<tr><td><b>Rentabilidade do mês</b></td><td><code>Rentabilidade</code></td><td>informada pelo provedor, por posição</td></tr>
+<tr><td><b>Contribuição</b></td><td>derivado</td><td>peso × rentabilidade</td></tr>
+<tr><td><b>Taxa a mercado</b></td><td><code>TaxaMercado</code></td><td>lida conforme o regime do indexador (ver <i>Métricas</i>)</td></tr>
+<tr><td><b>Score</b></td><td><code>tbFundos</code></td><td>soma das cinco notas de risco do ativo</td></tr>
+<tr><td><b>Titular</b></td><td>derivado</td><td>último caractere do <code>CodFundo</code></td></tr>
+<tr><td><b>Posições ativas</b></td><td>derivado</td><td>contagem de posições com mv &gt; 0</td></tr>
+</tbody></table></div>
+
+<h3>3 · As três convenções que valem em toda a tela</h3>
+<h4>3.1 Toda média é ponderada pelo valor a mercado</h4>
+<p>Uma posição de R$ 600 mil pesa seis vezes mais que uma de R$ 100 mil. Nunca usamos média simples entre ativos, classes ou titulares.</p>
+<div class="f">R<sub>carteira</sub> &nbsp;=&nbsp; Σ ( r<sub>i</sub> × mv<sub>i</sub> ) &nbsp;÷&nbsp; Σ mv<sub>i</sub></div>
+<div class="ex"><b>Exemplo.</b> Carteira de R$ 1.000.000 em três ativos — A: R$ 600.000 rendendo <b>+1,00%</b>; B: R$ 300.000 rendendo <b>+0,50%</b>; C: R$ 100.000 rendendo <b>−2,00%</b>.<br>
+Numerador: 600.000×0,0100 + 300.000×0,0050 + 100.000×(−0,0200) = 6.000 + 1.500 − 2.000 = <b>5.500</b>.<br>
+Retorno: 5.500 ÷ 1.000.000 = <b>+0,55%</b>. A média simples dos três seria −0,17% — número que não descreve carteira nenhuma.</div>
+
+<h4>3.2 O mês soma; o ano e os 12 meses compõem</h4>
+<p>Retornos de períodos diferentes não se somam: eles se <b>capitalizam</b>, porque o ganho do mês passa a render no mês seguinte.</p>
+<div class="f">R<sub>acumulado</sub> &nbsp;=&nbsp; ∏ ( 1 + r<sub>t</sub> ) &nbsp;−&nbsp; 1</div>
+<div class="ex"><b>Exemplo.</b> Três meses a <b>+2,00%</b>, <b>+3,00%</b> e <b>−1,00%</b>:<br>
+1,02 × 1,03 × 0,99 = 1,040094 → <b>+4,0094%</b>, e não os +4,00% da soma simples. A diferença é pequena no mês e cresce com o tempo — por isso a composição é a única forma usada aqui.</div>
+<p>O acumulado de <b>12 meses</b> só é exibido quando existem as doze competências completas; com menos, o campo fica em branco em vez de mostrar um período parcial disfarçado de ano.</p>
+
+<h4>3.3 Ausência de dado é ND, nunca zero</h4>
+<p>Um campo vazio na origem — taxa não informada, rentabilidade não divulgada, classificação pendente — entra como <b>ND</b>. A posição continua no PL e na exposição; ela apenas fica <b>fora do denominador</b> daquela métrica específica. Por isso cada bloco de taxa informa <b>em quantos ativos a métrica foi de fato apurada</b>, e os gráficos deixam o mês vazio em vez de ligar a linha por cima do buraco.</p>
+<p class="mt-live">Nesta competência, a taxa foi apurada em posições que somam <b>{{COBT}}</b> do PL e o score em <b>{{COBS}}</b>.</p>
+
+<h3>4 · Titularidade e veículos internos</h3>
+<p>A <b>titularidade</b> é derivada do último caractere do <code>CodFundo</code> — <b>A</b>, <b>N</b>, <b>D</b>, <b>D1</b>, <b>R</b>, <b>M</b>, <b>L</b>, <b>T</b>, <b>S</b>, <b>S2</b>. Os titulares <b>S</b>, <b>S2</b> e <b>T</b> são <b>veículos internos</b>: instrumentos investidos por outros titulares da própria família. Eles ficam <b>fora de toda consolidação</b>, porque somá-los ao consolidado contaria o mesmo patrimônio duas vezes — uma no veículo e outra em quem investe nele. Quando você seleciona um desses titulares nos chips do topo, ele volta a aparecer isoladamente, para inspeção.</p>
+<p class="mt-live">A competência {{CMP}} reúne <b>{{NTITP}}</b> e <b>{{NGESTP}}</b>, com <b>{{ISENTO}}</b> do PL em papéis isentos de IR.</p>
+
+<h3>5 · Qualidade do dado — as quatro guardas</h3>
+<p>A base de origem carrega imperfeições reais, e a escolha aqui é <b>mostrá-las em vez de maquiá-las</b>. O pipeline aplica quatro regras automáticas, todas com aviso nominal no log de geração — nenhuma silenciosa. Os contadores abaixo valem para <b>toda a série histórica</b>, não apenas para o mês em tela.</p>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Guarda</th><th>Regra</th><th>Por que existe</th><th class="mt-num">Ocorrências</th></tr></thead><tbody>
+<tr><td><b>Marcação % do CDI</b></td><td>papel marcado como percentual do CDI no cadastro ganha indexador próprio</td><td>a coluna de taxa guarda dois regimes na mesma casa decimal</td><td class="mt-num">{{GPMP}}</td></tr>
+<tr><td><b>Rede de segurança</b></td><td>papel pós-fixado com taxa acima de 30 vira “% do CDI” mesmo sem marcação</td><td><i>spread</i> de 30 pontos sobre o CDI não existe: é percentual mal lido</td><td class="mt-num">{{GPAP}}</td></tr>
+<tr><td><b>Faixa por indexador</b></td><td>taxa fora da faixa possível do próprio indexador vira ND</td><td>um IPCA+ com 46 não paga 46 pontos acima da inflação: a origem gravou outra grandeza</td><td class="mt-num">{{GFL}}</td></tr>
+<tr><td><b>Taxa zero</b></td><td>taxa igual a 0 em papel indexado vira ND</td><td>zero não é “spread nulo”, é taxa que a origem não informou — e diluía a média para baixo</td><td class="mt-num">{{GZL}}</td></tr>
+</tbody></table></div>
+<p>Faixas aceitas: <b>CDI +</b> e <b>IPCA +</b> de 0 a 30 p.p.; <b>% do CDI</b> de 30 a 300; <b>Prefixado</b> de 0 a 60% a.a.</p>
+<p>Há ainda um <b>diagnóstico que não altera número algum</b>, apenas aponta: o mesmo papel aparecendo com taxas muito diferentes entre titulares na mesma competência (gatilho severo — a maior precisa ser pelo menos o triplo da menor <i>e</i> distar 2 p.p.). Isso costuma indicar erro de ingestão na origem, não de painel.</p>
+<p class="mt-live">Casos sinalizados na série histórica: <b>{{GDVC}}</b>.</p>
+
+<h3>6 · Como conciliar os números — duas regras de ouro</h3>
+<p><b>Contribuição não é retorno.</b> A contribuição de um ativo ou classe é <b>retorno × peso</b>: o quanto ele mexeu no total. Uma classe pequena que subiu muito pode contribuir pouco; uma classe grande que caiu pouco pode puxar o total para baixo. Só a <b>soma das contribuições</b> fecha com o retorno da carteira — a soma dos retornos, não.</p>
+<p><b>O mês fecha na ponta do lápis; o acumulado, não exatamente.</b> O retorno do <b>mês</b> da carteira é igual à média dos retornos dos titulares ponderada pelo % do PL — essa conta fecha. Já <b>ano</b> e <b>12 meses</b> por titular são compostos isoladamente e o peso de cada titular muda a cada mês; por isso a média ponderada dos acumulados é uma boa aproximação do acumulado da carteira, não uma igualdade. Isso é aritmética de carteiras, não divergência de dado.</p>
+
+<h3>7 · Glossário</h3>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Termo</th><th>Significado</th></tr></thead><tbody>
+<tr><td><b>p.p.</b> (ponto percentual)</td><td>diferença entre dois percentuais. Sair de 3% para 5% é subir <b>2 p.p.</b>, não 2%.</td></tr>
+<tr><td><b>bps</b> (ponto-base)</td><td>um centésimo de ponto percentual. 0,55% = <b>55 bps</b>. Usado na atribuição por ativo, onde os números são pequenos.</td></tr>
+<tr><td><b>mv / valor a mercado</b></td><td>quanto a posição vale hoje, na marcação do provedor.</td></tr>
+<tr><td><b>Peso</b></td><td>fatia da posição no patrimônio total.</td></tr>
+<tr><td><b>Contribuição</b></td><td>retorno × peso: quanto a posição somou ou tirou do retorno da carteira.</td></tr>
+<tr><td><b>Spread</b></td><td>taxa adicional paga <i>acima</i> de um índice. “CDI + 1,52%” tem spread de 1,52 p.p.</td></tr>
+<tr><td><b>% do CDI</b></td><td>fração do índice que o papel paga. “101% do CDI” não é spread — é outra grandeza.</td></tr>
+<tr><td><b>D+n</b></td><td>dias até o dinheiro estar disponível após o pedido de resgate.</td></tr>
+<tr><td><b>HHI</b></td><td>índice de concentração: Σ(peso²). Quanto maior, mais concentrada a carteira.</td></tr>
+<tr><td><b>Nº efetivo</b></td><td>1 ÷ HHI: quantas posições de tamanho igual dariam a mesma concentração.</td></tr>
+<tr><td><b>Capitalização composta</b></td><td>encadeamento multiplicativo dos retornos: ∏(1+r) − 1.</td></tr>
+<tr><td><b>ND</b></td><td>dado não disponível na origem. Nunca significa zero.</td></tr>
+</tbody></table></div>
+
+<h3>8 · Limites conhecidos</h3>
+<ul>
+<li>A <b>rentabilidade é a do provedor</b>. Ela reflete a marcação de cada casa e não é recalculada aqui a partir de cotas e fluxos; casas diferentes podem marcar o mesmo papel de formas ligeiramente diferentes.</li>
+<li>O retorno é de <b>posição a mercado</b>, não uma cota time-weighted da carteira: aportes e resgates dentro do mês afetam o valor final, e a ponderação usa o valor de fechamento.</li>
+<li>Os <b>números de conta</b> aparecem mascarados (LGPD); enquanto a base não trouxer a conta, a visão por conta é substituída pela visão por titularidade.</li>
+<li>O <b>IPCA</b> é divulgado com defasagem, então a curva corrigida pela inflação pode terminar um mês antes da carteira.</li>
+<li>Os <b>scores</b> são de atribuição própria e cobrem apenas parte do PL — o rótulo do bloco informa quanto.</li>
+</ul>`},
+ visao:{html:`
+<h2>Visão Consolidada</h2>
+<p>Retrato do patrimônio na competência selecionada, já sem os veículos internos. Tudo nesta página responde aos chips de <b>titular</b> do topo: sem seleção, o número é o consolidado da família.</p>
+<p class="mt-live">Em <b>{{CMP}}</b>: PL a mercado <b>{{PLB}}</b>, PL líquido <b>{{PLL}}</b>, <b>{{NATIVOS}}</b> posições ativas, retorno de <b>{{RM}}</b> no mês, <b>{{RA}}</b> no ano e <b>{{R12}}</b> em 12 meses.</p>
+
+<h3>1 · Os números do cabeçalho</h3>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Indicador</th><th>Cálculo</th></tr></thead><tbody>
+<tr><td><b>Patrimônio Líquido Consolidado</b></td><td>Σ do valor líquido de todas as posições consolidadas do mês</td></tr>
+<tr><td><b>PL bruto</b></td><td>Σ do valor a mercado das mesmas posições</td></tr>
+<tr><td><b>Variação patrimonial no mês</b></td><td>PL líquido do mês − PL líquido do mês anterior. <b>Não é retorno</b>: inclui aportes e resgates.</td></tr>
+<tr><td><b>Posições ativas</b></td><td>contagem de posições com valor a mercado maior que zero</td></tr>
+<tr><td><b>No mês / No ano / 12 meses</b></td><td>retorno ponderado do mês e suas capitalizações compostas</td></tr>
+</tbody></table></div>
+<p><b>Atenção à diferença.</b> A variação patrimonial e o retorno respondem a perguntas distintas: a primeira diz <i>quanto o patrimônio mudou de tamanho</i>, a segunda diz <i>quanto o dinheiro investido rendeu</i>. Um mês com aporte relevante pode ter variação patrimonial alta e retorno modesto — ou o contrário, num mês de resgate.</p>
+
+<h3>2 · Retorno do topo, janela por janela</h3>
+<div class="f">No mês &nbsp;=&nbsp; Σ ( rentabilidade<sub>i</sub> × mv<sub>i</sub> ) ÷ Σ mv<sub>i</sub><br>
+No ano (YTD) &nbsp;=&nbsp; ∏<sub>jan..mês</sub> ( 1 + r<sub>t</sub> ) − 1<br>
+12 meses &nbsp;=&nbsp; ∏<sub>últimos 12</sub> ( 1 + r<sub>t</sub> ) − 1</div>
+<p>Entram no cálculo do mês apenas as posições com rentabilidade informada; as demais permanecem no PL e na exposição, fora do denominador do retorno. A janela de 12 meses fica em branco enquanto não houver doze competências completas.</p>
+
+<h3>3 · Evolução do patrimônio e a régua de poder de compra</h3>
+<p>A curva verde é o <b>PL líquido</b> mês a mês. A linha tracejada é o <b>PL inicial corrigido pelo IPCA</b>: parte do PL do primeiro mês exibido no gráfico (<b>{{HM1}}</b>) e o capitaliza pela inflação de cada mês.</p>
+<div class="f">PL<sub>IPCA</sub>(t) &nbsp;=&nbsp; PL<sub>inicial</sub> × ∏ ( 1 + IPCA<sub>t</sub> )</div>
+<p>Ela não é um benchmark de investimento; é uma régua. Se o PL está acima da tracejada, o patrimônio <b>ganhou poder de compra</b> desde o primeiro mês exibido — considerando também os aportes, já que a curva é de patrimônio e não de cota.</p>
+
+<h3>4 · Comparativos de mercado</h3>
+<p>Na evolução histórica, as barras são o <b>PL a mercado</b> (eixo da esquerda) e as linhas são <b>retorno acumulado</b> em percentual (eixo da direita). As séries comparadas:</p>
+<ul>
+<li><b>IMA-S</b> — índice de títulos públicos pós-fixados, referência de caixa/CDI. É o comparativo padrão do consolidado.</li>
+<li><b>Ibovespa</b> — substitui o IMA-S automaticamente quando o filtro isola o titular <b>D1</b>, cujo perfil é de renda variável.</li>
+<li><b>Carteira 60/40 IMA-S/IMA-B</b> — referência sintética exibida apenas no consolidado, montada mês a mês antes de acumular.</li>
+</ul>
+<div class="f">r<sub>60/40</sub>(t) &nbsp;=&nbsp; 0,60 × IMA-S<sub>t</sub> &nbsp;+&nbsp; 0,40 × IMA-B<sub>t</sub> &nbsp;&nbsp;→&nbsp;&nbsp; acumula por ∏ ( 1 + r<sub>t</sub> ) − 1</div>
+<p>A mistura é feita <b>no retorno mensal</b> e só depois acumulada — compor cada índice separadamente e misturar os acumulados daria outro número, e errado. Todas as séries de mercado vêm de base Bloomberg, são convertidas em retorno mensal pela variação de nível de um mês para o outro e acumuladas <b>pela mesma capitalização composta da carteira</b>, para que a comparação seja entre iguais.</p>
+
+<h3>5 · Consolidado por titular ou por gestor</h3>
+<p>A tabela alterna entre as duas leituras. Em ambas, para cada linha e cada mês:</p>
+<div class="f">Retorno do grupo no mês &nbsp;=&nbsp; Σ<sub>grupo</sub> ( rentabilidade<sub>i</sub> × mv<sub>i</sub> ) ÷ Σ<sub>grupo</sub> mv<sub>i</sub></div>
+<p>As colunas <b>Ano</b> e <b>12 m</b> compõem os retornos mensais do próprio grupo, com a mesma fórmula do topo. <b>PL</b> e <b>% do PL</b> são sempre do mês selecionado, e o percentual tem como denominador o PL consolidado já sem os veículos internos.</p>
+<div class="ex"><b>Por que a soma dos acumulados não bate exatamente.</b> Suponha dois titulares. No mês 1 o titular X tem 80% do PL; no mês 2, depois de um resgate, tem 50%. O acumulado de X compõe os retornos <i>de X</i>, e o da carteira compõe os retornos <i>da carteira</i> — que em cada mês pesaram X de forma diferente. As duas contas estão certas e não são a mesma conta.</div>
+
+<h3>6 · A leitura automática do mês</h3>
+<p>O parágrafo em destaque é gerado a partir dos mesmos campos da tela — PL, nº de ativos, retorno do mês e acumulado, maior classe por exposição, melhor e pior rentabilidade, maior contribuição em bps, comparação com o IMA-S acumulado, nº de titulares e gestores, fatia isenta de IR e os indicadores de concentração. <b>Não há texto editorial escrito à mão</b>: se um número muda na base, a frase muda junto.</p>`},
+
+ 'carteira-inv':{html:`
+<h2>Carteira de Investimentos</h2>
+<p>Alocação detalhada em árvore de quatro níveis — <b>classe › indexador › instrumento › ativo</b> — colapsável e filtrável por titular e por gestor. Os filtros <b>agregam</b> a seleção: marcar dois titulares soma os dois num único total.</p>
+
+<h3>1 · Os níveis da árvore</h3>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Nível</th><th>O que separa</th><th>Valores típicos</th></tr></thead><tbody>
+<tr><td><b>1 — Classe</b></td><td>a natureza econômica do risco</td><td>Renda Fixa, Renda Variável, Multimercado, Alternativos, Caixa</td></tr>
+<tr><td><b>2 — Indexador</b></td><td>a que o retorno está atrelado</td><td>Pós-fixado (CDI +), Pós-fixado (% do CDI), Prefixado, Inflação, RV Long-Only, FII</td></tr>
+<tr><td><b>3 — Instrumento</b></td><td>o veículo jurídico do papel</td><td>CDB, Debênture, CRI, CRA, LCA, LCI, FIDC, Ações, cotas de fundo</td></tr>
+<tr><td><b>4 — Ativo</b></td><td>a posição individual</td><td>papel a papel, com valor e % do PL</td></tr>
+</tbody></table></div>
+<p>Os dois pós-fixados aparecem como <b>nós separados</b> porque são grandezas diferentes: um paga um <i>spread acima</i> do CDI, o outro paga uma <i>fração</i> do CDI. Somá-los num nó só esconderia a distinção que a aba <i>Métricas</i> explica em detalhe.</p>
+
+<h3>2 · Como cada linha é calculada</h3>
+<div class="f">valor do nó &nbsp;=&nbsp; Σ mv das posições abaixo dele<br>
+nº de ativos &nbsp;=&nbsp; contagem dessas posições<br>
+% do total &nbsp;=&nbsp; valor do nó ÷ PL da seleção</div>
+<p>O denominador é sempre o <b>PL da seleção ativa</b>, não o da família inteira. Se você filtrar um gestor, os percentuais passam a ser dentro daquele gestor, e o rodapé fecha em 100,0%. Os nós são ordenados do maior para o menor valor; dentro de Renda Fixa, os instrumentos seguem uma ordem editorial por qualidade de crédito — do soberano ao <i>high yield</i> — em vez da ordem por tamanho, para a leitura acompanhar o risco e não o volume.</p>
+<div class="ex"><b>Exemplo.</b> Seleção com R$ 1.000.000. Renda Fixa soma R$ 850.000 → <b>85,0%</b>. Dentro dela, “Pós-fixado (CDI +)” soma R$ 500.000 → <b>50,0% do total</b> (não 58,8%: o denominador continua sendo o PL da seleção, nunca o do nó-pai).</div>
+
+<h3>3 · Donuts e evolução da composição</h3>
+<p>Abaixo da árvore, dois pares de gráficos: composição por <b>classe</b> (Nível 1) e por <b>indexador</b> (Nível 2), cada um com a foto do mês e a evolução ao longo da série. As barras empilhadas mostram <b>% do PL</b>, não valores — assim a leitura é de <i>mudança de composição</i>, sem que o crescimento do patrimônio mascare o movimento. As categorias além das oito maiores são agrupadas em <b>Outros</b>, com o mesmo critério em todos os meses.</p>`},
+
+ retorno:{html:`
+<h2>Retorno por Ativo</h2>
+<p>Esta página decompõe o retorno do mês: de onde ele veio, quem somou e quem tirou. Todos os números são da competência selecionada e respondem aos chips de titular.</p>
+<p class="mt-live">Retorno da carteira em <b>{{CMP}}</b>: <b>{{RM}}</b>.</p>
+
+<h3>1 · Retorno, contribuição e a diferença entre os dois</h3>
+<div class="f">Retorno da carteira &nbsp;=&nbsp; Σ ( r<sub>i</sub> × mv<sub>i</sub> ) ÷ Σ mv<sub>i</sub><br>
+Peso<sub>i</sub> &nbsp;=&nbsp; mv<sub>i</sub> ÷ PL &nbsp;&nbsp;·&nbsp;&nbsp; Contribuição<sub>i</sub> &nbsp;=&nbsp; Peso<sub>i</sub> × r<sub>i</sub><br>
+Σ Contribuição<sub>i</sub> &nbsp;=&nbsp; Retorno da carteira</div>
+<p>A última linha é a propriedade que torna a atribuição confiável: <b>as contribuições somam exatamente o retorno</b>. É por isso que o rodapé da tabela fecha com o card do topo.</p>
+<div class="ex"><b>Exemplo</b> (a mesma carteira de R$ 1.000.000 dos Princípios gerais):<br>
+A — peso 60%, retorno +1,00% → contribuição <b>+0,60%</b> (60 bps)<br>
+B — peso 30%, retorno +0,50% → contribuição <b>+0,15%</b> (15 bps)<br>
+C — peso 10%, retorno −2,00% → contribuição <b>−0,20%</b> (−20 bps)<br>
+Soma: 0,60 + 0,15 − 0,20 = <b>+0,55%</b> = retorno da carteira. Note que C teve o pior retorno, mas B, com retorno positivo pequeno, mexeu menos no total que C — porque peso importa.</div>
+
+<h3>2 · Cards de maior e menor contribuição</h3>
+<p>Os dois cards ordenam as posições <b>por contribuição</b>, não por rentabilidade. O ativo que mais rendeu pode não ser o que mais contribuiu, se for pequeno. Cada card mostra a contribuição em destaque e a rentabilidade logo abaixo, junto com classe, instrumento e peso.</p>
+
+<h3>3 · Waterfall por classe — passo a passo</h3>
+<ol>
+<li><b>Contribuição de cada ativo</b> = peso × rentabilidade.</li>
+<li><b>Contribuição da classe</b> = soma das contribuições dos ativos daquela classe.</li>
+<li>As classes são ordenadas da maior para a menor contribuição e <b>empilhadas</b>: cada barra começa onde a anterior terminou. A <b>posição vertical</b> é o acumulado corrente; a <b>altura</b> da barra é a contribuição daquela classe.</li>
+<li>Barra <b>verde</b> soma, <b>vermelha</b> subtrai. A barra <b>Total</b>, em cor cheia, parte do zero e chega ao resultado — <b>verde</b> se o mês foi positivo, <b>vermelha</b> se foi negativo: ela é o <b>retorno da carteira no mês</b>, idêntico ao card do topo.</li>
+</ol>
+<p>A escala é em <b>pontos percentuais</b>. Uma barra vermelha — Renda Variável num mês de queda, por exemplo — não significa prejuízo da carteira inteira: é a classe que <b>tirou</b> pontos de um total que ainda pode fechar positivo.</p>
+<div class="ex"><b>Exemplo.</b> Renda Fixa +0,75 p.p., Renda Variável −0,20 p.p. A primeira barra vai de 0 a 0,75; a segunda desce de 0,75 a 0,55; a barra Total vai de 0 a <b>0,55</b> — o retorno do mês.</div>
+
+<h3>4 · Atribuição por ativo, em bps</h3>
+<p>O gráfico da direita é a mesma contribuição, expressa em <b>pontos-base</b> para ganhar resolução nos números pequenos.</p>
+<div class="f">bps &nbsp;=&nbsp; contribuição × 10.000 &nbsp;&nbsp;(0,55% = 55 bps)</div>
+<p>São exibidos os seis maiores contribuintes e os seis maiores detratores. O gráfico da esquerda, ao lado, ordena por <b>rentabilidade</b> — maiores e menores do mês — e é deliberadamente uma leitura diferente: um ativo pode liderar num gráfico e nem aparecer no outro.</p>
+
+<h3>5 · A tabela detalhada</h3>
+<p>Traz, por posição, valor a mercado, % do PL, rentabilidade do mês e contribuição — logo depois do nome, para nunca ficarem escondidos pela rolagem lateral — e, em seguida, classe e conta. É ordenável por qualquer coluna e mostra as 15 primeiras linhas; <b>Ver todas</b> abre o restante. As três maiores contribuições são marcadas em verde à esquerda e as três maiores detrações em vermelho. O rodapé soma o valor a mercado das posições <b>com rentabilidade informada</b> e repete retorno e contribuição total — se ele não bater com o card do topo, há posição sem rentabilidade na base, e a diferença é exatamente essa.</p>
+
+<h3>6 · Ficha do ativo</h3>
+<p>Clicar no nome de um ativo abre a sua <b>ficha</b>: cadastro, resultado desde o ingresso, evolução mês a mês, fluxo de caixa e histórico mensal. A posição e a rentabilidade vêm do mesmo arquivo do painel; os movimentos datados vêm do arquivo de exportação, baixado só quando a ficha é aberta.</p>
+<p><b>Rentabilidade acumulada</b> encadeia as rentabilidades mensais informadas desde o primeiro mês da posição, comparada ao IMA-S no mesmo período. <b>TIR (a.a.)</b> é a taxa que zera o valor presente de todos os fluxos do investidor nas datas reais — aplicações negativas; resgates, amortizações, juros e dividendos positivos; IR e taxas debitados negativos — com a posição marcada a mercado entrando como recebimento na data de fechamento.</p>
+<div class="f">Σ fluxo<sub>i</sub> ÷ ( 1 + TIR )<sup>( d<sub>i</sub> − d<sub>0</sub> ) / 365</sup> &nbsp;=&nbsp; 0 &nbsp;&nbsp;<span class="fdim">ano de 365 dias corridos, a mesma convenção do XIRR do Excel</span></div>
+<p>Quando a compra é anterior ao histórico de movimentos, a TIR parte do saldo mais antigo disponível, tratado como aporte naquela data. Em períodos inferiores a 90 dias a TIR anualizada amplia qualquer oscilação — nesses casos, prefira a rentabilidade acumulada. Os avisos aparecem na própria ficha.</p>`},
+ metricas:{html:`
+<h2>Métricas</h2>
+<p>Taxa contratada a mercado por regime de indexação, e os indicadores de concentração da carteira.</p>
+
+<h3>1 · Quatro regimes, quatro escalas</h3>
+<p>“Taxa” não quer dizer a mesma coisa em todos os papéis. O painel trata os quatro regimes como grandezas distintas — cada um com seu card, sua unidade e sua escala.</p>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Regime</th><th>O que a taxa significa</th><th>Unidade</th><th>Como se lê</th></tr></thead><tbody>
+<tr><td><b>CDI +</b></td><td><i>spread</i> pago acima do CDI</td><td>p.p. ao ano</td><td>“CDI + 1,52%”</td></tr>
+<tr><td><b>% do CDI</b></td><td>fração do CDI que o papel entrega</td><td>% do índice (≈100)</td><td>“101,3% do CDI”</td></tr>
+<tr><td><b>IPCA +</b></td><td><i>spread</i> pago acima da inflação</td><td>p.p. ao ano</td><td>“IPCA + 6,40%”</td></tr>
+<tr><td><b>Prefixado</b></td><td>taxa nominal absoluta</td><td>% ao ano</td><td>“12,80% a.a.”</td></tr>
+</tbody></table></div>
+
+<h3>2 · Por que CDI + e % do CDI vivem separados</h3>
+<p>A base de posições guarda <b>os dois regimes na mesma coluna de taxa</b>: um papel a 101% do CDI entra como <code>102,92</code> e um papel a CDI+0,96% entra como <code>1,03</code>. Numa média ponderada única os percentuais dominam e o resultado é impossível — foi assim que o painel chegou a publicar um <b>“CDI + 72,56%”</b>.</p>
+<p>A separação vem da marcação <code>%doCDI</code> no cadastro de ativos, que é a fonte de verdade. Como rede de segurança, um papel pós-fixado com taxa acima de 30 é tratado como percentual do CDI mesmo sem marcação, e o pipeline emite aviso nominal para o cadastro ser completado.</p>
+<p class="mt-live">Hoje: <b>{{GPMP}}</b> marcado(s) no cadastro e <b>{{GPAP}}</b> capturado(s) pela rede de segurança.</p>
+<p>Pelo mesmo motivo os dois aparecem em <b>gráficos separados, cada um com sua escala</b>. Um eixo comum achataria os spreads contra números da ordem de 100 e sugeriria uma comparação que não existe. <b>Eixo duplo foi descartado de propósito</b>, não por limitação técnica. O painel de % do CDI desaparece sozinho quando a carteira não tem papel nesse regime.</p>
+
+<h3>3 · Como a taxa de cada card é calculada</h3>
+<div class="f">Taxa do indexador &nbsp;=&nbsp; Σ ( taxa<sub>i</sub> × mv<sub>i</sub> ) ÷ Σ mv<sub>i</sub> &nbsp;&nbsp;<span class="fdim">— somando apenas posições daquele indexador <b>com taxa apurada</b></span></div>
+<div class="ex"><b>Exemplo.</b> Bloco CDI + com dois papéis: R$ 400.000 a CDI+2,00% e R$ 600.000 a CDI+1,20%.<br>
+(400.000×2,00 + 600.000×1,20) ÷ 1.000.000 = (800.000 + 720.000) ÷ 1.000.000 = <b>CDI + 1,52%</b>.</div>
+<p>Cada card abre em <b>isento</b> e <b>tributado</b>, sempre separados. Misturá-los numa média única distorce a leitura, porque o papel isento embute o benefício fiscal: 1,00% isento não é comparável a 1,00% tributado. O rodapé de cada card informa <b>quantos ativos têm taxa apurada</b>, de quantos existem no bloco, e que fatia do bloco eles representam — é ali que se vê se a taxa exibida descreve o bloco inteiro ou apenas parte dele.</p>
+
+<h3>4 · Taxa ausente não vira zero</h3>
+<p>Taxa igual a 0 num papel indexado é <b>dado que a origem não informou</b>, não spread nulo; entra como ND. O papel continua no PL e na exposição, apenas fora do cálculo da média.</p>
+<p class="mt-live">Na série histórica: <b>{{GZL}}</b> convertida(s) em ND por taxa zero e <b>{{GFL}}</b> por taxa fora da faixa possível do indexador.</p>
+<p>Nos gráficos de evolução, meses sem taxa apurada ficam <b>vazios</b>: a linha não é ligada por cima do buraco, porque uma reta atravessando o vão inventaria uma trajetória que o dado não tem.</p>
+
+<h3>5 · Leitura da legenda dos gráficos</h3>
+<p>Uma família de cor por indexador — verde para CDI +, azul para % do CDI, terracota para IPCA +, violeta para Prefixado. Dentro de cada família, <b>linha cheia com marcador redondo = isento</b> e <b>linha tracejada, mais fina, com marcador triangular = tributado</b>. A distinção nunca depende só da cor: forma do traço e forma do marcador carregam a mesma informação, para a leitura sobreviver a daltonismo e a impressão em preto e branco.</p>
+
+<h3>6 · Concentração e diversificação</h3>
+<div class="f">Top 5 &nbsp;=&nbsp; Σ dos pesos das cinco maiores posições<br>
+HHI &nbsp;=&nbsp; Σ ( peso<sub>i</sub> )² &nbsp;&nbsp;<span class="fdim">exibido em escala 0–100</span><br>
+Nº efetivo de posições &nbsp;=&nbsp; 1 ÷ HHI</div>
+<div class="ex"><b>Exemplo.</b> Carteira com pesos 60% / 30% / 10%: HHI = 0,36 + 0,09 + 0,01 = <b>0,46</b> → 46 / 100. Nº efetivo = 1 ÷ 0,46 = <b>2,2</b>: apesar de três ativos, a carteira se comporta como se tivesse pouco mais de duas posições iguais. Se os três pesassem 33,3% cada, o HHI seria 0,33 e o nº efetivo, 3,0 — o máximo possível com três papéis.</div>
+<p class="mt-live">Em {{CMP}}: Top 5 = <b>{{TOP5}}</b> do PL · HHI <b>{{HHI}} / 100</b> · nº efetivo <b>{{NEFF}}</b>.</p>
+<p>O bloco seguinte repete os mesmos indicadores <b>dentro de um instrumento escolhido</b> (Nível 3) — CRI, CDB, Debênture e assim por diante. Ali o denominador passa a ser o total daquele instrumento, e não o PL: a pergunta muda de “quão concentrada é a carteira” para “quão concentrado é o meu CRI”.</p>`},
+
+ liquidez:{html:`
+<h2>Liquidez e Instrumentos</h2>
+<p>Quanto do patrimônio está disponível em cada prazo, e em que veículos e emissores ele está.</p>
+
+<h3>1 · A escada de liquidez</h3>
+<p>Cada posição é classificada no cadastro pela sua <b>janela de resgate</b> — o prazo entre o pedido e o dinheiro disponível.</p>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Janela</th><th>O que significa</th></tr></thead><tbody>
+<tr><td><b>D+0</b></td><td>resgate no mesmo dia — liquidez imediata</td></tr>
+<tr><td><b>D+1</b></td><td>disponível no dia útil seguinte</td></tr>
+<tr><td><b>D+2 a D+30</b></td><td>curto prazo</td></tr>
+<tr><td><b>D+31 a D+180</b></td><td>médio prazo</td></tr>
+<tr><td><b>D+181 a D+365</b></td><td>longo prazo dentro do ano</td></tr>
+<tr><td><b>Acima de D+365</b></td><td>resgate em mais de um ano (na base, código <code>GT365</code>)</td></tr>
+<tr><td><b>Mercado secundário</b></td><td>sem resgate contratual: a saída depende de encontrar comprador, com deságio possível</td></tr>
+<tr><td><b>No vencimento</b></td><td>o dinheiro volta na data do papel; antes disso, só via secundário</td></tr>
+<tr><td><b>Previdência</b></td><td>regras próprias de portabilidade e resgate</td></tr>
+</tbody></table></div>
+<p>A ordem das janelas é fixa, do mais líquido ao menos líquido, e não se reordena por tamanho — a escada precisa ser lida como uma escada. Categorias que aparecerem na base fora dessa lista entram ao final. No gráfico, as barras são horizontais e a cor segue uma única rampa: quanto mais líquida a janela, mais forte o tom. Janelas sem posição na competência não aparecem.</p>
+
+<h3>2 · Valor, % do PL e acumulado</h3>
+<div class="f">% do PL<sub>janela</sub> &nbsp;=&nbsp; Σ mv da janela ÷ PL<br>
+Acumulado<sub>janela</sub> &nbsp;=&nbsp; Σ dos % de todas as janelas até ela, na ordem da escada</div>
+<div class="ex"><b>Exemplo.</b> D+0 com 10%, D+1 com 15%, D+2 a D+30 com 25%. O acumulado lê-se: <b>10%</b> disponível hoje, <b>25%</b> até amanhã, <b>50%</b> em até 30 dias. É a resposta direta à pergunta “de quanto eu disponho se precisar em um mês”.</div>
+
+<h3>3 · Evolução e liquidez em reais</h3>
+<p>O gráfico empilhado mostra a composição da liquidez <b>em % do PL</b> ao longo da série — assim a leitura é de mudança de perfil, sem que o crescimento do patrimônio confunda. Ao lado, as mesmas informações em <b>reais</b>: a liquidez imediata (D+0) e o curto prazo (até D+30, somando D+0, D+1 e D+2 a D+30). Uma responde “que proporção”, a outra “quanto dinheiro” — e é a segunda que se compara com uma despesa concreta.</p>
+<p>Os dois respondem aos chips de <b>titular</b> do topo e aos botões de <b>gestor</b> da própria página, que agregam a seleção.</p>
+
+<h3>4 · Instrumentos e emissores</h3>
+<p>A composição por <b>tipo de instrumento</b> soma o valor a mercado por veículo (CDB, Debênture, CRI, CRA, LCA, LCI, FIDC, cotas, ações) e mostra a fatia de cada um no PL. A concentração por <b>emissor</b> agrupa por natureza de quem deve o papel — banco, securitizadora, corporativo, soberano — e responde a uma pergunta de risco de crédito diferente da anterior: dois instrumentos distintos podem ter o mesmo devedor por trás.</p>
+<p>Ambos usam <b>valor a mercado</b>, não valor de face, e o denominador é o PL da seleção ativa.</p>`},
+
+ carteira:{html:`
+<h2>Score e Carteira Detalhada</h2>
+<p>Enquadramento de risco de cada posição e a tabela completa da competência.</p>
+
+<h3>1 · As cinco dimensões de risco</h3>
+<p>Cada ativo recebe, no cadastro, uma nota de <b>1 a 5</b> em cinco dimensões independentes. A escala é de <b>intensidade de risco</b>: 1 é o mais defensivo, 5 o mais arrojado.</p>
+<div class="tbl-wrap"><table class="mt-tbl"><thead><tr><th>Dimensão</th><th>O que avalia</th></tr></thead><tbody>
+<tr><td><b>Mercado</b></td><td>sensibilidade a oscilação de preço — volatilidade, duration, exposição direcional</td></tr>
+<tr><td><b>Crédito</b></td><td>risco de o devedor não pagar — qualidade do emissor, garantias, subordinação</td></tr>
+<tr><td><b>Estruturação</b></td><td>complexidade jurídica e operacional da operação — quanto mais camadas, maior a nota</td></tr>
+<tr><td><b>Liquidez</b></td><td>dificuldade de sair da posição pelo valor marcado</td></tr>
+<tr><td><b>Operacional</b></td><td>risco de processo, custódia, administração e execução</td></tr>
+</tbody></table></div>
+
+<h3>2 · Score do ativo e score da carteira</h3>
+<div class="f">Score do ativo &nbsp;=&nbsp; mercado + crédito + estruturação + liquidez + operacional &nbsp;&nbsp;<span class="fdim">→ escala 5 a 25</span><br>
+Score da carteira &nbsp;=&nbsp; Σ ( mv<sub>i</sub> × score<sub>i</sub> ) ÷ Σ mv<sub>i</sub> &nbsp;&nbsp;<span class="fdim">apenas posições com score atribuído</span></div>
+<div class="ex"><b>Exemplo.</b> Três posições — A: R$ 600.000 com score 12; B: R$ 300.000 com score 18; C: R$ 100.000 com score 21.<br>
+(600.000×12 + 300.000×18 + 100.000×21) ÷ 1.000.000 = (7.200.000 + 5.400.000 + 2.100.000) ÷ 1.000.000 = <b>14,7</b> — no meio da escala, puxado para baixo pelo peso do ativo mais defensivo.</div>
+<p>A barra sob o número vai de <b>5 · defensivo</b> a <b>25 · arrojado</b>. O score é uma <b>avaliação própria</b>, não uma nota de agência: ele serve para comparar posições dentro desta carteira e acompanhar a evolução do perfil ao longo do tempo, não para substituir rating de crédito.</p>
+
+<h3>3 · O radar</h3>
+<p>Cada vértice é a <b>média ponderada pelo valor a mercado daquela dimensão isolada</b>, na escala de 0 a 5 — mesma fórmula do score total, aplicada dimensão a dimensão. O denominador de cada vértice considera apenas as posições que têm nota naquela dimensão, então um vértice pode ter cobertura diferente do outro. A forma da figura diz onde o risco se concentra: uma ponta esticada em Crédito com o resto recolhido descreve uma carteira muito diferente de uma figura arredondada com a mesma média.</p>
+
+<h3>4 · Cobertura — quanto do PL tem score</h3>
+<p>O rótulo abaixo do número informa a fatia do PL com score atribuído. Posições sem nota <b>não entram no cálculo</b> e não são tratadas como zero.</p>
+<div class="f">Cobertura &nbsp;=&nbsp; Σ mv das posições com score ÷ PL a mercado</div>
+<p class="mt-live">Em {{CMP}}, <b>{{COBS}}</b> do PL tem score atribuído.</p>
+
+<h3>5 · A tabela detalhada</h3>
+<p>Todas as posições da competência, com filtros de <b>conta/titular</b>, <b>gestor</b> e <b>classe</b>, busca por nome ou código, e ordenação por qualquer coluna. Traz classe, indexador, instrumento, conta, janela de liquidez, valor a mercado, % do PL, rentabilidade do mês e score.</p>
+<p>Os <b>números de conta aparecem mascarados</b> — apenas os últimos dígitos — por exigência de proteção de dados. O rodapé soma as posições filtradas: com todos os filtros limpos, ele fecha com o PL a mercado da competência.</p>`}
 };
 /* ============ FLUXO DE RECEBIMENTOS ============ */
 const FXS={stack:'tipo',real:'cmp',rows:'conta',at:'proj',sel:null,d12:'titular',i12:'jf'};
@@ -2020,7 +2448,9 @@ function renderMetodologia(){
   if(!state.metodSel)state.metodSel='geral';
   document.getElementById('metodBtns').innerHTML=items.map(it=>'<button type="button" class="ci-dimbtn'+(it[0]===state.metodSel?' on':'')+'" data-k="'+it[0]+'">'+it[1]+'</button>').join('');
   document.querySelectorAll('#metodBtns button').forEach(b=>b.onclick=()=>{state.metodSel=b.dataset.k;renderMetodologia();});
-  document.getElementById('metodContent').innerHTML=(METOD[state.metodSel]||{}).html||'';
+  let V={};try{V=metodVars();}catch(e){console.error(e);}
+  const raw=(METOD[state.metodSel]||{}).html||'';
+  document.getElementById('metodContent').innerHTML=raw.replace(/\{\{(\w+)\}\}/g,(_,k)=>(k in V&&V[k]!=null)?V[k]:'—');
 }
 
 /* ============ FICHA DO ATIVO (#/ativo/<cod>) ============
