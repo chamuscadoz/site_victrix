@@ -119,6 +119,18 @@ select:hover,input[type=search]:hover{border-color:var(--mid-green)}
 /* indicadores de concentração (Métricas) usam .aux.hero no mesmo elemento */
 .aux.hero div{font-size:12px;color:var(--sage-dim);font-weight:300}
 .aux.hero b{display:block;color:var(--white);font-weight:600;font-size:14px;margin-top:2px}
+/* tabela "Taxa por ativo" (Métricas) */
+.idx-card[data-reg]{cursor:pointer;transition:box-shadow .15s,transform .15s}
+.idx-card[data-reg]:hover{box-shadow:0 0 0 1px var(--idx)}
+.idx-card.sel{box-shadow:0 0 0 2px var(--idx)}
+.mtx-reg{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.mtx-reg i{width:9px;height:9px;border-radius:2px;flex:none}
+.mtx-spark{display:block;width:80px;height:22px;overflow:visible;margin:0 auto}
+#mTxTbl table{font-size:12.5px}
+#mTxTbl tbody td,#mTxTbl thead th{padding-left:8px;padding-right:8px}
+td.mtx-sp{text-align:center;padding-top:4px;padding-bottom:4px}
+td.mtx-nd{color:var(--sage-dim)}
+#mTxTbl tbody tr{cursor:default}
 
 .up{color:var(--accent)} .down{color:var(--red)} .flat{color:var(--sage)}
 .arr{font-size:.82em;margin-right:3px}
@@ -652,6 +664,14 @@ td.fx-rg{min-width:220px}td.fx-nm{min-width:180px}
       <div id="mIdxCards" style="display:contents"></div>
       <div class="card span12"><h2>Evolução da taxa média ponderada — spreads e prefixado</h2><div class="h-sub">CDI + · IPCA + · Prefixado, em pontos percentuais ao ano · linha cheia = isento, tracejada = tributado</div><div class="chart-box tall"><canvas id="mIdxChart"></canvas></div></div>
       <div class="card span12" id="mIdxPctCard"><h2>Evolução da taxa média ponderada — % do CDI</h2><div class="h-sub">Escala própria: percentual do CDI. Separado dos spreads de propósito — misturar as duas escalas num eixo só é o que produzia médias impossíveis (ex.: “CDI + 72,56%”).</div><div class="chart-box short"><canvas id="mIdxChartPct"></canvas></div><div class="idx-foot" id="mIdxPctNote"></div></div>
+      <div class="card span12" id="mTxCard"><h2>Taxa por ativo</h2>
+        <div class="h-sub">Taxa a mercado de cada posição nos quatro regimes · compare com a média do próprio regime e veja a evolução · clique num card acima para filtrar</div>
+        <div class="fx-frow"><span class="fx-flab">Regime</span><span class="ci-bar" style="margin:0" id="mTxReg"></span>
+          <span class="fx-flab">Tributação</span><span class="ci-bar" style="margin:0" id="mTxTrib"></span>
+          <span class="ci-bar" style="margin:0" id="mTxGrp"></span>
+          <input type="search" id="mTxBusca" placeholder="buscar ativo" aria-label="Buscar ativo na tabela de taxas" style="min-width:170px"></div>
+        <div class="tbl-wrap" id="mTxTbl"></div><div id="mTxMore"></div><div class="idx-foot" id="mTxFoot"></div>
+      </div>
       <div class="card span12"><h2>Concentração e Diversificação</h2><div class="h-sub">Maiores posições e nº efetivo de posições</div><div class="hbars" id="topPosBars"></div><div class="aux hero" style="border:0;padding-top:14px;margin-top:8px;display:flex;gap:24px" id="divIndic"></div></div>
       <div class="card span12"><h2>Concentração por instrumento (classe_L3)</h2><div class="h-sub" id="l3Sub"></div><div class="ci-bar" id="l3Chips"></div><div class="hbars" id="l3Bars"></div><div class="aux hero" style="border:0;padding-top:14px;margin-top:8px;display:flex;gap:24px" id="l3Ind"></div></div>
     </div>
@@ -1712,7 +1732,7 @@ function renderMetricas(){
     const linha=(s,tag,dash)=>{const x=g.sub[s],t=fIdx(code,x.avg);
       return '<div class="row"><span class="tag"><i class="swatch'+(dash?' dash':'')+'"></i>'+tag+'</span>'+
              '<span class="val'+(t?'':' nd')+'">'+(t||'ND')+'</span></div>';};
-    return '<div class="card span3 idx-card" style="--idx:'+h.base+';--idx-tint:'+h.tint+'">'+
+    return '<div class="card span3 idx-card'+(MTX.reg===code?' sel':'')+'" data-reg="'+code+'" role="button" tabindex="0" title="Filtrar a tabela Taxa por ativo por '+mt.nm+'" style="--idx:'+h.base+';--idx-tint:'+h.tint+'">'+
       '<div class="idx-head"><i class="idx-dot"></i><span class="idx-name">'+mt.nm+'</span></div>'+
       '<div class="idx-desc">'+mt.desc+'</div>'+
       '<div class="idx-big">'+val+'</div>'+
@@ -1728,6 +1748,7 @@ function renderMetricas(){
   if(note)note.textContent=nPct===1
     ? 'Um único mês com taxa apurada até aqui — a linha aparece quando houver dois ou mais. Meses sem taxa ficam vazios em vez de virarem zero.'
     : (nPct?'Meses sem taxa apurada ficam vazios (não são ligados por reta nem contados como zero).':'');
+  renderTaxaAtivos();
   renderConcentracao();
   renderConcL3();
 }
@@ -1757,6 +1778,98 @@ function mkIdxChart(cid,codes,axisTitle){
   /* nº de meses com ao menos uma taxa apurada — quem decide se o painel tem o que mostrar */
   return M.filter((_,i)=>ds.some(d=>d.data[i]!=null)).length;
 }
+
+
+/* ============ Taxa por ativo (Métricas) ============
+   Uma linha por posição (ou por papel, agrupando contas) nos quatro regimes de taxa.
+   "vs. média" compara com a média ponderada do PRÓPRIO regime e da MESMA tributação —
+   isento com isento, tributado com tributado —, a mesma régua dos cards do topo. */
+const MTX={reg:'',trib:'',busca:'',grp:false};
+function mtxTaxaGrupo(list){let w=0,wt=0;list.forEach(a=>{if(a.taxa!=null&&a.mv>0){w+=a.taxa*a.mv;wt+=a.mv;}});return wt>0?w/wt:null;}
+function mtxSpark(vals,col){
+  const W=80,H=22,P=3,ok=vals.filter(v=>v!=null);
+  if(ok.length<2)return '<span class="ci-muted">—</span>';
+  let lo=Math.min(...ok),hi=Math.max(...ok);if(hi-lo<1e-9){lo-=1;hi+=1;}
+  const x=i=>P+i*(W-2*P)/(vals.length-1),y=v=>H-P-(v-lo)/(hi-lo)*(H-2*P);
+  let d='',pen=false;vals.forEach((v,i)=>{if(v==null){pen=false;return;}d+=(pen?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1);pen=true;});
+  const li=vals.length-1-[...vals].reverse().findIndex(v=>v!=null);
+  return `<svg class="mtx-spark" viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${d}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>`+
+    `<circle cx="${x(li).toFixed(1)}" cy="${y(vals[li]).toFixed(1)}" r="2.4" fill="${col}"/></svg>`;
+}
+function mtxPP(v){return v==null?'—':(v>=0?'+':'−')+fNum(Math.abs(v),2);}   /* unidade (p.p.) vai no cabeçalho */
+function mtxChips(id,opts,cur,key){
+  const host=document.getElementById(id);if(!host)return;
+  host.innerHTML=opts.map(([k,l])=>'<button type="button" class="ci-dimbtn'+(cur===k?' on':'')+'" data-k="'+k+'">'+l+'</button>').join('');
+  host.querySelectorAll('button').forEach(b=>b.onclick=()=>{MTX[key]=key==='grp'?!MTX.grp:b.dataset.k;
+    if(key==='reg')document.querySelectorAll('#mIdxCards .idx-card').forEach(c=>c.classList.toggle('sel',c.dataset.reg===MTX.reg));
+    renderTaxaAtivos();});
+}
+function renderTaxaAtivos(){
+  const host=document.getElementById('mTxTbl');if(!host)return;
+  const m=state.month,i=mi(m),o=taxaByIdx(m);
+  mtxChips('mTxReg',[['','Todos'],...M_IDX_ORDER.map(c=>[c,M_IDX_META[c].nm])],MTX.reg,'reg');
+  mtxChips('mTxTrib',[['','Todos'],['is','Isento'],['tr','Tributado']],MTX.trib,'trib');
+  mtxChips('mTxGrp',[['g','Agrupar por papel']],MTX.grp?'g':'','grp');
+  const tribOf=a=>a.tributacao==='Isento de IR'?'is':'tr';
+  /* janela de 13 competências (atual + 12 anteriores) para Δ e minigráfico */
+  const win=M.slice(Math.max(0,i-12),i+1);
+  const byMonth=win.map(mo=>{const mp=new Map();assets(mo).forEach(a=>{if(a.mv>0)mp.set(a.cod,a);});return mp;});
+  const keyOf=a=>MTX.grp?(a.nome+'|'+a.idx_code+'|'+tribOf(a)):a.cod;
+  const busca=MTX.busca.trim().toLowerCase();
+  const base=assets(m).filter(a=>a.mv>0&&M_IDX_META[a.idx_code]
+    &&(!MTX.reg||a.idx_code===MTX.reg)&&(!MTX.trib||tribOf(a)===MTX.trib)
+    &&(!busca||(a.nome||'').toLowerCase().includes(busca)||(a.cod||'').toLowerCase().includes(busca)));
+  const groups=new Map();base.forEach(a=>{const k=keyOf(a);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(a);});
+  const rows=[...groups.values()].map(list=>{
+    const a0=list[0],code=a0.idx_code,tr=tribOf(a0),cods=new Set(list.map(a=>a.cod));
+    const hist=byMonth.map(mp=>mtxTaxaGrupo([...cods].map(c=>mp.get(c)).filter(Boolean)));
+    const taxa=hist[hist.length-1],mv=list.reduce((s2,a)=>s2+a.mv,0);
+    const avg=o[code]&&o[code].sub[tr]?o[code].sub[tr].avg:null;
+    const at=k=>{const v=hist[hist.length-1-k];return (taxa!=null&&v!=null)?taxa-v:null;};
+    return {nome:a0.nome,cod:cods.size===1?a0.cod:null,n:list.length,code,reg:M_IDX_META[code].nm,trib:tr==='is'?'Isento':'Tributado',
+      taxa,vsmed:(taxa!=null&&avg!=null)?taxa-avg:null,d3:hist.length>3?at(3):null,d12:hist.length>12?at(12):null,
+      hist,mv,pbl:o[code]&&o[code].mv?mv/o[code].mv:null};
+  });
+  const tbl='mtx';
+  if(!state.sort[tbl])state.sort[tbl]={key:'mv',dir:-1};
+  const sorted=sortRows(rows,tbl),more=document.getElementById('mTxMore'),foot=document.getElementById('mTxFoot');
+  if(!rows.length){host.innerHTML='<div class="empty"><b>Nenhum ativo encontrado</b>Ajuste os filtros ou o termo de busca.</div>';more.innerHTML='';foot.textContent='';return;}
+  const link=(r)=>{const t=trunc(r.nome,200)+(r.n>1?' <span class="fx-tt">· '+r.n+' contas</span>':'');
+    return (r.cod&&typeof assetLink==='function')?assetLink(r.cod,t):t;};
+  host.classList.toggle('capped',!!showAll[tbl]);
+  host.innerHTML=`<table><thead><tr>
+    ${thSort(tbl,'nome','Ativo',false)}${thSort(tbl,'reg','Regime',false)}${thSort(tbl,'trib','Trib.',false)}
+    ${thSort(tbl,'taxa','Taxa atual')}${thSort(tbl,'vsmed','vs. média (p.p.)')}${thSort(tbl,'d3','Δ 3m')}${thSort(tbl,'d12','Δ 12m')}
+    <th style="text-align:center">12 meses</th>${thSort(tbl,'mv','Valor')}${thSort(tbl,'pbl','% regime')}
+    </tr></thead><tbody>${capRows(tbl,sorted).map(r=>{const h=IDX_HUE[r.code]||{base:C.lime};
+      return `<tr data-reg="${r.code}"><td class="name">${link(r)}</td>`+
+      `<td class="txt"><span class="mtx-reg"><i style="background:${h.base}"></i>${esc(r.reg)}</span></td><td class="txt">${r.trib}</td>`+
+      `<td class="${r.taxa==null?'mtx-nd':'num-strong'}">${r.taxa==null?'ND':fIdx(r.code,r.taxa)}</td>`+
+      `<td>${mtxPP(r.vsmed)}</td><td>${mtxPP(r.d3)}</td><td>${mtxPP(r.d12)}</td>`+
+      `<td class="mtx-sp">${mtxSpark(r.hist,h.base)}</td><td>${fBRL(r.mv,0)}</td><td>${fPct(r.pbl,1)}</td></tr>`;}).join('')}
+    </tbody></table>`;
+  more.innerHTML=moreBar(tbl,sorted.length);
+  const nTx=rows.filter(r=>r.taxa!=null).length,mvT=rows.reduce((s2,r)=>s2+r.mv,0),mvTx=rows.filter(r=>r.taxa!=null).reduce((s2,r)=>s2+r.mv,0);
+  foot.innerHTML='Taxa apurada em <b>'+nTx+'</b> de '+rows.length+(MTX.grp?' papéis':' posições')+' ('+fPct(mvTx/(mvT||1),0)+' do valor filtrado). '+
+    '“vs. média” compara com a média ponderada do mesmo regime e da mesma tributação. Diferenças e Δ em pontos (p.p.) da própria unidade do regime: taxa a mercado que sobe com o papel na carteira significa preço caindo.';
+  /* passar o mouse numa linha destaca o regime dela nos gráficos de cima */
+  host.querySelectorAll('tbody tr').forEach(tr=>{
+    tr.onmouseenter=()=>mtxHighlight(tr.dataset.reg);tr.onmouseleave=()=>mtxHighlight(null);});
+}
+function mtxHighlight(code){
+  ['mIdxChart','mIdxChartPct'].forEach(id=>{const ch=charts[id];if(!ch)return;
+    ch.data.datasets.forEach(d=>{if(d._c==null)d._c=d.borderColor;
+      const dim=code&&d.idxCode!==code;d.borderColor=dim?d._c+'33':d._c;d.pointBorderColor=d.borderColor;
+      if(d.pointBackgroundColor!==C.surface)d.pointBackgroundColor=d.borderColor;});
+    ch.update('none');});
+}
+document.getElementById('mTxBusca').addEventListener('input',e=>{MTX.busca=e.target.value;renderTaxaAtivos();});
+document.getElementById('mIdxCards').addEventListener('click',e=>{const c=e.target.closest('.idx-card[data-reg]');if(!c)return;
+  MTX.reg=MTX.reg===c.dataset.reg?'':c.dataset.reg;
+  document.querySelectorAll('#mIdxCards .idx-card').forEach(x=>x.classList.toggle('sel',x.dataset.reg===MTX.reg));
+  renderTaxaAtivos();document.getElementById('mTxCard').scrollIntoView({behavior:'smooth',block:'start'});});
+document.getElementById('mIdxCards').addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;
+  const c=e.target.closest('.idx-card[data-reg]');if(c){e.preventDefault();c.click();}});
 
 function renderPerfAtivo(){
   const A=assets(state.month).filter(x=>x.rent!=null&&x.mv>0);
@@ -2158,7 +2271,13 @@ Soma: 0,60 + 0,15 − 0,20 = <b>+0,55%</b> = retorno da carteira. Note que C tev
 <h3>5 · Leitura da legenda dos gráficos</h3>
 <p>Uma família de cor por indexador — verde para CDI +, azul para % do CDI, terracota para IPCA +, violeta para Prefixado. Dentro de cada família, <b>linha cheia com marcador redondo = isento</b> e <b>linha tracejada, mais fina, com marcador triangular = tributado</b>. A distinção nunca depende só da cor: forma do traço e forma do marcador carregam a mesma informação, para a leitura sobreviver a daltonismo e a impressão em preto e branco.</p>
 
-<h3>6 · Concentração e diversificação</h3>
+<h3>6 · Taxa por ativo</h3>
+<p>A tabela abaixo dos gráficos abre a média de cada card em suas posições. Os filtros de regime e de tributação — e o clique num card do topo — recortam a lista; o filtro de titular do topo vale aqui também. <b>Agrupar por papel</b> junta o mesmo ativo em contas diferentes, com taxa ponderada pelo valor a mercado.</p>
+<div class="f">vs. média<sub>i</sub> &nbsp;=&nbsp; taxa<sub>i</sub> − média ponderada do regime (mesma tributação)<br>
+Δ 3m &nbsp;=&nbsp; taxa<sub>hoje</sub> − taxa<sub>3 meses antes</sub> &nbsp;&nbsp;·&nbsp;&nbsp; Δ 12m &nbsp;=&nbsp; taxa<sub>hoje</sub> − taxa<sub>12 meses antes</sub></div>
+<p>As diferenças estão na unidade do próprio regime: pontos de spread para CDI + e IPCA +, pontos de taxa para o Prefixado e pontos percentuais do CDI para % do CDI. Uma <b>taxa a mercado que sobe</b> com o papel na carteira significa <b>preço caindo</b> — o mercado passou a exigir mais daquele emissor. O minigráfico mostra os últimos 12 meses; meses sem taxa ficam vazios, e a posição sem taxa na competência aparece como <b>ND</b>, sem sair da lista.</p>
+
+<h3>7 · Concentração e diversificação</h3>
 <div class="f">Top 5 &nbsp;=&nbsp; Σ dos pesos das cinco maiores posições<br>
 HHI &nbsp;=&nbsp; Σ ( peso<sub>i</sub> )² &nbsp;&nbsp;<span class="fdim">exibido em escala 0–100</span><br>
 Nº efetivo de posições &nbsp;=&nbsp; 1 ÷ HHI</div>
